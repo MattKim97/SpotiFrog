@@ -41,14 +41,31 @@ class Song(db.Model):
         back_populates='songs'
     )
 
-    userLike = db.relationship(
+    userLikes = db.relationship(
         "User",
         secondary=likes,
-        back_populates="songLikes"
-    )
+        back_populates="songLikes",
+        )
 
     playlist = db.relationship(
         "Playlist",
         secondary=playlistsSongs,
-        back_populates="songs"
+        back_populates="songs",
     )
+
+    def to_dict(self,scope="default"):
+        d = {
+            "id": self.id,
+            "userId": self.userId,
+            "albumId": self.albumId,
+            "name": self.name,
+            "mp3": self.mp3,
+            "uploadedAt": self.uploadedAt,
+            "playtimeLength": self.playtimeLength,
+            "albumTrackNumber": self.albumTrackNumber,
+            "lyrics": self.lyrics,
+            "userLikes" : len(self.userLikes)
+        }
+        if scope == "detailed":
+            d["user"] = self.user.to_dict()
+            d["album"] = self.album.to_dict()
