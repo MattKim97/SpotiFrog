@@ -30,22 +30,25 @@ class User(db.Model, UserMixin):
     albums = db.relationship(
         "Album",
         back_populates="user",
+        cascade="all, delete-orphan"
     )
 
     playlists = db.relationship(
         "Playlist",
         back_populates="user",
+        cascade="all, delete-orphan"
     )
 
     songs = db.relationship(
         "Song",
         back_populates="user",
+        cascade="all, delete-orphan"
     )
 
     songLikes = db.relationship(
         "Song",
         secondary=likes,
-        back_populates="userLikes"
+        back_populates="userLikes",
     )
 
     @property

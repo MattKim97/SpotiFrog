@@ -27,5 +27,18 @@ class Playlist(db.Model):
     songs = db.relationship(
         "Song",
         secondary=playlistsSongs,
-        back_populates="playlist"
+        back_populates="playlist",
     )
+
+    def to_dict(self,scope="default"):
+        d = {
+            "id": self.id,
+            "name": self.name,
+            "userId": self.userId,
+            "playlistCover": self.playlistCover,
+            "description": self.description,
+            "createdAt": self.createdAt,
+        }
+        if scope == "songs_details":
+            d["songs"] = [song.to_dict() for song in self.songs]
+        return d

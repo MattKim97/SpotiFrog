@@ -24,3 +24,17 @@ class Album(db.Model):
         "Song",
         back_populates="album",
     )
+
+    def to_dict(self,scope="default"):
+        d =  {
+                    "id": self.id,
+                    "name": self.name,
+                    "albumCover": self.albumCover,
+                    "userId": self.userId,
+                    "releaseDate": self.releaseDate
+                }
+        if scope == "songs_details":
+            d["songs"] = [song.to_dict() for song in self.songs]
+        
+        return d
+        
