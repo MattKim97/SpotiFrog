@@ -25,11 +25,6 @@ class Album(db.Model):
         back_populates="album",
     )
 
-    playlists = db.relationship(
-        "Playlist",
-        back_populates="user",
-    )
-
 playlistsSongs = db.Table(
     'playlistsSongs',
     db.Model.metadata,
