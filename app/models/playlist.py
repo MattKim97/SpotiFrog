@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
-from .song import playlistsSongs 
+from datetime import date
+from .song import playlistsSongs
 
 
 class Playlist(db.Model):
@@ -17,7 +17,7 @@ class Playlist(db.Model):
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     playlistCover = db.Column(db.String(255), nullable=True)
     description = db.Column(db.String(255), nullable=True)
-    createdAt = db.Column(db.DateTime, default=datetime.utcnow)
+    createdAt = db.Column(db.Date, default=date.today())
 
     user = db.relationship(
         "User",
