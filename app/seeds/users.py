@@ -5,15 +5,15 @@ from sqlalchemy.sql import text
 # Adds a demo user, you can add other users here if you want
 def seed_users():
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
+        username='Demo', email='demo@aa.io', profilePictureUrl="", password='password')
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
+        username='marnie', email='marnie@aa.io', profilePictureUrl="", password='password')
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        username='bobbie', email='bobbie@aa.io', profilePictureUrl="", password='password')
     Matt = User(
         username='MattKim', email='MattKim@aa.io', profilePictureUrl="", password='password2')
     Bill = User(
-        username='Bill', email='Bill@aa.io',profilePictureUrl="", password='password3')
+        username='Bill Shauck', email='bill@aa.io',profilePictureUrl="", password='password')
     Sophia = User(
         username='Sophia', email='Sophia@aa.io', profilePictureUrl="", password='password4')
     TaylorS = User(
@@ -37,8 +37,8 @@ def seed_users():
     RichardWartner = User(
         username='Richard Wartner', email='RichardWartner@aa.io', profilePictureUrl="", password='password14')
     Tschaikroaksy = User(
-        username='Tschaikroaksy', email='Tschaikroaksy@aa.io', profilePictureUrl="", password='password15')
-    
+        username='Tschaikroaksky', email='tschaikroaksky@aa.io', profilePictureUrl="", password='password')
+
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
@@ -58,5 +58,5 @@ def undo_users():
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
+
     db.session.commit()
