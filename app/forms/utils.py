@@ -3,7 +3,7 @@ import boto3
 import botocore
 import os
 import uuid
-# from pydub import AudioSegment
+from io import BytesIO
 from mutagen.mp3 import MP3
 
 def validation_errors_to_error_messages(validation_errors):
@@ -21,10 +21,10 @@ def validation_errors_to_error_messages(validation_errors):
 #     duration = len(audio) / 1000
 #     return duration
 
-# def analyzePlayTime(mp3_file):
-#     audio = MP3(mp3_file)
-#     duration = audio.info.length
-#     return duration
+def analyzePlayTime(mp3_file):
+    audio = MP3(BytesIO(mp3_file))
+    duration = int(audio.info.length)
+    return duration
 
 ALLOWED_EXTENSIONS = {"pdf", "png", "jpg", "jpeg", "gif", "webp", "svg", "bmp", "tiff", "jfif"}
 
