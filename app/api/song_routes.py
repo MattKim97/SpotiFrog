@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.forms import SongForm, validation_errors_to_error_messages, upload_file_to_s3, get_unique_filename
+from app.forms import SongForm, validation_errors_to_error_messages, upload_file_to_s3, analyzePlayTime, get_unique_filename
 from app.models import db, Song, Album
 
 song_routes = Blueprint('songs', __name__)
@@ -32,6 +32,8 @@ def create_song():
     form = SongForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
+
+    mp3_data = request.files['mp3'].read()
     
 
     if form.validate_on_submit():
@@ -49,7 +51,7 @@ def create_song():
             "mp3": upload["url"],
             "lyrics": form.lyrics.data,
         }
-        # new_song["playtimeLength"] = analyzePlayTime(mp3)
+        new_song["playtimeLength"] = analyzePlayTime(mp3_data)
         if new_song["albumId"]:
             album = Album.query.get(new_song["albumId"])
             new_song["albumTrackNumber"] = len(album.songs) + 1 
