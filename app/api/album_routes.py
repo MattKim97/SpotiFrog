@@ -68,26 +68,18 @@ def add_song(albumId, songId):
     Adds or removes a song to an album and returns the updated album in a dictionary
     """
 
-    # album = Album.query.get(albumId)
-    if request.method == "PATCH":
-        song = [song for song in current_user.songs if song.id == songId and song.albumId == albumId]
-        if song:
-            song[0].albumId = None
-            db.session.add(song[0])
-            db.session.commit()
-            return song[0].to_dict(), 200
-        else:
-            return {"errors": "Invalid songId"}, 403
-    else:
-        song = [song for song in current_user.songs if song.id == songId]
+    song = [song for song in current_user.songs if song.id == songId]
+    if song:
+        song = song[0]
 
-        if song and song[0].albumId == albumId:
-            return {"errors": "Cannot add song to album again"}, 401
-        if song:
-            song[0].albumId = albumId
-            db.session.add(song[0])
-            db.session.commit()
-            return song[0].to_dict(), 200
-            # return album.to_dict(scope="songs_details")
+        if request.method =="PUT":
+            if song.albumId == albumId:
+                return {"errors": "Cannot add song to album again"}, 401
+            song.albumId = albumId
         else:
-            return {"errors": "Invalid songId"}, 403
+            song.albumId = None 
+        db.session.add(song)
+        db.session.commit()
+        return song.to_dict(), 200
+    else:
+        return {"errors": "Invalid songId"}, 403
