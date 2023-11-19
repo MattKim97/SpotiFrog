@@ -3,7 +3,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import date
 from .user import likes
 
 playlistsSongs = db.Table(
@@ -28,7 +28,7 @@ class Song(db.Model):
     albumId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('albums.id')), nullable=True)
     name = db.Column(db.String(100), nullable=False)
     mp3 = db.Column(db.String(255), nullable=False)
-    uploadedAt = db.Column(db.DateTime, default=datetime.utcnow)
+    uploadedAt = db.Column(db.Date, default=date.today(), nullable=False)
     playtimeLength = db.Column(db.Integer, nullable=False)
     albumTrackNumber = db.Column(db.Integer, nullable=True)
     lyrics = db.Column(db.Text, nullable=True)
@@ -71,6 +71,7 @@ class Song(db.Model):
         if scope == "detailed":
             d["user"] = self.user.to_dict()
             d["album"] = self.album.to_dict()
+        return d
 
 
 # user = User(
