@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Album, db 
+from app.models import Album, db
 from app.forms import AlbumForm, validation_errors_to_error_messages, upload_file_to_s3, get_unique_filename
 
 
@@ -60,3 +60,34 @@ def create_album():
         return {"errors": validation_errors_to_error_messages(form.errors)}, 401 
     else:
         return {"errors": "Unknown error occurred"}, 500
+
+@album_routes.route('/<int:albumId>/songs/<int:songId>', methods=["PUT", "PATCH"])
+@login_required
+def add_song(albumId, songId):
+    """
+    Adds or removes a song to an album and returns the updated album in a dictionary
+    """
+
+    # album = Album.query.get(albumId)
+    if request.method == "PATCH":
+        song = [song for song in current_user.songs if song.id == songId and song.albumId == albumId]
+        if song:
+            song[0].albumId = None
+            db.session.add(song[0])
+            db.session.commit()
+            return song[0].to_dict(), 200
+        else:
+            return {"errors": "Invalid songId"}, 403
+    else:
+        song = [song for song in current_user.songs if song.id == songId]
+
+        if song and song[0].albumId == albumId:
+            return {"errors": "Cannot add song to album again"}, 401
+        if song:
+            song[0].albumId = albumId
+            db.session.add(song[0])
+            db.session.commit()
+            return song[0].to_dict(), 200
+            # return album.to_dict(scope="songs_details")
+        else:
+            return {"errors": "Invalid songId"}, 403
