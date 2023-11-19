@@ -70,7 +70,7 @@ class Song(db.Model):
         }
         if scope == "detailed":
             d["user"] = self.user.to_dict()
-            if d["album"]:
+            if self.album:
                 d["album"] = self.album.to_dict()
         return d
 
