@@ -1,16 +1,3 @@
-/* TODO Add site wide styles */
-:root { /* Nunito?. Montserrat? cf public/index.html */
-    --fontFamily: "Figtree", sans-serif ;
-    --fontSize: 14px ;
-    --inputBackground: rgb(247,247,247) ;
-    --headingSize: 24pt ;
-    --subheadingSize: 16pt ;
-    --subheadingWeight: 550 ;
-    --buttonBorderRadius: 10px ;
-    --imgBorderRadius: 14px ;
-    --boxShadow: 2px 2px darkgray ;
-    --boxShadowHover: 4px 4px darkgray ;
-}
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -106,39 +93,81 @@ h2 {
     color: red ;
 }
 
-/* Following are the skeleton modal /login / signup/ navigator settings */
-/*
-./src/components/Navigation/Navigation.css
-./src/components/SignupFormPage/SignupForm.css
-./src/components/SignupFormModal/SignupForm.css
 
-*/
-/* next 3 rulesets from src/context/Modal.css */
-#modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+/* TODO temporary debug div layout */
+/* div {
+    border: 2px orange dashed;
+} */
+
+/* begin HEADER */
+header {
     display: flex;
+    align-items: center;
+    border-bottom: 2px solid lightgrey;
+    width: 100%;
+    height: 60px;
     justify-content: center;
+}
+nav {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
-#modal-background {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+.logoDiv {
+    /* the next two are not aligning as they should */
+    display: flex ;
+    align-items: center ;
+    text-decoration-color: var(--abnbRed) ;
+    color: var(--abnbRed) ;
 }
-#modal-content {
-    position: absolute;
-    background-color:white;
+.logoLink {
+    font-size: 20pt;
+    text-decoration: none ;
 }
-/* LoginFormPage, LoginFormModal, SignupFormModal, SignupFormPage
-   had empty css files */
-/* next ruleset from src/components/Navigation/Navigation.css */
+.menuDiv {
+    display: flex ;
+    justify-self: flex-end ;
+}
+.navMenuDiv {
+    display: flex ;
+}
+.profileButton {
+    padding: 3px 12px;
+    font-size: 26pt;
+    display: flex;
+    gap: 7px;
+    border: 1px solid black;
+    border-radius: 56px;
+}
 .profile-dropdown {
-    position: absolute;
+    /* padding: 0px ; */
+    z-index: 1 ;
+    position: fixed ;
+    top: 55px ;
+    right: 50px ;
+    background: rgba(255, 255, 255, 1) ;
+    list-style-type: none ;
+    border: 1px solid black ;
+    width: fit-content ;
+    min-width: 160px;
 }
+.profile-dropdown > li {
+    text-align: left; /* TODO not quite */
+}
+li:has(.logoutButton) {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.logoutButton {
+    width: fit-content ;
+    align-self: center ;
+    border-radius: 50px ;
+    margin-top: -4px ;
+    margin-bottom: 3px ;
+}
+.loggedInMenuTextItem {
+    padding-left: 6px;
+}
+/* end HEADER */
