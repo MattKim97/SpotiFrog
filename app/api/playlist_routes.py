@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.models import Playlist, db
+from app.models import Playlist, db, Song
 from app.forms import PlayListForm, validation_errors_to_error_messages, upload_file_to_s3,get_unique_filename, remove_file_from_s3
 
 playlist_routes = Blueprint('playlists', __name__)
@@ -93,3 +93,29 @@ def update_playlist(id):
         return {"errors": validation_errors_to_error_messages(form.errors)}, 401 
     else:
         return {"errors": "Unknown error occurred"}, 500
+
+@playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["PUT", "PATCH"])
+@login_required
+def add_song(playlistId, songId):
+    """
+    Adds or removes a song to an playlist and returns the updated playlist in a dictionary
+    """
+
+    song = Song.query.get(songId)
+    playlist = Playlist.query.get(playlistId)
+    
+    if song:
+        if request.method =="PUT":
+            if playlist in song.playlist:
+                return {"errors": "Cannot add song to playlist again"}, 401
+            song.playlist.append(playlist)
+        else:
+            if playlist in song.playlist:
+                song.playlist.remove(playlist)
+            else:
+                return {"errors": "Song does not exist in playlist"}, 403
+        db.session.add(song)
+        db.session.commit()
+        return song.to_dict(), 200
+    else:
+        return {"errors": "Invalid songId"}, 403
