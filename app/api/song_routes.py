@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.forms import SongForm, validation_errors_to_error_messages, upload_file_to_s3, analyzePlayTime, get_unique_filename
+from app.forms import SongForm, UpdateSongForm, validation_errors_to_error_messages, upload_file_to_s3, analyzePlayTime, get_unique_filename
 from app.models import db, Song, Album
 
 song_routes = Blueprint('songs', __name__)
@@ -58,6 +58,38 @@ def create_song():
 
         song = Song(**new_song)
         db.session.add(song)
+        db.session.commit()
+        return song.to_dict(), 201
+    elif form.errors:
+        return {"errors": validation_errors_to_error_messages(form.errors)}, 401 
+    else:
+        return {"errors": "Unknown error occurred"}, 500
+
+@song_routes.route('/<int:id>', methods=['PUT'])
+@login_required
+def update_song(id):
+
+    """
+    Updates a song and returns the updated song in a dictionary
+    """
+    
+    song = Song.query.get(id)
+
+    if song.userId != current_user.id:
+        return {"errors": "Authorization Error"}, 403
+
+    form = UpdateSongForm()
+    album_ids = [album.id for album in current_user.albums]
+
+    if form.albumId.data is not None and form.albumId.data not in album_ids:
+        return {"errors": ["Invalid Album"]}, 401
+
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    if form.validate_on_submit():
+        song.name = form.name.data
+        song.albumId = form.albumId.data
+        song.lyrics = form.lyrics.data
         db.session.commit()
         return song.to_dict(), 201
     elif form.errors:
