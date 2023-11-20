@@ -1,6 +1,10 @@
+import { fetchData } from "./csrf"
+
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const GOT_USER_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
+
 
 const setUser = user => ({
 	type: SET_USER,
@@ -10,6 +14,11 @@ const setUser = user => ({
 const removeUser = () => ({
 	type: REMOVE_USER
 });
+
+const gotUserPlaylists = playlists => ({
+	type: GOT_USER_PLAYLISTS,
+	playlists
+})
 
 
 export const authenticate = () => async (dispatch) => {
@@ -89,13 +98,31 @@ export const signUp = (formData) => async (dispatch) => {
 	}
 };
 
-const initialState = { user: null };
+export const thunkGetUserPlaylist = userId => async dispatch => {
+    const url = `/api/users/${userId}/playlists`
+    let answer = await fetchData(url)
+    if (!answer.errors) {
+        answer = answer.playlists
+        dispatch(gotUserPlaylists(answer))
+    }
+	return answer
+}
+
+const initialState = { user: null,
+					   playlists: [],
+					   albums: [],
+					 };
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case REMOVE_USER:
-			return { user: null };
+			return { ...state, user: null };
 		case SET_USER:
-			return { user: action.user };
+			return { ...state, user: action.user };
+		case GOT_USER_PLAYLISTS: {
+			const playlists = {};
+			action.playlists.forEach(p => playlists[p.id] = p);
+			return { ...state, playlists };
+		}
 		default:
 			return state;
 	}
