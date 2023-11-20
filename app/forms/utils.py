@@ -6,15 +6,24 @@ import uuid
 from io import BytesIO
 from mutagen.mp3 import MP3
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
+# def validation_errors_to_error_messages(validation_errors):
+#     """
+#     Simple function that turns the WTForms validation errors into a simple list
+#     """
+#     errorMessages = []
+#     for field in validation_errors:
+#         for error in validation_errors[field]:
+#             errorMessages.append(f'{field} : {error}')
+#     return errorMessages
+
+def error_message(key,string):
+    errorMessages= {"errors":{key:[string]}}
     return errorMessages
+
+
+def error_messages(dictionary):
+    return {"errors": dictionary}
+
 
 # def analyzePlayTime(mp3_file):
 #     audio = AudioSegment.from_mp3(mp3_file)
