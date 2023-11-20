@@ -1,9 +1,14 @@
 import React from 'react'
+import { Redirect, useHistory } from 'react-router-dom';
 
 export default function Logo() {
+  const history = useHistory()
+  function home () {
+   history.push('/')
+  }
   return (
-    <div>
-      <h1>SpotiFrog</h1>
+    <div className='LogoContainer'>
+      <h1 onClick={home}>SpotiFrog</h1>
     </div>
   )
 }
