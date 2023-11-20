@@ -9,7 +9,10 @@ export default function Library() {
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
-    const userAlbums = albums.filter(album => album.userId === sessionUser.id)
+    let userAlbums = []
+    if (sessionUser){
+      userAlbums = albums.filter(album => album.userId === sessionUser.id)
+    }
 
     
     const [activeTab, setActiveTab] = useState('albums')
