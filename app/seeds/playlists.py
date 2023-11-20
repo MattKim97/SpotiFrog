@@ -11,31 +11,26 @@ def seed_playlists():
     demo1 = Playlist(
         name="DemoPlaylist",
         userId=1,
-        playlistCover="",
         description="Chill playlist for when I want to eat flies"
         )
     demo2 = Playlist(
         name="Bill's Playlist",
         userId=5,
-        playlistCover="",
         description="Happy playlist for when I want to ribbit",
         )
     demo3 = Playlist(
         name="Matt's Playlist",
         userId=4,
-        playlistCover="",
         description="Energizing playlist for when I want to hop",
         )
     demo4 = Playlist(
         name="Sophia's Playlist",
         userId=6,
-        playlistCover="",
         description="Cute music for tadpoles",
         )
     demo5 = Playlist(
         name="Sophia's Other Playlist",
         userId=6,
-        playlistCover="",
         description="Uplifting playlist for when I want to croak"
         )
 

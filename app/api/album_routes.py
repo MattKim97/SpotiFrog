@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Album, db
-from app.forms import AlbumForm, validation_errors_to_error_messages, upload_file_to_s3, get_unique_filename, remove_file_from_s3
+from app.forms import AlbumForm, error_message, upload_file_to_s3, get_unique_filename, remove_file_from_s3, error_messages
 
 
 album_routes = Blueprint('albums', __name__)
@@ -38,28 +38,29 @@ def create_album():
     
     if form.validate_on_submit():
 
-        image = form.albumCover.data
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
-
-        if "url" not in upload:
-            return upload, 401
-        
         new_album = {
             "userId": current_user.id,
             "name": form.name.data,
-            "albumCover": upload["url"],
             "releaseDate": form.releaseDate.data,
         }
+        if form.albumCover.data:
+            image = form.albumCover.data
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+
+            if "url" not in upload:
+                return upload, 401
+            
+            new_album["albumCover"] = upload["url"]
 
         album = Album(**new_album)
         db.session.add(album)
         db.session.commit()
         return album.to_dict(), 201
     elif form.errors:
-        return {"errors": validation_errors_to_error_messages(form.errors)}, 401 
+        return error_messages(form.errors), 401 
     else:
-        return {"errors": "Unknown error occurred"}, 500
+        return error_message("unknown", "An unknown Error has occurred"), 500
 
 @album_routes.route('/<int:albumId>/songs/<int:songId>', methods=["PUT", "PATCH"])
 @login_required
@@ -74,7 +75,7 @@ def add_song(albumId, songId):
 
         if request.method =="PUT":
             if song.albumId == albumId:
-                return {"errors": "Cannot add song to album again"}, 401
+                return error_message("album", "Cannot add song to album again"), 401
             song.albumId = albumId
         else:
             song.albumId = None 
@@ -82,8 +83,8 @@ def add_song(albumId, songId):
         db.session.commit()
         return song.to_dict(), 200
     else:
-        return {"errors": "Invalid songId"}, 403
-    
+        return error_message("song", "Invalid songId"), 403
+        
 @album_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_album(id):
@@ -94,7 +95,7 @@ def delete_album(id):
     album = Album.query.get(id)
 
     if album.userId != current_user.id:
-        return {"errors": "Authorization Error"}, 403
+        return error_message("user", "Authorization Error"), 403
     
     if album.albumCover is not None:
         file_to_delete = remove_file_from_s3(album.albumCover)
@@ -104,7 +105,7 @@ def delete_album(id):
             db.session.commit()
             return {"message": "Album successfully deleted"}
         else:
-            return "<h1> File deletion error!<h1>", 401
+            return error_message("file", "File deletion error"), 401
     else:
         db.session.delete(album)
         db.session.commit()
