@@ -67,7 +67,7 @@ export const thunkUpdatePlaylist = (data, id) => async dispatch => {
 }
 
 export const thunkDeletePlaylist = id => async dispatch => {
-    const url = `/api/playlists/${id}`
+    const url = `/api/playlists/${id}/`
     const answer = await fetchData(url, {method: 'DELETE'})
     if (!answer.errors) dispatch(deletedPlaylist(id))
     return answer
