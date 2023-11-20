@@ -1,7 +1,7 @@
 const GOT_ALL_ALBUMS = "albums/GOT_ALL_ALBUMS";
 const GOT_ALBUM = "albums/GOT_ALBUM";
 const CREATED_ALBUM = "albums/CREATED_ALBUM";
-const UPDATED_ALBUM = "albums/UPDATED_ALBUM";
+// const UPDATED_ALBUM = "albums/UPDATED_ALBUM";
 const DELETED_ALBUM = "albums/DELETED_ALBUM";
 
 
@@ -20,10 +20,10 @@ export const createdAlbum = album => ({
     album
 });
 
-export const updatedAlbum = album => ({
-    type: UPDATED_ALBUM,
-    album
-});
+// export const updatedAlbum = album => ({
+//     type: UPDATED_ALBUM,
+//     album
+// });
 
 export const deletedAlbum = id => ({
     type: DELETED_ALBUM,
@@ -48,7 +48,7 @@ export const thunkGetAlbum = id => async dispatch => {
 }
 
 export const thunkCreateAlbum = data => async dispatch => {
-    const url = `/api/albums/`
+    const url = `/api/albums/new/`
     const answer = await fetchData(url, {
         method: "POST",
         body: JSON.stringify(data)
@@ -57,15 +57,15 @@ export const thunkCreateAlbum = data => async dispatch => {
     return answer
 }
 
-export const thunkUpdateAlbum = (data, id) => async dispatch => {
-    const url = `/api/albums/${id}/`
-    const answer = await fetchData(url, {
-        method: 'PUT',
-        body: JSON.stringify(data)
-    })
-    if (!answer.errors) dispatch(updatedAlbum(answer))
-    return answer
-}
+// export const thunkUpdateAlbum = (data, id) => async dispatch => {
+//     const url = `/api/albums/${id}/`
+//     const answer = await fetchData(url, {
+//         method: 'PUT',
+//         body: JSON.stringify(data)
+//     })
+//     if (!answer.errors) dispatch(updatedAlbum(answer))
+//     return answer
+// }
 
 export const thunkDeleteAlbum = id => async dispatch => {
     const url = `/api/albums/${id}/`

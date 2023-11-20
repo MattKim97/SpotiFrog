@@ -124,14 +124,14 @@ def like_song(songId):
     """
     Likes a song, creating relationship between user and song
     """
-    song = Song.query.get(songId)
+    song = Song.query.get(songId) # TODO could just get from current_user.songs
 
     if song is None:
         return error_message("song", "Song not found"), 404
-    elif song in current_user.songLikes:
+    elif song in current_user.songsLiked:
         return error_message("like", "Cannot like a song that is already liked"), 401
     else:
-        current_user.songLikes.append(song)
+        current_user.songsLiked.append(song)
         db.session.commit()
         return {"message": "Song successfully liked"}, 201
 
@@ -142,12 +142,12 @@ def unlike_song(songId):
     """
     Unlikes a song, removing relationship between user and song
     """
-    song = Song.query.get(songId)
+    song = Song.query.get(songId) # TODO could just get from current_user.songs
 
     if song is None:
         return error_message("song", "Song not found"), 404
-    elif song in current_user.songLikes:
-        current_user.songLikes.remove(song)
+    elif song in current_user.songsLiked:
+        current_user.songsLiked.remove(song)
         db.session.commit()
         return {"message": "Song successfully unliked"}, 200
     else:
