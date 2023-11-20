@@ -1,6 +1,6 @@
-.HeaderContainer{
+.HeaderStyle{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .LogoContainer{
     cursor: pointer;
