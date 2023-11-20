@@ -32,9 +32,7 @@ export default function Landing() {
     }
 
     const randomAlbums = randominator(albums)
-    console.log("🚀 ~ file: Landing.js:34 ~ Landing ~ randomAlbums:", randomAlbums)
     const randomPlaylists = randominator(playlists)
-    console.log("🚀 ~ file: Landing.js:35 ~ Landing ~ randomPlaylists:", randomPlaylists)
     
   return (
     <div>
