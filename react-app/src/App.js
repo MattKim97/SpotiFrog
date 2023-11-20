@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
+import Header from "./components/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,17 +19,7 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (  
-        <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-        </Switch>
-      )}
+      <Header />
       <SideBar />
       <Main />
       <Footer />
