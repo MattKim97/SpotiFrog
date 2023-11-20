@@ -2,7 +2,7 @@
 
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 from datetime import date
 from .user import likes
 
@@ -68,11 +68,17 @@ class Song(db.Model):
             "lyrics": self.lyrics,
             "userLikes" : len(self.userLikes)
         }
+
+        if hasattr(current_user, "id"):
+            d.update({"liked": self in current_user.songLikes})
+
         if scope == "detailed":
             d["user"] = self.user.to_dict()
             if self.album:
                 d["album"] = self.album.to_dict()
         return d
+
+
 
 
 # user = User(
