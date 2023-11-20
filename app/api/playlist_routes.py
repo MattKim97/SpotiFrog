@@ -119,3 +119,31 @@ def add_song(playlistId, songId):
         return song.to_dict(), 200
     else:
         return {"errors": "Invalid songId"}, 403
+
+
+@playlist_routes.route('/<int:playlistId>/', methods=["DELETE"])
+@login_required
+def delete_playlist(playlistId):
+    """
+    Deletes a playlist and returns the deleted playlist in a dictionary
+    """
+    playlist = Playlist.query.get(playlistId)
+
+    if playlist.userId != current_user.id:
+        return {"errors": "Authorization Error"}, 403
+    
+
+    if playlist.playlistCover is not None:
+        file_to_delete = remove_file_from_s3(playlist.playlistCover)
+
+        if file_to_delete is True:
+            db.session.delete(playlist)
+            db.session.commit()
+            return {"message": "Playlist successfully deleted"}
+        
+        else:
+            return "<h1> File deletion error!<h1>", 401
+    else:
+        db.session.delete(playlist)
+        db.session.commit()
+        return {"message": "Playlist successfully deleted"}

@@ -96,11 +96,16 @@ def delete_album(id):
     if album.userId != current_user.id:
         return {"errors": "Authorization Error"}, 403
     
-    file_to_delete = remove_file_from_s3(album.albumCover)
+    if album.albumCover is not None:
+        file_to_delete = remove_file_from_s3(album.albumCover)
 
-    if file_to_delete is True:
+        if file_to_delete is True:
+            db.session.delete(album)
+            db.session.commit()
+            return {"message": "Album successfully deleted"}
+        else:
+            return "<h1> File deletion error!<h1>", 401
+    else:
         db.session.delete(album)
         db.session.commit()
         return {"message": "Album successfully deleted"}
-    else:
-        return "<h1> File deletion error!<h1>", 401
