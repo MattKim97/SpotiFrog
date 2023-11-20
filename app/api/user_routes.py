@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask_login import login_required, current_user
 from app.models import User
+from app.forms import error_message, error_messages
 
 user_routes = Blueprint('users', __name__)
 
@@ -32,7 +33,7 @@ def user_albums(id):
     Query for a user's albums by id and returns that user's albums in a dictionary
     """
     if current_user.id != id:
-        return {"errors": ["Unauthorized"]}, 401
+        return error_message("user","Unauthorized"), 403
     user = User.query.get(id)
     albums = [album.to_dict() for album in user.albums]
     return {
@@ -46,7 +47,7 @@ def user_playlists(id):
     Query for a user's playlists by id and returns that user's playlists in a dictionary
     """
     if current_user.id != id:
-        return {"errors": ["Unauthorized"]}, 401
+        return error_message("user","Unauthorized"), 403
     user = User.query.get(id)
     playlists = [playlist.to_dict() for playlist in user.playlists]
     return {
@@ -60,7 +61,7 @@ def user_songs(id):
     Query for a user's songs by id and returns that user's songs in a dictionary
     """
     if current_user.id != id:
-        return {"errors": ["Unauthorized"]}, 401
+        return error_message("user","Unauthorized"), 403
     user = User.query.get(id)
     songs = [song.to_dict() for song in user.songs]
     return {
