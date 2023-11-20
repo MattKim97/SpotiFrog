@@ -42,7 +42,7 @@ export default function Landing() {
             <div key={album.id}>
               <AlbumCard format="main" album={album}/>
             </div>))}
-            <h2>Discover our carefully created croaktastic playlists!</h2>
+            <h2>Discover our carefully curated croaktastic playlists!</h2>
             {randomPlaylists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="main" playlist={playlist}/>
