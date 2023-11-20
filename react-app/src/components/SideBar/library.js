@@ -2,19 +2,22 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { thunkGetAllAlbums } from '../../store/albums'
+import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
+import PlaylistCard from '../PlaylistCard'
 
 export default function Library() {
 
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
+    const playlists = Object.values(useSelector(state => state.session.playlists))
+
     let userAlbums = []
     if (sessionUser){
       userAlbums = albums.filter(album => album.userId === sessionUser.id)
     }
 
-    
     const [activeTab, setActiveTab] = useState('albums')
     const handleTabClick = (tab) => {
         setActiveTab(tab)
@@ -22,11 +25,20 @@ export default function Library() {
 
     useEffect(() => {
         if (sessionUser) {
-            dispatch(thunkGetAllAlbums())
+          dispatch(thunkGetAllAlbums())
+          dispatch(thunkGetUserPlaylist(sessionUser.id))
         }
     }, [dispatch, sessionUser])
 
     if (!albums || albums.length === 0) return null
+
+  // useEffect(() => {
+  //   if (sessionUser) {
+  //       dispatch(thunkGetUserPlaylist())
+  //   }
+  // }, [dispatch, sessionUser])
+
+  if (!playlists || playlists.length === 0) return null
 
   return (
     <div >
@@ -38,7 +50,7 @@ export default function Library() {
         </div>
        : <div>Log in to view your library</div>}
 
-      {sessionUser ? 
+      {sessionUser ?
         <div>
           {activeTab === 'albums' ?
            <div>
@@ -47,7 +59,15 @@ export default function Library() {
               <AlbumCard format="side" album={album}/>
             </div>))}
            </div>
-           : <div>Playlists</div>}
+           : activeTab === 'playlists' ?
+           <div>
+            {playlists.map((playlist)=> (
+            <div key={playlist.id}>
+              <PlaylistCard format="side" playlist={playlist}/>
+            </div>))}
+           </div>
+           : "No active tab set"
+          }
         </div>
         : null}
     </div>
