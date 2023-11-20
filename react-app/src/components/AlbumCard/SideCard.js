@@ -9,7 +9,6 @@ export default function SideCard({album}) {
             <img src={imageUrl}/>
             <div>
                 <h3>{album.name}</h3>
-                {}
                 <h4>{year} • {album.artist}</h4>
             </div>
         </div>
