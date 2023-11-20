@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SideCard from './SideCard.js'
-import MainTile from './MainTile.js'
 
 export default function AlbumCard({format, album}) {
     const imageUrl = album.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png";
@@ -18,14 +16,4 @@ export default function AlbumCard({format, album}) {
             </div>
         </Link>
     )
-    // return (
-    // <>
-    // {format === "side" ?
-    //     <SideCard album={album}/>
-    // : format === "main" ?
-    //     <MainTile album={album}/>
-    // : <span>Something went wrong in the AlbumCard</span>
-    // }
-    // </>
-    // )
 }

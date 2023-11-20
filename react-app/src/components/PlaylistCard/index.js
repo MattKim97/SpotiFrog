@@ -1,16 +1,18 @@
 import React from 'react'
-import SideCard from './SideCard.js'
-import MainTile from './MainTile.js'
+import { Link } from 'react-router-dom'
 
 export default function PlaylistCard({format, playlist}) {
+    const imageUrl = playlist.playlistCover ? playlist.playlistCover : "https://static.thenounproject.com/png/4974686-200.png"
+
     return (
-    <>
-    {format === "side" ?
-        <SideCard playlist={playlist}/>
-    : format === "main" ?
-        <MainTile playlist={playlist}/>
-    : <span>Something went wrong in the PlaylistCard</span>
-    }
-    </>
+        <Link to={`/playlists/${playlist.id}`}>
+            <div className={`playlist ${format}`}>
+                <div>
+                    <img src={imageUrl}/>
+                </div>
+                <h3>{playlist.name}</h3>
+                <h4>{playlist.description}</h4>
+            </div>
+        </Link>
     )
 }
