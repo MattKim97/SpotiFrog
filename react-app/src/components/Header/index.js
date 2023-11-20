@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import SignupFormPage from "../SignupFormPage";
 import LoginFormPage from "../LoginFormPage";
 import { authenticate } from "../../store/session";
+import './Header.css'
 
 export default function Index() {
 
@@ -17,7 +18,7 @@ export default function Index() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className='HeaderContainer'>
       <Logo/>
       <About/>
       <Navigation isLoaded={isLoaded} />

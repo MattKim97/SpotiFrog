@@ -10,7 +10,6 @@ export default function Library() {
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
     const userAlbums = albums.filter(album => album.userId === sessionUser.id)
-    console.log("🚀 ~ file: library.js:12 ~ Library ~ userAlbums:", userAlbums)
 
     
     const [activeTab, setActiveTab] = useState('albums')
@@ -31,8 +30,8 @@ export default function Library() {
       <div>Your Library</div>
       {sessionUser ? 
         <div>
-          <div onClick={()=> handleTabClick("albums")}>Albums</div>
-          <div onClick={()=> handleTabClick("playlists")}>Playlists</div>
+          <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
+          <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
         </div>
        : <div>Log in to view your library</div>}
 
