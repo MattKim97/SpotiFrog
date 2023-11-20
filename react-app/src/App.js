@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
 import Header from "./components/Header";
-
+import MusicPlayer from "./components/MusicPlayer";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,6 +21,7 @@ function App() {
     <>
       <Header />
       <SideBar />
+      <MusicPlayer />
       <Main />
       <Footer />
     </>
