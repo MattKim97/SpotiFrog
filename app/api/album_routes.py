@@ -31,11 +31,11 @@ def create_album():
     """
     Creates a new album and returns the new album in a dictionary
     """
-    
+
     form = AlbumForm()
 
     form['csrf_token'].data = request.cookies['csrf_token']
-    
+
     if form.validate_on_submit():
 
         new_album = {
@@ -50,7 +50,7 @@ def create_album():
 
             if "url" not in upload:
                 return upload, 401
-            
+
             new_album["albumCover"] = upload["url"]
 
         album = Album(**new_album)
@@ -58,7 +58,7 @@ def create_album():
         db.session.commit()
         return album.to_dict(), 201
     elif form.errors:
-        return error_messages(form.errors), 401 
+        return error_messages(form.errors), 401
     else:
         return error_message("unknown", "An unknown Error has occurred"), 500
 
@@ -78,13 +78,13 @@ def add_song(albumId, songId):
                 return error_message("album", "Cannot add song to album again"), 401
             song.albumId = albumId
         else:
-            song.albumId = None 
+            song.albumId = None
         db.session.add(song)
         db.session.commit()
         return song.to_dict(), 200
     else:
         return error_message("song", "Invalid songId"), 403
-        
+
 @album_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
 def delete_album(id):
@@ -92,11 +92,11 @@ def delete_album(id):
     Deletes an album and returns a message if successfully deleted
     """
 
-    album = Album.query.get(id)
+    album = Album.query.get(id) # TODO get this from current_user.albums
 
     if album.userId != current_user.id:
         return error_message("user", "Authorization Error"), 403
-    
+
     if album.albumCover is not None:
         file_to_delete = remove_file_from_s3(album.albumCover)
 

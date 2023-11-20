@@ -45,7 +45,7 @@ class User(db.Model, UserMixin):
         cascade="all, delete-orphan"
     )
 
-    songLikes = db.relationship(
+    songsLiked = db.relationship(
         "Song",
         secondary=likes,
         back_populates="userLikes",
@@ -68,6 +68,9 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             "profilePictureUrl": self.profilePictureUrl,
-            "lastPageUrl": self.lastPageUrl
+            "lastPageUrl": self.lastPageUrl,
+            "playlists": [playlist.id for playlist in self.playlists],
+            "albums": [album.id for album in self.albums],
+            "songs": [song.id for song in self.songs],
+            "songsLiked": [song.id for song in self.songsLiked]
         }
-    

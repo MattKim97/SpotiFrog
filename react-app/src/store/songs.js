@@ -47,7 +47,7 @@ export const thunkGetSong = id => async dispatch => {
 }
 
 export const thunkCreateSong = data => async dispatch => {
-    const url = `/api/songs/`
+    const url = `/api/songs/new/`
     const answer = await fetchData(url, {
         method: "POST",
         body: JSON.stringify(data)
