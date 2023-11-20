@@ -109,8 +109,8 @@ export const thunkGetUserPlaylist = userId => async dispatch => {
 }
 
 const initialState = { user: null,
-					   playlists: [],
-					   albums: [],
+					   playlists: {},
+					   albums: {},
 					 };
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
