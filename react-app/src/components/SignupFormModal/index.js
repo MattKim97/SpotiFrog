@@ -26,7 +26,7 @@ function SignupFormModal() {
 
 			const data = await dispatch(signUp(formData));
 			if (data) {
-				setErrors(data);
+				setErrors(Object.values(data));
 			} else {
 				closeModal();
 			}

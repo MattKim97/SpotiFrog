@@ -17,7 +17,7 @@ function LoginFormPage() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      setErrors(Object.values(data.errors));
     }
   };
 
