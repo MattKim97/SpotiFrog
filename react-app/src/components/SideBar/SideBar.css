@@ -1,0 +1,7 @@
+.SideBarLinks{
+    cursor: pointer;
+}
+
+.Active{
+    background-color: blue;
+}

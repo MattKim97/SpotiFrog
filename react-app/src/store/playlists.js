@@ -1,3 +1,6 @@
+import { fetchData } from "./csrf"
+
+
 const GOT_ALL_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
 const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
 const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
@@ -31,7 +34,7 @@ export const deletedPlaylist = id => ({
 
 export const thunkGetAllPlaylists = () => async dispatch => {
     const url = `/api/playlists/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.playlists
         dispatch(gotAllPlaylists(answer))
