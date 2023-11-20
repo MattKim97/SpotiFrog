@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function MainTile({album}) {
-    const imageUrl = album.albumCover ? album.albumCover : "defaultImage.png"
+    const imageUrl = album.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png"
     // final: userId should be user's name and should link to user
     return (
         <>
