@@ -68,7 +68,7 @@ export const thunkUpdateAlbum = (data, id) => async dispatch => {
 }
 
 export const thunkDeleteAlbum = id => async dispatch => {
-    const url = `/api/albums/${id}`
+    const url = `/api/albums/${id}/`
     const answer = await fetchData(url, {method: 'DELETED'})
     if (!answer.errors) dispatch(deletedAlbum(id))
     return answer
