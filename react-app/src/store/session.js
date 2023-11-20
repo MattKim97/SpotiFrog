@@ -3,7 +3,7 @@ import { fetchData } from "./csrf"
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-const GOT_USER_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
+const GOT_USER_PLAYLISTS = "session/GOT_USER_PLAYLISTS";
 
 
 const setUser = user => ({
