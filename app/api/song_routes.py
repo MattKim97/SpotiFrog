@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
-from app.forms import SongForm, UpdateSongForm, validation_errors_to_error_messages, upload_file_to_s3, analyzePlayTime, get_unique_filename
+from app.forms import SongForm, UpdateSongForm, validation_errors_to_error_messages, upload_file_to_s3, analyzePlayTime, get_unique_filename, remove_file_from_s3
 from app.models import db, Song, Album
 
 song_routes = Blueprint('songs', __name__)
@@ -96,3 +96,23 @@ def update_song(id):
         return {"errors": validation_errors_to_error_messages(form.errors)}, 401 
     else:
         return {"errors": "Unknown error occurred"}, 500
+    
+@song_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_song(id):
+    """
+    Deletes a song and returns the id of the deleted song
+    """
+    song = Song.query.get(id)
+
+    if song.userId != current_user.id:
+        return {"errors": "Authorization Error"}, 403
+
+    file_to_delete = remove_file_from_s3(song.mp3)
+
+    if file_to_delete is True:
+        db.session.delete(song)
+        db.session.commit()
+        return {"message": "Song successfully deleted"}
+    else:
+        return "<h1> File deletion error!<h1>", 401
