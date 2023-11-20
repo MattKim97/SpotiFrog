@@ -18,7 +18,7 @@ def get_playlist(id):
 @playlist_routes.route('/new', methods=["POST"])
 @login_required
 def create_playlist():
-    
+
     """
     Creates a new playlist and returns the new playlist in a dictionary
     """
@@ -43,18 +43,18 @@ def create_playlist():
 
             if "url" not in upload:
                 return upload, 401
-            
+
             new_playlist["playlistCover"] = upload["url"]
-        
+
         playlist = Playlist(**new_playlist)
         db.session.add(playlist)
         db.session.commit()
         return playlist.to_dict(), 201
     elif form.errors:
-        return error_messages(form.errors), 401 
+        return error_messages(form.errors), 401
     else:
         return error_message("unknown","Unknown error occurred"),500
-    
+
 
 """NOT FULLY IMPLEMENTED ROUTE"""
 @playlist_routes.route('/<int:id>', methods=["PUT"])
@@ -63,8 +63,8 @@ def update_playlist(id):
     """
     Updates a playlist and returns the updated playlist in a dictionary
     """
-    playlist = Playlist.query.get(id)
-    
+    playlist = Playlist.query.get(id) # TODO just get from current_user
+
     form = PlayListForm()
 
     if playlist.userId != current_user.id:
@@ -94,20 +94,20 @@ def update_playlist(id):
         db.session.commit()
         return playlist.to_dict(), 201
     elif form.errors:
-        return error_messages(form.errors), 401 
+        return error_messages(form.errors), 401
     else:
         return error_message("unknown","Unknown error occurred"),500
 
-@playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["PUT", "PATCH"])
+@playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["PUT", "PATCH"]) # change PATCH to DELETE?
 @login_required
 def add_song(playlistId, songId):
     """
     Adds or removes a song to an playlist and returns the updated playlist in a dictionary
     """
 
-    song = Song.query.get(songId)
+    song = Song.query.get(songId) # these two db hits can also just be gotten from current_user
     playlist = Playlist.query.get(playlistId)
-    
+
     if song:
         if request.method =="PUT":
             if playlist in song.playlist:
@@ -131,11 +131,11 @@ def delete_playlist(playlistId):
     """
     Deletes a playlist and returns the deleted playlist in a dictionary
     """
-    playlist = Playlist.query.get(playlistId)
+    playlist = Playlist.query.get(playlistId) # TODO just get from current_user
 
     if playlist.userId != current_user.id:
         return error_message("user", "Authorization Error"), 403
-    
+
 
     if playlist.playlistCover is not None:
         file_to_delete = remove_file_from_s3(playlist.playlistCover)
@@ -144,7 +144,7 @@ def delete_playlist(playlistId):
             db.session.delete(playlist)
             db.session.commit()
             return {"message": "Playlist successfully deleted"}
-        
+
         else:
             return error_message("file","File deletion error"), 401
     else:

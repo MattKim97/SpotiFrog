@@ -47,7 +47,7 @@ export const thunkGetPlaylist = id => async dispatch => {
 }
 
 export const thunkCreatePlaylist = data => async dispatch => {
-    const url = `/api/playlists/`
+    const url = `/api/playlists/new/`
     const answer = await fetchData(url, {
         method: "POST",
         body: JSON.stringify(data)
