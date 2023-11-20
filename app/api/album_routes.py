@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import Album, db
-from app.forms import AlbumForm, validation_errors_to_error_messages, upload_file_to_s3, get_unique_filename
+from app.forms import AlbumForm, validation_errors_to_error_messages, upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
 
 album_routes = Blueprint('albums', __name__)
@@ -83,3 +83,24 @@ def add_song(albumId, songId):
         return song.to_dict(), 200
     else:
         return {"errors": "Invalid songId"}, 403
+    
+@album_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_album(id):
+    """
+    Deletes an album and returns a message if successfully deleted
+    """
+
+    album = Album.query.get(id)
+
+    if album.userId != current_user.id:
+        return {"errors": "Authorization Error"}, 403
+    
+    file_to_delete = remove_file_from_s3(album.albumCover)
+
+    if file_to_delete is True:
+        db.session.delete(album)
+        db.session.commit()
+        return {"message": "Album successfully deleted"}
+    else:
+        return "<h1> File deletion error!<h1>", 401
