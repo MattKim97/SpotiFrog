@@ -34,7 +34,7 @@ export const deletedAlbum = id => ({
 
 export const thunkGetAllAlbums = () => async dispatch => {
     const url = `/api/albums/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.albums
         dispatch(gotAllAlbums(answer))

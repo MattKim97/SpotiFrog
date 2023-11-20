@@ -34,7 +34,7 @@ export const deletedPlaylist = id => ({
 
 export const thunkGetAllPlaylists = () => async dispatch => {
     const url = `/api/playlists/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.playlists
         dispatch(gotAllPlaylists(answer))
