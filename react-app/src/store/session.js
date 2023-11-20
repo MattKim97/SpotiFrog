@@ -2,16 +2,15 @@
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
-const setUser = (user) => ({
+const setUser = user => ({
 	type: SET_USER,
-	payload: user,
+	user
 });
 
 const removeUser = () => ({
-	type: REMOVE_USER,
+	type: REMOVE_USER
 });
 
-const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/", {
@@ -94,13 +93,16 @@ export const signUp = (username, email, password) => async (dispatch) => {
 	}
 };
 
-export default function reducer(state = initialState, action) {
+const initialState = { user: null };
+function sessionReducer(state = initialState, action) {
 	switch (action.type) {
-		case SET_USER:
-			return { user: action.payload };
 		case REMOVE_USER:
 			return { user: null };
+		case SET_USER:
+			return { user: action.user };
 		default:
 			return state;
 	}
 }
+
+export default sessionReducer;
