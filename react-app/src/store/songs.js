@@ -1,3 +1,5 @@
+import { fetchData } from "./csrf"
+
 const GOT_ALL_SONGS = "songs/GOT_ALL_SONGS";
 const GOT_SONG = "songs/GOT_SONG";
 const CREATED_SONG = "songs/CREATED_SONG";
@@ -31,7 +33,7 @@ export const deletedSong = id => ({
 
 export const thunkGetAllSongs = () => async dispatch => {
     const url = `/api/songs/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.songs
         dispatch(gotAllSongs(answer))

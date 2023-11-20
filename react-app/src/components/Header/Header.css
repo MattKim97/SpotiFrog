@@ -1,0 +1,7 @@
+.HeaderStyle{
+    display: flex;
+    justify-content: space-between;
+}
+.LogoContainer{
+    cursor: pointer;
+}

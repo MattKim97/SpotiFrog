@@ -1,3 +1,6 @@
+import { fetchData } from "./csrf"
+
+
 const GOT_ALL_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
 const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
 const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
@@ -29,9 +32,18 @@ export const deletedPlaylist = id => ({
     id
 });
 
+// export const thunkGetUserPlaylist = userId => async dispatch => {
+//     const url = `/api/users/${userId}/playlists`
+//     let answer = await fetchData(url)
+//     if (!answer.errors) {
+//         answer = answer.playlists
+//         dispatch()
+//     }
+// }
+
 export const thunkGetAllPlaylists = () => async dispatch => {
     const url = `/api/playlists/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.playlists
         dispatch(gotAllPlaylists(answer))
@@ -77,10 +89,10 @@ export const thunkDeletePlaylist = id => async dispatch => {
 const initialState = {};
 const playlistReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_ALL_PLAYLISTS:
+    case GOT_ALL_PLAYLISTS: {
       const normalized = {};
       action.playlists.forEach(p => normalized[p.id] = p);
-      return normalized;
+      return normalized;}
     case GOT_PLAYLIST:
     case CREATED_PLAYLIST:
     case UPDATED_PLAYLIST:

@@ -1,3 +1,5 @@
+import { fetchData } from "./csrf"
+
 const GOT_ALL_ALBUMS = "albums/GOT_ALL_ALBUMS";
 const GOT_ALBUM = "albums/GOT_ALBUM";
 const CREATED_ALBUM = "albums/CREATED_ALBUM";
@@ -32,7 +34,7 @@ export const deletedAlbum = id => ({
 
 export const thunkGetAllAlbums = () => async dispatch => {
     const url = `/api/albums/`
-    const answer = await fetchData(url)
+    let answer = await fetchData(url)
     if (!answer.errors) {
         answer = answer.albums
         dispatch(gotAllAlbums(answer))
@@ -84,7 +86,7 @@ const albumReducer = (state = initialState, action) => {
       return normalized;
     case GOT_ALBUM:
     case CREATED_ALBUM:
-    case UPDATED_ALBUM:
+    // case UPDATED_ALBUM:
       return { ...state, [action.album.id]: action.album };
     case DELETED_ALBUM:
       const newState = { ...state };

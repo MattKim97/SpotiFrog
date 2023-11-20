@@ -1,0 +1,16 @@
+.SideBarLinks{
+    cursor: pointer;
+    background-color: darkgray;
+    border-radius: 15px;
+    width: fit-content;
+    padding: 5px;
+    border: grey solid 2px;
+}
+
+.Active{
+    background-color: grey; 
+}
+
+.SideBarLinksContainer{
+    display: flex;
+}

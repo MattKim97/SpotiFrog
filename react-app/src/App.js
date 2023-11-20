@@ -5,6 +5,10 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import SideBar from "./components/SideBar";
+import Main from "./components/Main";
+import Header from "./components/Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,19 +18,12 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/login" >
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-        </Switch>
-      )}
-    </>
+    <div className="PageGridContainer">
+      <div className="HeaderContainer"><Header /></div>
+      <div className="SideBarContainer"><SideBar /></div>
+      <div className="MainContainer"><Main /></div>
+      <div className="FooterContainer"><Footer /></div>
+    </div>
   );
 }
 

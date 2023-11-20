@@ -11,31 +11,31 @@ def seed_users():
     bobbie = User(
         username='bobbie', email='bobbie@aa.io', profilePictureUrl="", password='password')
     Matt = User(
-        username='MattKim', email='MattKim@aa.io', profilePictureUrl="", password='password2')
+        username='MattKim', email='MattKim@aa.io', profilePictureUrl="", password='password')
     Bill = User(
         username='Bill Shauck', email='bill@aa.io',profilePictureUrl="", password='password')
     Sophia = User(
-        username='Sophia', email='Sophia@aa.io', profilePictureUrl="", password='password4')
+        username='Sophia', email='Sophia@aa.io', profilePictureUrl="", password='password')
     TaylorS = User(
-        username='Taylor Swift', email='TaylorSwift@aa.io', profilePictureUrl="", password='password5')
+        username='Taylor Swift', email='TaylorSwift@aa.io', profilePictureUrl="", password='password')
     FrogMozart = User(
-        username='Froggang A. Mozart', email='FrogMozart@aa.io', profilePictureUrl="", password='password6')
+        username='Froggang A. Mozart', email='FrogMozart@aa.io', profilePictureUrl="", password='password')
     ToadericHoppin = User(
-        username='Toaderic Hoppin', email='ToadericHoppin@aa.io', profilePictureUrl="", password='password7')
+        username='Toaderic Hoppin', email='ToadericHoppin@aa.io', profilePictureUrl="", password='password')
     ToadDebussy = User(
-        username='Toad Debussy', email='ToadDebussy@aa.io',profilePictureUrl="", password='password8')
+        username='Toad Debussy', email='ToadDebussy@aa.io',profilePictureUrl="", password='password')
     LadyFrogga = User(
-        username='Lady Frogga', email='LadyFrogga@aa.io', profilePictureUrl="", password='password9')
+        username='Lady Frogga', email='LadyFrogga@aa.io', profilePictureUrl="", password='password')
     FroggieEllish = User(
-        username='Froggie Ellish', email='FroggieEllish@aa.io', profilePictureUrl="", password='password10')
+        username='Froggie Ellish', email='FroggieEllish@aa.io', profilePictureUrl="", password='password')
     LilFrog = User(
-        username='Lil Frog', email='LilFrog@aa.io', profilePictureUrl="", password='password11')
+        username='Lil Frog', email='LilFrog@aa.io', profilePictureUrl="", password='password')
     SnoopFrogg = User(
-        username='Snoop Frogg', email='SnoopFrogg@aa.io', profilePictureUrl="", password='password12')
+        username='Snoop Frogg', email='SnoopFrogg@aa.io', profilePictureUrl="", password='password')
     JohannesFroghms = User(
-        username='Johannes Froghms', email='JohannesFroghms@aa.io', profilePictureUrl="", password='password13')
+        username='Johannes Froghms', email='JohannesFroghms@aa.io', profilePictureUrl="", password='password')
     RichardWartner = User(
-        username='Richard Wartner', email='RichardWartner@aa.io', profilePictureUrl="", password='password14')
+        username='Richard Wartner', email='RichardWartner@aa.io', profilePictureUrl="", password='passwords')
     Tschaikroaksy = User(
         username='Tschaikroaksky', email='tschaikroaksky@aa.io', profilePictureUrl="", password='password')
 
