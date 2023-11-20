@@ -32,7 +32,7 @@ export default function Library() {
     <div >
       <div>Your Library</div>
       {sessionUser ? 
-        <div>
+        <div className='SideBarLinksContainer'>
           <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
           <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
         </div>

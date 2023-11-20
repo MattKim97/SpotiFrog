@@ -18,7 +18,7 @@ export default function Index() {
   }, [dispatch]);
 
   return (
-    <div className='HeaderContainer'>
+    <div className='HeaderStyle'>
       <Logo/>
       <About/>
       <Navigation isLoaded={isLoaded} />

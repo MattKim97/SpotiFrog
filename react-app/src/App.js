@@ -18,12 +18,12 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
-      <Header />
-      <SideBar />
-      <Main />
-      <Footer />
-    </>
+    <div className="PageGridContainer">
+      <div className="HeaderContainer"><Header /></div>
+      <div className="SideBarContainer"><SideBar /></div>
+      <div className="MainContainer"><Main /></div>
+      <div className="FooterContainer"><Footer /></div>
+    </div>
   );
 }
 
