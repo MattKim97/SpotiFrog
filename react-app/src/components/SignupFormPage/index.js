@@ -30,7 +30,9 @@ function SignupFormPage() {
   return (
     <>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -50,6 +52,12 @@ function SignupFormPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+          />
+        </label>
+        <label>
+          Profile Picture (Optional)
+          <input
+            type="text"
           />
         </label>
         <label>
