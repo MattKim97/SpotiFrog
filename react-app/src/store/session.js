@@ -3,7 +3,7 @@ import { fetchData } from "./csrf"
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
-const GOT_USER_PLAYLISTS = "session/GOT_USER_PLAYLISTS";
+// const GOT_USER_PLAYLISTS = "session/GOT_USER_PLAYLISTS";
 
 
 const setUser = user => ({
@@ -15,10 +15,10 @@ const removeUser = () => ({
 	type: REMOVE_USER
 });
 
-const gotUserPlaylists = playlists => ({
-	type: GOT_USER_PLAYLISTS,
-	playlists
-})
+// const gotUserPlaylists = playlists => ({
+// 	type: GOT_USER_PLAYLISTS,
+// 	playlists
+// })
 
 
 export const authenticate = () => async (dispatch) => {
@@ -98,31 +98,34 @@ export const signUp = (formData) => async (dispatch) => {
 	}
 };
 
-export const thunkGetUserPlaylist = userId => async dispatch => {
-    const url = `/api/users/${userId}/playlists`
-    let answer = await fetchData(url)
-    if (!answer.errors) {
-        answer = answer.playlists
-        dispatch(gotUserPlaylists(answer))
-    }
-	return answer
-}
+// export const thunkGetUserPlaylist = userId => async dispatch => {
+//     const url = `/api/users/${userId}/playlists`
+//     let answer = await fetchData(url)
+//     if (!answer.errors) {
+//         answer = answer.playlists
+//         dispatch(gotUserPlaylists(answer))
+//     }
+// 	return answer
+// }
 
-const initialState = { user: null,
-					   playlists: {},
-					   albums: {},
+const initialState = { user: {
+							playlists: {},
+							albums: {},
+							songs: {},
+						}
 					 };
+
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case REMOVE_USER:
 			return { ...state, user: null };
 		case SET_USER:
 			return { ...state, user: action.user };
-		case GOT_USER_PLAYLISTS: {
-			const playlists = {};
-			action.playlists.forEach(p => playlists[p.id] = p);
-			return { ...state, playlists };
-		}
+		// case GOT_USER_PLAYLISTS: {
+		// 	const playlists = {};
+		// 	action.playlists.forEach(p => playlists[p.id] = p);
+		// 	return { ...state, playlists };
+		// }
 		default:
 			return state;
 	}
