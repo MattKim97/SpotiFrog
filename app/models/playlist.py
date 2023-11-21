@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import date
-from .song import playlistsSongs
+from .song import playlist_songs
 
 
 class Playlist(db.Model):
@@ -26,7 +26,7 @@ class Playlist(db.Model):
 
     songs = db.relationship(
         "Song",
-        secondary=playlistsSongs,
+        secondary=playlist_songs,
         back_populates="playlist",
     )
 
