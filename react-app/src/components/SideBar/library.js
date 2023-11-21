@@ -11,7 +11,7 @@ export default function Library() {
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
-    const playlists = Object.values(useSelector(state => state.session.playlists))
+    const playlists = Object.values(useSelector(state => state.playlists))
 
     let userAlbums = []
     if (sessionUser){
@@ -38,7 +38,7 @@ export default function Library() {
   //   }
   // }, [dispatch, sessionUser])
 
-  if (!playlists || playlists.length === 0) return null
+  // if (!playlists || playlists.length === 0) return null
 
   return (
     <div >
@@ -48,23 +48,23 @@ export default function Library() {
           <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
           <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
         </div>
-       : <div>Log in to view your library</div>}
+       : <a href='/login'>Log in to view your library</a>}
 
       {sessionUser ?
         <div>
           {activeTab === 'albums' ?
            <div>
-            {userAlbums.map((album)=> (
+            {userAlbums.length > 0 ? userAlbums.map((album)=> (
             <div key={album.id}>
               <AlbumCard format="side" album={album}/>
-            </div>))}
+            </div>)): <a href='/albums/new'>Create an album</a>}
            </div>
            : activeTab === 'playlists' ?
            <div>
-            {playlists.map((playlist)=> (
+            {playlists.length > 0 ? playlists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist}/>
-            </div>))}
+            </div>)): <a href='/playlists/new'>Create a playlist</a>}
            </div>
            : "No active tab set"
           }

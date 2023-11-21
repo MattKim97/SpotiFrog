@@ -1,0 +1,54 @@
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7);
+    flex-direction: column;
+  }
+  
+  .modal-content {
+    position: absolute;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+  
+  
+  .modalButtons {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .deleteButton {
+    background: red;
+    color: white;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 300px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 5px 2px 2px black;
+    margin-bottom: 10px;
+  }
+  
+  .keepButton {
+    background: darkgray;
+    color: white;
+    border-radius: 5px;
+    width: 300px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 5px 2px 2px black;
+  
+  }

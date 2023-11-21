@@ -54,7 +54,7 @@ export const thunkGetAllPlaylists = () => async dispatch => {
 export const thunkGetPlaylist = id => async dispatch => {
     const url = `/api/playlists/${id}/`
     const answer = await fetchData(url)
-    if (!answer.errors) dispatch(gotAllPlaylists(answer))
+    if (!answer.errors) dispatch(gotPlaylist(answer))
     return answer
 }
 

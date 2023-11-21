@@ -5,6 +5,9 @@ const GOT_SONG = "songs/GOT_SONG";
 const CREATED_SONG = "songs/CREATED_SONG";
 const UPDATED_SONG = "songs/UPDATED_SONG";
 const DELETED_SONG = "songs/DELETED_SONG";
+const LIKE_SONG = "songs/LIKE_SONG";
+const UNLIKE_SONG = "songs/UNLIKE_SONG";
+
 
 export const gotAllSongs = songs => ({
     type: GOT_ALL_SONGS,
@@ -31,6 +34,16 @@ export const deletedSong = id => ({
     id
 });
 
+export const likeSong = id => ({
+    type: LIKE_SONG,
+    id
+})
+
+export const unlikeSong = id => ({
+    type: UNLIKE_SONG,
+    id
+})
+
 export const thunkGetAllSongs = () => async dispatch => {
     const url = `/api/songs/`
     let answer = await fetchData(url)
@@ -42,9 +55,9 @@ export const thunkGetAllSongs = () => async dispatch => {
   }
 
 export const thunkGetSong = id => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url)
-    if (!answer.errors) dispatch(gotAllSongs(answer))
+    if (!answer.errors) dispatch(gotSong(answer))
     return answer
 }
 
@@ -75,6 +88,22 @@ export const thunkDeleteSong = id => async dispatch => {
     return answer
 }
 
+export const thunkLikeSong = songId => async dispatch => {
+    const url = `/api/songs/${songId}/likes`
+    const answer = await fetchData(url, {method: "POST"})
+    if (!answer.errors) dispatch(likeSong(songId))
+    console.log("******like song********", answer)
+    return answer
+}
+
+export const thunkUnlikeSong = songId => async dispatch => {
+    const url = `/api/songs/${songId}/likes`
+    const answer = await fetchData(url, {method: "DELETE"})
+    if (!answer.errors) dispatch(unlikeSong(songId))
+    console.log("******unlike song********", answer)
+    return answer
+}
+
 
 const initialState = {};
 const songReducer = (state = initialState, action) => {
@@ -84,13 +113,20 @@ const songReducer = (state = initialState, action) => {
       action.songs.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_SONG:
+        return {...state, [action.song.id]: action.song }
     case CREATED_SONG:
     case UPDATED_SONG:
       return { ...state, [action.song.id]: action.song };
-    case DELETED_SONG:
+    case DELETED_SONG: {
       const newState = { ...state };
       delete newState[action.id];
       return newState;
+    }
+    case LIKE_SONG:{
+        return {...state, [action.id]: {...state[action.id], liked: true}}
+    }
+    case UNLIKE_SONG:
+        return {...state, [action.id]: {...state[action.id], liked: false}}
     default:
       return state;
   }
