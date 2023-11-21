@@ -69,8 +69,8 @@ class User(db.Model, UserMixin):
             'email': self.email,
             "profilePictureUrl": self.profilePictureUrl,
             "lastPageUrl": self.lastPageUrl,
-            "playlists": [playlist.to_dict() for playlist in self.playlists],
-            "albums": [album.to_dict() for album in self.albums],
-            "songs": [song.to_dict() for song in self.songs],
+            "playlists": [playlist.id for playlist in self.playlists],
+            "albums": [album.id for album in self.albums],
+            "songs": [song.id for song in self.songs],
             "songsLiked": [song.id for song in self.songsLiked]
         }
