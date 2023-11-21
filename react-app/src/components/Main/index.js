@@ -7,6 +7,7 @@ import Playlists from "./Playlists";
 import Songs from "./Songs";
 import Landing from "./Landing";
 import Search from "./Search";
+import PlayListDetails from "./PlayListDetails";
 
 export default function Main() {
     return (
@@ -28,6 +29,9 @@ export default function Main() {
             </Route>
             <Route exact path="/search">
                 <Search/>
+            </Route>
+            <Route exact path="/playlists/:playlistId">
+                <PlayListDetails/>
             </Route>
             <Route>
                 404 Page Not Found
