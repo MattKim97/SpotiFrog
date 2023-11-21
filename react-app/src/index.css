@@ -10,6 +10,7 @@
     --imgBorderRadius: 14px ;
     --boxShadow: 2px 2px darkgray ;
     --boxShadowHover: 4px 4px darkgray ;
+    --accentGreen: rgb(0,255,100)
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -132,4 +133,9 @@ h2 {
 
 .SoundBarContainer{
     grid-area: sound;
+}
+
+/* ******* SongDetails *************** */
+.fa-heart {
+    color: var(--accentGreen)
 }
