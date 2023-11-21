@@ -11,7 +11,7 @@ export default function Library() {
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
-    const playlists = Object.values(useSelector(state => state.session.playlists))
+    const playlists = Object.values(useSelector(state => state.playlists))
 
     let userAlbums = []
     if (sessionUser){
