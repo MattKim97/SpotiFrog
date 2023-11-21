@@ -82,7 +82,7 @@ export const thunkCreateSong = data => async dispatch => {
   };
 
 export const thunkUpdateSong = (data, id) => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url, {
         method: 'PUT',
         body: JSON.stringify(data)

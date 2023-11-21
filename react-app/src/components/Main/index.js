@@ -11,6 +11,7 @@ import PlayListDetails from "./PlayListDetails";
 import AlbumDetails from "./AlbumDetails";
 import SongDetails from "./SongDetails";
 import SongForm from "./SongForm";
+import SongUpdateForm from "./SongUpdateForm";
 
 export default function Main() {
     return (
@@ -41,6 +42,9 @@ export default function Main() {
             </Route>
             <Route exact path="/albums/:albumId">
                 <AlbumDetails/>
+            </Route>
+            <Route exact path="/songs/:songId/edit">
+                <SongUpdateForm/>
             </Route>
             <Route exact path="/songs/:songId">
                 <SongDetails />
