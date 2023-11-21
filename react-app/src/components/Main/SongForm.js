@@ -31,14 +31,12 @@ export default function SongForm() {
     setFormData((prevFormData) => {
       const updatedFormData = { ...prevFormData };
 
-      // Handle file input separately
       if (type === "file") {
         updatedFormData[name] = files[0];
       } else {
         updatedFormData[name] = value;
       }
 
-      console.log("Updated Form Data:", updatedFormData); // Log the updated form data
 
       return updatedFormData;
     });
