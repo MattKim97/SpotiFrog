@@ -44,7 +44,7 @@ export default function SongDetails() {
             <h2>{name}</h2>
             <h3>{artist}</h3>
             <h3>{albumName} • {year} • {min}:{sec} • {userLikes} Likes</h3>
-            {/* <i className={`fa-heart fa-${liked ? "solid": "regular"}`}></i> */}
+
             <LikeSong liked={liked} songId={songId} />
             <h2>Lyrics:</h2>
             <p>

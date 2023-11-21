@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { thunkGetAllAlbums } from '../../store/albums'
 import { thunkGetAllSongs } from '../../store/songs'
+import LikeSong from '../SongCard/LikeSong'
 
 export default function AlbumDetails() {
   const { albumId } = useParams()
@@ -10,7 +11,7 @@ export default function AlbumDetails() {
   const albums = Object.values(useSelector(state => state.albums))
 
   const allSongs = Object.values(useSelector(state => state.songs))
-  
+
 
   useEffect(() => {
     dispatch(thunkGetAllAlbums())
@@ -23,7 +24,7 @@ export default function AlbumDetails() {
   const album = albums[albumId - 1]
   const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
   console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
-  
+
   if(!album) return null
   if(!albumSongs) return null
 
@@ -42,12 +43,12 @@ export default function AlbumDetails() {
     </div>
         {albumSongs.map((song) => (
             <div>
-            <div>{song.name}</div>
-            <div>{song.artist}</div>
-            <div>{album.name}</div>
-            <div>💖</div>
-            <div>{song.userLikes}</div>
-            <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
+              <div>{song.name}</div>
+              <div>{song.artist}</div>
+              <div>{album.name}</div>
+              <LikeSong songId={song.id} liked={song.liked}/>
+              <div>{song.userLikes}</div>
+              <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
             </div>
 
         ))}
