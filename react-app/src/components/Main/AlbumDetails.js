@@ -41,13 +41,6 @@ export default function AlbumDetails() {
       history.push(`/albums`);
     }
   };
-
-  const handleDeleteNoKeep = async () => {
-    const response = await dispatch((thunkDeleteAlbum(albumId)));
-    if (response) {
-      history.push(`/albums`);
-    }
-  };
   useEffect(() => {
     dispatch(thunkGetAllAlbums());
     dispatch(thunkGetAllSongs());
@@ -71,11 +64,8 @@ export default function AlbumDetails() {
             <h1>Confirm Delete</h1>
             <p>Are you sure you want to remove this album?</p>
             <div className="modalButtons">
-              <button className="deleteButton" onClick={handleDeleteNoKeep}>
-                Yes (Delete Album but keep songs)
-              </button>
               <button className="deleteButton" onClick={handleDeleteKeep}>
-                Yes (Delete Album but delete songs)
+                Yes (Delete Album)
               </button>
               <button className="keepButton" onClick={closeModal}>
                 No (Keep Album)
