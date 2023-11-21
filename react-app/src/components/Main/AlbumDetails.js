@@ -25,7 +25,8 @@ export default function AlbumDetails() {
     setIsModalOpen(false);
   };
 
-  const onClickCreate = () => {
+  const onClickAdd = () => {
+    return history.push(`/albums/${albumId}/change-songs`)
   };
 
   const onClickUpdate = () => {
@@ -103,7 +104,7 @@ export default function AlbumDetails() {
                 ? sessionUser.id === album.userId && (
                     <div className="groupOwnerButtonsContainer">
                       <button
-                        onClick={(e) => onClickCreate()}
+                        onClick={(e) => onClickAdd()}
                         className="groupOwnerButtons"
                       >
                         Add a song
