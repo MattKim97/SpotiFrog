@@ -5,7 +5,8 @@ import { thunkDeleteAlbum, thunkGetAllAlbums } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import "./Main.css";
+import "./Main.css";import LikeSong from '../SongCard/LikeSong'
+
 export default function AlbumDetails() {
   const { albumId } = useParams();
   const dispatch = useDispatch();
@@ -47,7 +48,6 @@ export default function AlbumDetails() {
       history.push(`/albums`);
     }
   };
-
   useEffect(() => {
     dispatch(thunkGetAllAlbums());
     dispatch(thunkGetAllSongs());
@@ -56,13 +56,12 @@ export default function AlbumDetails() {
   if (!albums) return null;
   if (!allSongs) return null;
 
-  const album = albums.filter((album) => album.id === +albumId)[0];
-  const albumSongs = allSongs.filter(
-    (song) => song.albumId === Number(albumId)
-  );
+  const album = albums[albumId - 1]
+  const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
+  console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
 
-  if (!album) return null;
-  if (!albumSongs) return null;
+  if(!album) return null
+  if(!albumSongs) return null
 
   return (
     <div>
@@ -127,12 +126,12 @@ export default function AlbumDetails() {
       <div>
       {albumSongs.map((song) => (
         <div>
-          <div>{song.name}</div>
-          <div>{song.artist}</div>
-          <div>{album.name}</div>
-          <div>💖</div>
-          <div>{song.userLikes}</div>
-          <div>
+            <div>{song.name}</div>
+            <div>{song.artist}</div>
+            <div>{album.name}</div>
+            <LikeSong songId={song.id} liked={song.liked}/>
+            <div>{song.userLikes}</div>
+            <div>
             {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}
           </div>
         </div>

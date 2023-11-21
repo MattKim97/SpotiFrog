@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetAllPlaylists } from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import LikeSong from "../SongCard/LikeSong";
 
 export default function PlayListDetails() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function PlayListDetails() {
 
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeletePlaylist(playlistId)));
-    if (response) { 
+    if (response) {
       history.push("/playlists");
     }
   };
@@ -101,7 +102,7 @@ export default function PlayListDetails() {
             <div>
             <div>{song.name}</div>
             <div>{song.artist}</div>
-            <div>💖</div>
+            <LikeSong songId={song.id} liked={song.liked}/>
             <div>{song.albumName}</div>
             <div>{song.userLikes}</div>
             <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
