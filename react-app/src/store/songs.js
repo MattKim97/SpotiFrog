@@ -92,7 +92,6 @@ export const thunkLikeSong = songId => async dispatch => {
     const url = `/api/songs/${songId}/likes`
     const answer = await fetchData(url, {method: "POST"})
     if (!answer.errors) dispatch(likeSong(songId))
-    console.log("******like song********", answer)
     return answer
 }
 
@@ -100,9 +99,9 @@ export const thunkUnlikeSong = songId => async dispatch => {
     const url = `/api/songs/${songId}/likes`
     const answer = await fetchData(url, {method: "DELETE"})
     if (!answer.errors) dispatch(unlikeSong(songId))
-    console.log("******unlike song********", answer)
     return answer
 }
+
 
 
 const initialState = {};

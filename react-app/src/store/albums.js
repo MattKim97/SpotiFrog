@@ -5,6 +5,8 @@ const GOT_ALBUM = "albums/GOT_ALBUM";
 const CREATED_ALBUM = "albums/CREATED_ALBUM";
 // const UPDATED_ALBUM = "albums/UPDATED_ALBUM";
 const DELETED_ALBUM = "albums/DELETED_ALBUM";
+const ADD_TO_ALBUM = "albums/ADD_TO_ALBUM";
+const REMOVE_FROM_ALBUM = "albums/REMOVE_FROM_ALBUM";
 
 
 export const gotAllAlbums = albums => ({
@@ -31,6 +33,10 @@ export const deletedAlbum = id => ({
     type: DELETED_ALBUM,
     id
 });
+
+export const addToAlbum = (albumId, song) => {
+
+}
 
 export const thunkGetAllAlbums = () => async dispatch => {
     const url = `/api/albums/`

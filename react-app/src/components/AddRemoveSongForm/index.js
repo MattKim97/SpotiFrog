@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { thunkGetAlbum } from '../../store/albums'
+import { thunkGetAllSongs } from '../../store/songs'
+import { fetchData } from '../../store/csrf'
 
 export default function AddRemoveSongForm() {
     const history = useHistory()
@@ -10,30 +12,42 @@ export default function AddRemoveSongForm() {
     const {albumId} = useParams()
 
     const sessionUser = useSelector(state => state.session.user)
-    const album = useSelector(state => state.albums[albumId])
+    // const album = useSelector(state => state.albums[albumId])
+    const allSongs = useSelector(state => state.songs)
+
+    // const [isLoaded, setIsLoaded] = useState(false)
 
     // list of songs in album / playlist
     const [albumSongs, setAlbumSongs] = useState([])
     const [removedSongs, setRemovedSongs] = useState(new Set())
 
     // list of songs user has that is not in album / playlist
-    const [userSongs, setUserSongs] = useState([])
+    const [userSingles, setUserSingles] = useState([])
     const [addedSongs, setAddedSongs] = useState(new Set())
 
-    useEffect(() => {
-        // if there is an album, but no songs in album: the case where all albums were got but not the single album's details
-        if (album && !album.songs) {
-            dispatch(thunkGetAlbum(albumId))
-        }
-        if (album?.songs) {
-            setAlbumSongs(Object.values(album.songs))
-        }
-    }, [album])
+    const [errors, setErrors] = useState({})
 
-    // current: can't directly access form by url, must be by button click
-    if (!sessionUser || album?.userId !== sessionUser.id) {
-        history.push('/')
-    }
+    // useEffect(() => {
+    //     // if there is an album, but no songs in album: the case where all albums were got but not the single album's details
+    //     if (!album) {
+    //         dispatch(thunkGetAlbum(albumId))
+    //     }
+
+    // }, [album])
+
+    useEffect(() => {
+        dispatch(thunkGetAllSongs())
+    }, [])
+
+    useEffect(() => {
+        if (sessionUser){
+            const songs = Object.values(allSongs)
+
+            setAlbumSongs(songs.filter(song => song.albumId==albumId))
+
+            setUserSingles(songs.filter(song => song.userId==sessionUser.id && !song.albumId))
+        }
+    }, [allSongs, sessionUser, albumId])
 
     const removeSong = (e) => {
         if (e.target.checked) {
@@ -47,31 +61,67 @@ export default function AddRemoveSongForm() {
 
     const addSong = e => {
         if (e.target.checked) {
-            addedSongs.delete(e.target.value)
-            setRemovedSongs(addedSongs)
-        } else {
             addedSongs.add(e.target.value)
-            setRemovedSongs(addedSongs)
+            setAddedSongs(addedSongs)
+        } else {
+            addedSongs.remove(e.target.value)
+            setAddedSongs(addedSongs)
         }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        let errors = {}
 
-        console.log("REMOVING SONGS: ", removedSongs)
-        console.log("ADDING SONGS", addedSongs)
+        if (removedSongs.size) {
+            console.log("REMOVING SONGS: ", removedSongs)
+            for (let songId of [...removedSongs]) {
+                const res = await fetchData(
+                    `/api/albums/${albumId}/songs/${songId}`,
+                    { method: 'PATCH' })
+
+                // if no errors, refresh store (songs, albums)
+                if (!res.errors) {
+                    console.log("success remove")
+                    // dispatch()
+                } else {
+                    console.log("error remove")
+                    for (let [error, msg] of Object.entries(res.errors)) {
+                        errors[error] = msg
+                    }
+                    console.log("ERRORS", errors)
+                }
+            }
+        }
+        if (addedSongs.size) {
+            console.log("ADDING SONGS", addedSongs)
+            for (let songId of [...addedSongs]) {
+                const res = await fetchData(
+                    `/api/albums/${albumId}/songs/${songId}`,
+                    { method: 'PUT' })
+
+                // if no errors, refresh store (songs, albums)
+                if (!res.errors) {
+                    console.log("success add")
+                    // dispatch()
+                } else {
+                    console.log("error add")
+                    for (let [error, msg] of Object.entries(res.errors)) {
+                        errors[error] = msg
+                    }
+                }
+            }
+        }
+
+        if (!Object.values(errors).length) {
+            return history.push(`/albums/${albumId}`)
+        } else setErrors(errors)
     }
 
     // update button + functionality
     // put, patch methods
 
-    // collect song ids for in / out of album
-
-    if (!album) return <>Loading update page</>
-
-    console.log(albumSongs)
-
-    // return 'checking song stuff'
+    if (!allSongs) return <>Loading update page</>
 
     return (
         <form action="" onSubmit={handleSubmit}>
@@ -94,7 +144,7 @@ export default function AddRemoveSongForm() {
 
             <div>
                 <h3>Select songs to add to album</h3>
-                {userSongs.map(song => {
+                {userSingles.map(song => {
                     return (
                     <label htmlFor={song.id}>
                         {song.name}
@@ -103,7 +153,6 @@ export default function AddRemoveSongForm() {
                             type="checkbox"
                             value={song.id}
                             onClick={addSong}
-                            defaultChecked
                         />
                     </label>)
                 })}
