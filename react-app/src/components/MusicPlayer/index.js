@@ -26,12 +26,14 @@ class MusicPlayer extends React.Component {
   }
 
   handleClickPrevious = () => {
+    console.log('Entering handleClickPrevious')
     this.setState(prev => ({
       index: (prev.index === 0 ? this.state.tracks.length : prev.index) - 1,
     }))
   }
 
   handleClickNext = () => {
+    console.log('Entering handleClickNext')
     this.setState(prev => ({
       index: prev.index < this.state.tracks.length - 1 ? prev.index + 1 : 0,
     }))
@@ -52,71 +54,42 @@ class MusicPlayer extends React.Component {
         onClickNext={this.handleClickNext}
         onEnded={this.handleClickNext}
       />
-        )}}
+    )}}
 
-
-
-//   console.log('Entering: tracks', tracks, 'test1', test1)
-
-//   const handleClickNext = () => {
-//     console.log('Entering handleClickNext')
-//     if (!tracks || !tracks.length) return
-//     const nextTrackIndex = (currentTrack + 1) % tracks.length // Loop back to beginning
-//     dispatch(changeCurrentTrack(nextTrackIndex))
-//     setSrc(tracks[nextTrackIndex])
-//   }
-
-//   const handleClickPrevious = () => {
-//     console.log('Entering handleClickPrevious')
-//     if (!tracks || !tracks.length) return
-//       const nextTrackIndex = (currentTrack ? currentTrack : tracks.length) - 1 // Loop back to end
-//     dispatch(changeCurrentTrack(nextTrackIndex))
-//     setSrc(tracks[nextTrackIndex])
-//   }
-
-
-
-//   return (
-//     <AudioPlayer
-//         autoPlay
-//         onEnded={handleClickNext}
-//         autoPlayAfterSrcChange={true}
-//         showSkipControls={true}
-//         showJumpControls={false}
-//         src={src}
-//         onClickPrevious={handleClickPrevious}
-//         onClickNext={handleClickNext}
-//       />
-//     )
-//   };
 
 
 const MusicPlayer2 = () => {
-  const { tracks, currentTrack } = useSelector(state => state.audioPlayer)
-  // const { currentTrack } = useSelector(state => state.audioPlayer)
+  // const { playlist, currentTrack } = useSelector(state => state.audioPlayer)
+  const { playlist } = useSelector(state => state.audioPlayer)
+  const { currentTrack } = useSelector(state => state.audioPlayer)
   const dispatch = useDispatch()
 
-  console.log('Entering: tracks', tracks, 'test1', test1)
+  console.log('Entering: playlist', playlist, 'test1', test1)
 
 
-  const handleNextTrack = () => {
-    if (!tracks || !tracks?.length) return
-    const nextTrackIndex = (currentTrack + 1) % tracks.length // Loop back to beginning
+  const handleClickPrevious = () => {
+    if (!playlist || !playlist?.length) return
+    const nextTrackIndex = (currentTrack + 1) % playlist.length // Loop back to beginning
+    dispatch(changeCurrentTrack(nextTrackIndex))
+  }
+  const handleClickNext = () => {
+    if (!playlist || !playlist?.length) return
+    const nextTrackIndex = (currentTrack + 1) % playlist.length // Loop back to beginning
     dispatch(changeCurrentTrack(nextTrackIndex))
   }
 
-  if (!tracks && test1) dispatch(changePlaylist(test1, 0))
-  console.log('After dispatch: tracks', tracks, 'test1', test1)
+  if (!playlist && test1) dispatch(changePlaylist(test1, 0))
+  console.log('After dispatch: playlist', playlist, 'test1', test1)
 
-if (!tracks || !tracks.length || currentTrack < 0 || currentTrack >= tracks.length) {
-  console.log('Before return null: tracks', tracks, 'test1', test1)
+if (!playlist || !playlist.length || currentTrack < 0 || currentTrack >= playlist.length) {
+  console.log('Before return null: playlist', playlist, 'test1', test1)
   return null
 }
 
-console.log('After null check: tracks', tracks, 'test1', test1)
+console.log('After null check: playlist', playlist, 'test1', test1)
   return (
     <>
-    <h1>AudioPlayer</h1>
+    <h1>MusicPlayer</h1>
     {test1 &&
     <>
       <h1>test1</h1>
@@ -129,11 +102,20 @@ console.log('After null check: tracks', tracks, 'test1', test1)
       </ul>
       </>
     }
-    <AudioPlayer
-      src={test1[0]}
-      onEnded={handleNextTrack}
-      autoPlayAfterSrcChange
-    />
+      <AudioPlayer
+        src={playlist[currentTrack]}
+        layout='stacked-reverse'
+        autoplay={true}
+        autoPlayAfterSrcChange={true}
+        loop={true}
+        muted={false}
+        showSkipControls={true}
+        showJumpControls={false}
+        hasDefaultKeyBindings={false}
+        onClickPrevious={handleClickPrevious}
+        onClickNext={handleClickNext}
+        onEnded={handleClickNext}
+      />
     </>
   );
 };
