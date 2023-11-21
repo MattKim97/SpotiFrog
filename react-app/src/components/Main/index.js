@@ -13,6 +13,7 @@ import SongDetails from "./SongDetails";
 import AddRemoveSongForm from "../AddRemoveSongForm";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import SongForm from "./SongForm";
+import SongUpdateForm from "./SongUpdateForm";
 
 
 export default function Main() {
@@ -44,6 +45,9 @@ export default function Main() {
             </Route>
             <Route exact path="/albums/:albumId">
                 <AlbumDetails/>
+            </Route>
+            <Route exact path="/songs/:songId/edit">
+                <SongUpdateForm/>
             </Route>
             <Route exact path="/songs/:songId">
                 <SongDetails />
