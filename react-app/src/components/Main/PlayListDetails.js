@@ -22,6 +22,7 @@ export default function PlayListDetails() {
   };
 
   const onClickAdd = () => {
+    return history.push(`/playlists/${playlistId}/change-songs`)
   };
 
   const onClickDelete = () => {

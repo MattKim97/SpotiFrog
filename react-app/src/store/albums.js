@@ -5,6 +5,8 @@ const GOT_ALBUM = "albums/GOT_ALBUM";
 const CREATED_ALBUM = "albums/CREATED_ALBUM";
 // const UPDATED_ALBUM = "albums/UPDATED_ALBUM";
 const DELETED_ALBUM = "albums/DELETED_ALBUM";
+const ADD_TO_ALBUM = "albums/ADD_TO_ALBUM";
+const REMOVE_FROM_ALBUM = "albums/REMOVE_FROM_ALBUM";
 
 
 export const gotAllAlbums = albums => ({
@@ -32,6 +34,10 @@ export const deletedAlbum = id => ({
     id
 });
 
+export const addToAlbum = (albumId, song) => {
+
+}
+
 export const thunkGetAllAlbums = () => async dispatch => {
     const url = `/api/albums/`
     let answer = await fetchData(url)
@@ -43,7 +49,7 @@ export const thunkGetAllAlbums = () => async dispatch => {
   }
 
 export const thunkGetAlbum = id => async dispatch => {
-    const url = `/api/albums/${id}/`
+    const url = `/api/albums/${id}`
     const answer = await fetchData(url)
     if (!answer.errors) dispatch(gotAlbum(answer))
     return answer
@@ -85,6 +91,7 @@ const albumReducer = (state = initialState, action) => {
       action.albums.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_ALBUM:
+      return {...state, [action.album.id]: action.album}
     case CREATED_ALBUM:
     // case UPDATED_ALBUM:
       return { ...state, [action.album.id]: action.album };
