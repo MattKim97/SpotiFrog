@@ -10,6 +10,7 @@
     --imgBorderRadius: 14px ;
     --boxShadow: 2px 2px darkgray ;
     --boxShadowHover: 4px 4px darkgray ;
+    --accentGreen: rgb(0,255,100)
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -104,4 +105,37 @@ h2 {
 
 .error,.errors {
     color: red ;
+}
+
+.PageGridContainer{
+    display: grid;
+    grid-template-areas: "header header header"
+                         "sidebar main main"
+                         "sound sound sound"
+                         "footer footer footer" ;
+    grid-template-columns: 1fr 4fr ;
+    grid-template-rows: 1fr 3fr 1fr 1fr;
+    height: 100vh;
+}
+
+.HeaderContainer{
+    grid-area: header;
+}
+.SiderBarContainer{
+    grid-area: sidebar;
+}
+.MainContainer{
+    grid-area: main;
+}
+.FooterContainer{
+    grid-area: footer;
+}
+
+.SoundBarContainer{
+    grid-area: sound;
+}
+
+/* ******* SongDetails *************** */
+.fa-heart {
+    color: var(--accentGreen)
 }

@@ -45,7 +45,7 @@ export const thunkGetAllAlbums = () => async dispatch => {
 export const thunkGetAlbum = id => async dispatch => {
     const url = `/api/albums/${id}/`
     const answer = await fetchData(url)
-    if (!answer.errors) dispatch(gotAllAlbums(answer))
+    if (!answer.errors) dispatch(gotAlbum(answer))
     return answer
 }
 
@@ -70,8 +70,8 @@ export const thunkCreateAlbum = data => async dispatch => {
 // }
 
 export const thunkDeleteAlbum = id => async dispatch => {
-    const url = `/api/albums/${id}/`
-    const answer = await fetchData(url, {method: 'DELETED'})
+    const url = `/api/albums/${id}`
+    const answer = await fetchData(url, { method: 'DELETE' });
     if (!answer.errors) dispatch(deletedAlbum(id))
     return answer
 }

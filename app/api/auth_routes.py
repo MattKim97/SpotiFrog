@@ -73,7 +73,6 @@ def sign_up():
             image = form.profilePicture.data
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
-            print('*****************************upload***********************************', upload)
 
             if "url" not in upload:
                 return error_messages({"profilePicture": upload["errors"]}), 401

@@ -8,7 +8,7 @@ playlist_routes = Blueprint('playlists', __name__)
 @playlist_routes.route('/')
 def get_all_playlist():
     playlists = Playlist.query.all()
-    return {"playlists": [playlist.to_dict() for playlist in playlists]}
+    return {"playlists": [playlist.to_dict(scope="songs_details") for playlist in playlists]}
 
 @playlist_routes.route('/<int:id>')
 def get_playlist(id):

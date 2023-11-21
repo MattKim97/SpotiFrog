@@ -7,7 +7,9 @@ export default function Home() {
       <NavLink exact to="/">
         Home
       </NavLink>
-      <div>Search</div>
+      <NavLink exact to="/search">
+        Search
+      </NavLink>
     </div>
   );
 }
