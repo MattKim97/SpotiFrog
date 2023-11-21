@@ -8,7 +8,7 @@ import Songs from "./Songs";
 import Landing from "./Landing";
 import Search from "./Search";
 import PlayListDetails from "./PlayListDetails";
-import AlbumDetails from "../AlbumDetails";
+import AlbumDetails from "./AlbumDetails";
 
 export default function Main() {
     return (

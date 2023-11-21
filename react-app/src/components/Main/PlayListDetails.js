@@ -17,7 +17,6 @@ export default function PlayListDetails() {
     if (!allPlaylists) return null
 
     const playlist = allPlaylists[playlistId - 1]
-    console.log("🚀 ~ file: PlayListDetails.js:20 ~ PlayListDetails ~ allPlaylists:", allPlaylists)
 
     if (!playlist) return null
 
