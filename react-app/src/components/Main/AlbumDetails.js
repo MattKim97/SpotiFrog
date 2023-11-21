@@ -35,6 +35,9 @@ export default function AlbumDetails() {
   const onClickDelete = () => {
     openModal();
   };
+  const onClickSong = (songId) => {
+    history.push(`/songs/${songId}`)
+  }
 
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeleteAlbum(albumId)));
@@ -92,7 +95,7 @@ export default function AlbumDetails() {
       </div>
       {sessionUser
                 ? sessionUser.id === album.userId && (
-                    <div className="groupOwnerButtonsContainer">
+                    <div className="">
                       <button
                         onClick={(e) => onClickAdd()}
                         className="groupOwnerButtons"
@@ -116,7 +119,7 @@ export default function AlbumDetails() {
                 : null}
       <div>
       {albumSongs.map((song) => (
-        <div>
+        <div className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <div>{album.name}</div>

@@ -25,8 +25,18 @@ def seed_albums():
         userId=6,
         releaseDate=date(2016,12,31),
         )
+    demo5 = Album(
+        name="Meditation time for Frogs",
+        userId=6,
+        releaseDate=date(2016,12,31),
+        )
+    demo6 = Album(
+        name="Frog Pond",
+        userId=6,
+        releaseDate=date(2016,12,31),
+        )
 
-    albums = [demo1, demo2, demo3, demo4]
+    albums = [demo1, demo2, demo3, demo4, demo5, demo6]
     db.session.add_all(albums)
     db.session.commit()
 

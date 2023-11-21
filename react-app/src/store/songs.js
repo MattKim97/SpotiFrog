@@ -92,7 +92,7 @@ export const thunkUpdateSong = (data, id) => async dispatch => {
 }
 
 export const thunkDeleteSong = id => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url, {method: 'DELETE'})
     if (!answer.errors) dispatch(deletedSong(id))
     return answer
