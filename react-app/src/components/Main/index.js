@@ -10,7 +10,9 @@ import Search from "./Search";
 import PlayListDetails from "./PlayListDetails";
 import AlbumDetails from "./AlbumDetails";
 import SongDetails from "./SongDetails";
+import AddRemoveSongForm from "../AddRemoveSongForm";
 import SongForm from "./SongForm";
+
 
 export default function Main() {
     return (
@@ -44,6 +46,9 @@ export default function Main() {
             </Route>
             <Route exact path="/songs/:songId">
                 <SongDetails />
+            </Route>
+            <Route exact path="/albums/:albumId/change-songs">
+                <AddRemoveSongForm />
             </Route>
             <Route>
                 404 Page Not Found
