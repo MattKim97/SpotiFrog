@@ -6,15 +6,15 @@ from flask_login import UserMixin, current_user
 from datetime import date
 from .user import likes
 
-playlist_songs = db.Table(
-    'playlist_songs',
+playlistsSongs = db.Table(
+    'playlistsSongs',
     db.Model.metadata,
     db.Column('playlistId', db.Integer, db.ForeignKey(add_prefix_for_prod('playlists.id')), primary_key=True),
     db.Column('songId', db.Integer, db.ForeignKey(add_prefix_for_prod('songs.id')), primary_key=True)
 )
 
 if environment == "production":
-    playlist_songs.schema = SCHEMA
+    playlistsSongs.schema = SCHEMA
 
 class Song(db.Model):
     __tablename__ = 'songs'
@@ -51,7 +51,7 @@ class Song(db.Model):
 
     playlist = db.relationship(
         "Playlist",
-        secondary=playlist_songs,
+        secondary=playlistsSongs,
         back_populates="songs",
     )
 
