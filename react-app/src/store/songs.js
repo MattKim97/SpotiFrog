@@ -42,9 +42,9 @@ export const thunkGetAllSongs = () => async dispatch => {
   }
 
 export const thunkGetSong = id => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url)
-    if (!answer.errors) dispatch(gotAllSongs(answer))
+    if (!answer.errors) dispatch(gotSong(answer))
     return answer
 }
 
@@ -84,6 +84,7 @@ const songReducer = (state = initialState, action) => {
       action.songs.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_SONG:
+        return {...state, [action.song.id]: action.song }
     case CREATED_SONG:
     case UPDATED_SONG:
       return { ...state, [action.song.id]: action.song };

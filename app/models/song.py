@@ -67,7 +67,8 @@ class Song(db.Model):
             "playtimeLength": self.playtimeLength,
             "albumTrackNumber": self.albumTrackNumber,
             "lyrics": self.lyrics,
-            "userLikes" : len(self.userLikes)
+            "userLikes" : len(self.userLikes),
+            "artist": self.user.username,
         }
 
         if hasattr(current_user, "id"):
