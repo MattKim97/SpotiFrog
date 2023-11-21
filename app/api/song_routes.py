@@ -81,8 +81,9 @@ def update_song(id):
     form = UpdateSongForm()
     album_ids = [album.id for album in current_user.albums]
 
+    
     if form.albumId.data is not None and form.albumId.data not in album_ids:
-        return error_message("album","Invalid Album"), 401
+        return error_message("album", "Invalid Album"), 401
 
     form['csrf_token'].data = request.cookies['csrf_token']
 

@@ -47,6 +47,7 @@ export default function SongDetails() {
 
             <LikeSong liked={liked} songId={songId} />
             <h2>Lyrics:</h2>
+            {sessionUser && sessionUser.id === song.userId && <a href={`/songs/${songId}/edit`}>Edit Song</a>}
             <p>
                 {lyrics ? lyrics : "no lyrics available"}
             </p>
