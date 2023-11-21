@@ -60,6 +60,7 @@ class Song(db.Model):
             "id": self.id,
             "userId": self.userId,
             "albumId": self.albumId,
+            "albumName": self.album.name if self.album else "Solo Single",
             "name": self.name,
             "mp3": self.mp3,
             "uploadedAt": self.uploadedAt,
@@ -77,16 +78,3 @@ class Song(db.Model):
             if self.album:
                 d["album"] = self.album.to_dict()
         return d
-
-
-
-
-# user = User(
-
-# )
-# song = Song(
-#         userId=1,
-#         name="No Flies Can Come Between Frogs",
-#         mp3="",
-#         playtimeLength=233,
-#         )
