@@ -22,6 +22,7 @@ function App() {
       <div className="HeaderContainer"><Header /></div>
       <div className="SideBarContainer"><SideBar /></div>
       <div className="MainContainer"><Main /></div>
+      <div className="SoundBarContainer"><MusicPlayer /></div>
       <div className="FooterContainer"><Footer /></div>
     </div>
   );

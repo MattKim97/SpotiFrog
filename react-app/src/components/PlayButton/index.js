@@ -7,7 +7,7 @@ const PlayButton = ({ playlist, trackIndex }) => {
   const handlePlayClick = () => dispatch(changePlaylist(playlist, trackIndex))
 
   return (
-    <button onClick={handlePlayClick}>
+    <button type='button' onClick={handlePlayClick}>
       Play
     </button>
   )
