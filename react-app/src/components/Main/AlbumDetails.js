@@ -8,13 +8,46 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./Main.css";import LikeSong from '../SongCard/LikeSong'
 
 export default function AlbumDetails() {
-  const { albumId } = useParams()
-  const dispatch = useDispatch()
-  const albums = Object.values(useSelector(state => state.albums))
+  const { albumId } = useParams();
+  const dispatch = useDispatch();
+  const albums = Object.values(useSelector((state) => state.albums));
+  const sessionUser = useSelector((state) => state.session.user);
+  const allSongs = Object.values(useSelector((state) => state.songs));
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const allSongs = Object.values(useSelector(state => state.songs))
+  const history = useHistory()
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onClickCreate = () => {
+  };
+
+  const onClickUpdate = () => {
+  };
+
+  const onClickDelete = () => {
+    openModal();
+  };
+
+  const handleDeleteKeep = async () => {
+    const response = await dispatch((thunkDeleteAlbum(albumId)));
+    if (response) {
+      history.push(`/albums`);
+    }
+  };
+
+  const handleDeleteNoKeep = async () => {
+    const response = await dispatch((thunkDeleteAlbum(albumId)));
+    if (response) {
+      history.push(`/albums`);
+    }
+  };
   useEffect(() => {
     dispatch(thunkGetAllAlbums());
     dispatch(thunkGetAllSongs());
