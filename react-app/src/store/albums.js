@@ -45,7 +45,7 @@ export const thunkGetAllAlbums = () => async dispatch => {
 export const thunkGetAlbum = id => async dispatch => {
     const url = `/api/albums/${id}/`
     const answer = await fetchData(url)
-    if (!answer.errors) dispatch(gotAllAlbums(answer))
+    if (!answer.errors) dispatch(gotAlbum(answer))
     return answer
 }
 
