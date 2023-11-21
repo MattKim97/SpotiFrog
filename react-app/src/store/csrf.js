@@ -43,6 +43,13 @@ export async function csrfFetch(url, options = {}) {
 
 export const fetchData = (url, options) => {
   /* Returns Promise which resolves to either data or errors */
+  options = options || {};
+  const headers = options.headers || {};
+  options.headers = {
+    ...headers,
+    'Content-Type': 'multipart/form-data',
+  };
+
   return csrfFetch(url, options)
     .then(response => response.ok
         ? response.json()

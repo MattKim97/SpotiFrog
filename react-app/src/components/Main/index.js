@@ -12,6 +12,8 @@ import AlbumDetails from "./AlbumDetails";
 import SongDetails from "./SongDetails";
 import AddRemoveSongForm from "../AddRemoveSongForm";
 import ProtectedRoute from "../auth/ProtectedRoute";
+import SongForm from "./SongForm";
+
 
 export default function Main() {
     return (
@@ -30,6 +32,9 @@ export default function Main() {
             </Route>
             <Route exact path="/albums">
                 <Albums/>
+            </Route>
+            <Route exact path="/songs/new">
+                <SongForm/>
             </Route>
             <Route exact path="/search">
                 <Search/>
