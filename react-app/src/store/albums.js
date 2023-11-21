@@ -82,6 +82,22 @@ export const thunkDeleteAlbum = id => async dispatch => {
     return answer
 }
 
+export const thunkAddSongToAlbum = (albumId, songId) => async dispatch => {
+    const answer = await fetchData(
+      `/api/albums/${albumId}/songs/${songId}`,
+      { method: 'PUT' })
+    if (!answer.errors) dispatch(gotAlbum(albumId))
+    return answer
+}
+
+export const thunkRemoveSongFromAlbum = (albumId, songId) => async dispatch => {
+  const answer = await fetchData(
+    `/api/albums/${albumId}/songs/${songId}`,
+    { method: 'PATCH' })
+  if (!answer.errors) dispatch(gotAlbum(albumId))
+  return answer
+}
+
 
 const initialState = {};
 const albumReducer = (state = initialState, action) => {
