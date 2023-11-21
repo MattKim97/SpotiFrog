@@ -1,13 +1,38 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { thunkGetAllPlaylists } from "../../store/playlists";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { thunkDeletePlaylist, thunkGetAllPlaylists } from "../../store/playlists";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function PlayListDetails() {
   const dispatch = useDispatch();
   const allPlaylists = Object.values(useSelector((state) => state.playlists));
   const { playlistId } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onClickAdd = () => {
+  };
+
+  const onClickDelete = () => {
+    openModal();
+  };
+
+  const handleDeleteKeep = async () => {
+    const response = await dispatch((thunkDeletePlaylist(playlistId)));
+    if (response) { 
+      history.push("/playlists");
+    }
+  };
 
   useEffect(() => {
     dispatch(thunkGetAllPlaylists());
@@ -15,12 +40,29 @@ export default function PlayListDetails() {
 
   if (!allPlaylists) return null;
 
-  const playlist = allPlaylists[playlistId - 1];
+  const playlist = allPlaylists.filter((playlist) => playlist.id === +playlistId)[0];
 
   if (!playlist) return null;
 
   return (
+
     <div>
+        {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h1>Confirm Delete</h1>
+            <p>Are you sure you want to remove this playlist?</p>
+            <div className="modalButtons">
+              <button className="deleteButton" onClick={handleDeleteKeep}>
+                Yes (Delete Playlist)
+              </button>
+              <button className="keepButton" onClick={closeModal}>
+                No (Keep Playlist)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div>
         <div>
           <img
@@ -37,6 +79,24 @@ export default function PlayListDetails() {
         <div>{playlist.createdAt}</div>
         <div>Owned by: {playlist.owner} </div>
       </div>
+      {sessionUser
+                ? sessionUser.id === playlist.userId && (
+                    <div className="groupOwnerButtonsContainer">
+                      <button
+                        onClick={(e) => onClickAdd()}
+                        className="groupOwnerButtons"
+                      >
+                        Add a song
+                      </button>
+                      <button
+                        onClick={(e) => onClickDelete()}
+                        className="groupOwnerButtons"
+                      >
+                        Delete Playlist
+                      </button>
+                    </div>
+                  )
+                : null}
       <div>   {playlist.songs.map((song) => (
             <div>
             <div>{song.name}</div>
