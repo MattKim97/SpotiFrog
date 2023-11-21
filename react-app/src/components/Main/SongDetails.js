@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { thunkGetSong } from '../../store/songs'
+import LikeSong from '../SongCard/LikeSong'
 
 export default function SongDetails() {
     const dispatch = useDispatch()
@@ -43,9 +44,11 @@ export default function SongDetails() {
             <h2>{name}</h2>
             <h3>{artist}</h3>
             <h3>{albumName} • {year} • {min}:{sec} • {userLikes} Likes</h3>
-            <p>You have {liked ? "liked": "not liked"} this song</p>
+            {/* <i className={`fa-heart fa-${liked ? "solid": "regular"}`}></i> */}
+            <LikeSong liked={liked} songId={songId} />
+            <h2>Lyrics:</h2>
             <p>
-                {lyrics}
+                {lyrics ? lyrics : "no lyrics available"}
             </p>
         </div>
     )
