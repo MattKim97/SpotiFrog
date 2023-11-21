@@ -62,14 +62,24 @@ export const thunkGetSong = id => async dispatch => {
 }
 
 export const thunkCreateSong = data => async dispatch => {
-    const url = `/api/songs/new/`
-    const answer = await fetchData(url, {
-        method: "POST",
-        body: JSON.stringify(data)
-    })
-    if (!answer.errors) dispatch(createdSong(answer))
-    return answer
-}
+    try {
+      const url = `/api/songs/new`;
+      const response = await fetch(url, {
+        method: 'POST',
+        body: data,
+      });
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        dispatch(createdSong(responseData));
+      }
+  
+      return responseData;
+    } catch (error) {
+      return { errors: { system: error.message } };
+    }
+  };
 
 export const thunkUpdateSong = (data, id) => async dispatch => {
     const url = `/api/songs/${id}/`
