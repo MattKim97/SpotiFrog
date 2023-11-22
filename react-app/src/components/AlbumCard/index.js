@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import "./AlbumCard.css"
 
 export default function AlbumCard({format, album}) {
     const imageUrl = album.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png";
@@ -7,7 +8,7 @@ export default function AlbumCard({format, album}) {
     const year = new Date(album.releaseDate).getFullYear();
     return (
         <Link to={`/albums/${album.id}`}>
-            <div className={`album ${format}`}>
+            <div className={`album${format}`}>
                 <img src={imageUrl}/>
                 <div>
                     <h3>{album.name}</h3>

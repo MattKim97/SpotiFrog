@@ -1,0 +1,22 @@
+.playlistmain{
+    display: flex;
+    margin-bottom: 10px;
+    width: 300px;
+    flex-direction: column;
+}
+.playlistmain div img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+.playlistside{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+
+}
+.playlistside div img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}

@@ -57,3 +57,13 @@
     border: 2px black solid;
     cursor: pointer;
   }
+
+  .landingMainContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .aboutContainer{
+    width: 900px;
+  }
