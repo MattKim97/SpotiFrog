@@ -25,7 +25,8 @@ export default function AlbumDetails() {
     setIsModalOpen(false);
   };
 
-  const onClickCreate = () => {
+  const onClickAdd = () => {
+    return history.push(`/albums/${albumId}/change-songs`)
   };
 
   const onClickUpdate = () => {
@@ -36,13 +37,6 @@ export default function AlbumDetails() {
   };
 
   const handleDeleteKeep = async () => {
-    const response = await dispatch((thunkDeleteAlbum(albumId)));
-    if (response) {
-      history.push(`/albums`);
-    }
-  };
-
-  const handleDeleteNoKeep = async () => {
     const response = await dispatch((thunkDeleteAlbum(albumId)));
     if (response) {
       history.push(`/albums`);
@@ -71,11 +65,8 @@ export default function AlbumDetails() {
             <h1>Confirm Delete</h1>
             <p>Are you sure you want to remove this album?</p>
             <div className="modalButtons">
-              <button className="deleteButton" onClick={handleDeleteNoKeep}>
-                Yes (Delete Album but keep songs)
-              </button>
               <button className="deleteButton" onClick={handleDeleteKeep}>
-                Yes (Delete Album but delete songs)
+                Yes (Delete Album)
               </button>
               <button className="keepButton" onClick={closeModal}>
                 No (Keep Album)
@@ -103,7 +94,7 @@ export default function AlbumDetails() {
                 ? sessionUser.id === album.userId && (
                     <div className="groupOwnerButtonsContainer">
                       <button
-                        onClick={(e) => onClickCreate()}
+                        onClick={(e) => onClickAdd()}
                         className="groupOwnerButtons"
                       >
                         Add a song

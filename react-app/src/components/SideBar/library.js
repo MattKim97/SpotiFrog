@@ -14,8 +14,10 @@ export default function Library() {
     const playlists = Object.values(useSelector(state => state.playlists))
 
     let userAlbums = []
+    let userPlaylists = []
     if (sessionUser){
       userAlbums = albums.filter(album => album.userId === sessionUser.id)
+      userPlaylists = playlists.filter(playlist => playlist.userId === sessionUser.id)
     }
 
     const [activeTab, setActiveTab] = useState('albums')
@@ -61,7 +63,7 @@ export default function Library() {
            </div>
            : activeTab === 'playlists' ?
            <div>
-            {playlists.length > 0 ? playlists.map((playlist)=> (
+            {userPlaylists.length > 0 ? userPlaylists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist}/>
             </div>)): <a href='/playlists/new'>Create a playlist</a>}
