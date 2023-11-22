@@ -71,14 +71,11 @@ class Song(db.Model):
             "lyrics": self.lyrics,
             "userLikes" : len(self.userLikes),
             "artist": self.user.username,
+
+            "playlistIds": self.playlist_ids()
         }
 
-        if hasattr(current_user, "id"):
-            d.update({"liked": self in current_user.songsLiked})
-            d.update({"playlistIds": [playlist.id for playlist in self.playlist]})
-
         if scope == "detailed":
-            # d["user"] = self.user.to_dict()
             if self.album:
                 d["album"] = self.album.to_dict()
         return d
