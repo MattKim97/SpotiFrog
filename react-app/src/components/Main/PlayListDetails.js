@@ -78,6 +78,7 @@ export default function PlayListDetails() {
       <div>
         <div>
           <img
+          className="playlistCover"
             src={
               playlist.playlistCover
                 ? playlist.playlistCover
