@@ -7,14 +7,21 @@ import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
 import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
 import { useContentLoaded } from '../../context/ContentLoaded'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function Library() {
     const {userLoaded, setSidebarLoaded} = useContentLoaded()
-
+    const history = useHistory()
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
     const playlists = Object.values(useSelector(state => state.playlists))
+
+  const onClickSong = () => {
+    console.log('clicked')
+    history.push('/songs/new')
+  }
+
 
     let userAlbums = []
     let userPlaylists = []
@@ -79,6 +86,7 @@ export default function Library() {
            </div>
            : "No active tab set"
           }
+          <button type='button' onClick={onClickSong}>Upload a Song</button>
         </div>
         : null}
     </div>
