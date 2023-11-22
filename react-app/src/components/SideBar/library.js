@@ -2,10 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { thunkGetAllAlbums } from '../../store/albums'
-import { thunkGetUserPlaylist } from '../../store/session'
+// import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
-import { thunkGetAllPlaylists } from '../../store/playlists'
+import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
 
 export default function Library() {
 
@@ -28,8 +28,9 @@ export default function Library() {
 
     useEffect(() => {
         if (sessionUser) {
+          console.log("GETTING THE LIBRARY STUFF")
           dispatch(thunkGetAllAlbums())
-          dispatch(thunkGetAllPlaylists())
+          dispatch(thunkGetUserPlaylist(sessionUser.id))
         }
     }, [dispatch, sessionUser])
 

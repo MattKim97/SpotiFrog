@@ -43,8 +43,7 @@ export const thunkGetUserPlaylist = userId => async dispatch => {
     const url = `/api/users/${userId}/playlists`
     let answer = await fetchData(url)
     if (!answer.errors) {
-        answer = answer.playlists
-        dispatch()
+        dispatch(getUserPlaylist(answer.playlists))
     }
     return answer
 }
@@ -116,6 +115,7 @@ const playlistReducer = (state = initialState, action) => {
       action.playlists.forEach(p => normalized[p.id] = p);
       return normalized;}
     case GOT_PLAYLIST:
+        return { ...state, [action.playlist.id]: action.playlist }
     case CREATED_PLAYLIST:
     case UPDATED_PLAYLIST:
       return { ...state, [action.playlist.id]: action.playlist };

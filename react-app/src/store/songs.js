@@ -127,6 +127,18 @@ export const thunkUnlikeSong = songId => async dispatch => {
 //   }
 // }
 
+export const selectSongsByIds = (songList) => {
+  function selector(state) {
+      console.log("SONGS IN LIST", songList)
+
+      // const songs = []
+      return songList.map(songId => state.songs[songId])
+      // console.log("SONGS IN SELECTOR", songs)
+      // return songs
+  }
+  return selector
+}
+
 
 const initialState = {};
 const songReducer = (state = initialState, action) => {

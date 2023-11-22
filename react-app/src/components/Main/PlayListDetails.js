@@ -4,14 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
+import { selectSongsByIds } from "../../store/songs";
 
 export default function PlayListDetails() {
   const dispatch = useDispatch();
-  // const allPlaylists = Object.values(useSelector((state) => state.playlists));
   const { playlistId } = useParams();
   const playlist = useSelector(state => state.playlists[playlistId])
+
+
   const sessionUser = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [songIds, setSongIds] = useState([])
+  const playlistSongs = useSelector(selectSongsByIds(songIds))
+
   const history = useHistory();
 
   const openModal = () => {
@@ -38,14 +44,14 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    dispatch(thunkGetPlaylist(playlistId));
-  }, [dispatch]);
+    if (!playlist?.songs) dispatch(thunkGetPlaylist(playlistId));
+    else {
+      setSongIds(playlist.songs)
+      setIsLoaded(true)
+    }
+  }, [dispatch, playlist]);
 
-  // if (!allPlaylists) return null;
-
-  // const playlist = allPlaylists.filter((playlist) => playlist.id === +playlistId)[0];
-
-  if (!playlist) return null;
+  if (!playlist || !isLoaded) return null;
 
   return (
 
@@ -100,8 +106,8 @@ export default function PlayListDetails() {
                     </div>
                   )
                 : null}
-      <div>   {playlist.songs.map((song) => (
-            <div>
+      <div>   {playlistSongs.map((song) => (
+            <div key={song.id}>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>
