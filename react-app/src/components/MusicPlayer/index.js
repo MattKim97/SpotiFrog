@@ -35,6 +35,7 @@ const MusicPlayer = () => {
 // if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
 // songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
 
+
   useEffect(() => {
     if (!playlist || !playlist.length)
       dispatch(changePlaylist(test1, 0))
@@ -101,7 +102,9 @@ if (!playlist || !playlist.length || !track ||
         src={playlist[track]}
         volume={.5}
 
+
         // controls={false}
+
         // controlsList="nodownload"
         // customAdditionalControls={[]}
         // customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
@@ -116,6 +119,7 @@ if (!playlist || !playlist.length || !track ||
         // customVolumeControls={[]}
         // defaultCurrentTime="0:00"
         // defaultDuration="0:00"
+
         // progressJumpSteps={{ backward: 5000, forward: 5000 }}
 
 
