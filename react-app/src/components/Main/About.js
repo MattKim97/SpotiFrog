@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div>
+    <div className='aboutContainer'>
 <h1>About Spotifrog</h1>
 A frog themed music sharing platform
 

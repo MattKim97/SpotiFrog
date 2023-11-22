@@ -1,0 +1,24 @@
+.albummain{
+    display: flex;
+    margin-bottom: 10px;
+    width: 300px;
+    flex-direction: column;
+}
+.albummain img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.albumside{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+
+}
+
+.albumside img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
