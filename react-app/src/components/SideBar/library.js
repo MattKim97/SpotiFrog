@@ -9,7 +9,8 @@ import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlist
 import { useContentLoaded } from '../../context/ContentLoaded'
 
 export default function Library() {
-    const {sidebarLoaded, setSidebarLoaded} = useContentLoaded()
+    const {userLoaded, setSidebarLoaded} = useContentLoaded()
+
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
@@ -31,6 +32,10 @@ export default function Library() {
         if (sessionUser) {
           dispatch(thunkGetAllAlbums())
           dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
+        }
+        else if (userLoaded) {
+          // if there is no user logged in
+          setSidebarLoaded(true);
         }
     }, [dispatch, sessionUser])
 

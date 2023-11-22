@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { consumeUserPlaylists } from '../../store/playlists'
+import { useContentLoaded } from "../../context/ContentLoaded";
 // import { thunkAddSongToPlaylist } from '../../store/songs'
 
 export default function AddToPlaylist({userPlaylists, songId}) {
     // need to check if song in playlist
     const dispatch = useDispatch()
+    const {sidebarLoaded} = useContentLoaded()
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef()
-    const playlists = Object.values(useSelector(state => state.playlists))
-        .filter(playlist => userPlaylists.includes(playlist.id))
-
+    // const playlists = Object.values(useSelector(state => state.playlists))
+    //     .filter(playlist => userPlaylists.includes(playlist.id))
+    // const playlists = useSelector(consumeUserPlaylists(userPlaylists))
     // const [playlists, setPlaylists] = useState([])
 
     useEffect(() => {
@@ -53,12 +56,15 @@ export default function AddToPlaylist({userPlaylists, songId}) {
                 <span>Add to Playlist</span>
             </button>
             <ul className={dropDown} ref={ulRef}>
-                {playlists.length ?
-                playlists.map(playlist => (
+                {sidebarLoaded ?
+                userPlaylists.length ?
+                userPlaylists.map(playlist => (
                     <li key={playlist.id} onClick={() => addSong(playlist.id)}>
                         Add to Playlist "{playlist.name}"
                     </li>
-                )) : <li>Loading Playlists</li>
+                ))
+                : <li>No Playlists Available</li>
+                : <li>Loading Playlists</li>
                 }
             </ul>
         </>
