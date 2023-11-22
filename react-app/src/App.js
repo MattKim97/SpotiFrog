@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
@@ -12,7 +8,7 @@ import Header from "./components/Header";
 import MusicPlayer from "./components/MusicPlayer";
 function App() {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [_isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);

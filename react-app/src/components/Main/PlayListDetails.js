@@ -29,6 +29,10 @@ export default function PlayListDetails() {
     openModal();
   };
 
+  const onClickSong = (songId) => {
+    history.push(`/songs/${songId}`)
+  }
+
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeletePlaylist(playlistId)));
     if (response) {
@@ -100,7 +104,7 @@ export default function PlayListDetails() {
                   )
                 : null}
       <div>   {playlist.songs.map((song) => (
-            <div>
+            <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>

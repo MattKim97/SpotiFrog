@@ -62,18 +62,13 @@ export const thunkGetSong = id => async dispatch => {
 }
 
 export const thunkCreateSong = formData => async dispatch => {
+
     try {
       const url = `/api/songs/new`;
-      let headers = {}; let body = formData;
-      if (formData.mp3)
-        headers = {"Content-Type": "multipart/form-data"}
-      else
-        body = JSON.stringify(formData)
 
       const response = await fetch(url, {
         method: 'POST',
-        headers,
-        body
+        body: formData
       });
 
       const responseData = await response.json();
@@ -99,7 +94,7 @@ export const thunkUpdateSong = (data, id) => async dispatch => {
 }
 
 export const thunkDeleteSong = id => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url, {method: 'DELETE'})
     if (!answer.errors) dispatch(deletedSong(id))
     return answer

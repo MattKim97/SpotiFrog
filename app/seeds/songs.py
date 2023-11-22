@@ -1,6 +1,7 @@
 from app.models import db, Song, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import date
+from random import choices, randint
 
 
 # Adds a demo user, you can add other users here if you want
@@ -8,8 +9,8 @@ def seed_songs():
     demo1 = Song(
         userId=5,
         albumId=2,
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Sade+-+Your+Love+Is+King+-+Official+-+1984.mp3",
         name="Your Frog is King",
-        mp3="",
         playtimeLength=219,
         albumTrackNumber=1,
         )
@@ -17,7 +18,7 @@ def seed_songs():
         userId=5,
         albumId=2,
         name="Hang On to Your Lily Pad",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Sade+-+Hang+On+To+Your+Love+-+Official+-+1984+(320+kbps).mp3",
         playtimeLength=270,
         albumTrackNumber=2,
         )
@@ -25,7 +26,7 @@ def seed_songs():
         userId=5,
         albumId=2,
         name="Smooth Frogerator",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Sade+-+Smooth+Operator+-+Official+-+1984+(128+kbps).mp3",
         playtimeLength=258,
         albumTrackNumber=3,
         )
@@ -33,7 +34,7 @@ def seed_songs():
         userId=5,
         albumId=2,
         name="Jezetoad",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Sade+-+Jezebel+(Audio)+(64+kbps).mp3",
         playtimeLength=329,
         albumTrackNumber=4,
         )
@@ -41,59 +42,101 @@ def seed_songs():
         userId=5,
         albumId=2,
         name="The Sweetest Tadpole",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Sade+-+The+Sweetest+Taboo+-+Official+-+1985+(128+kbps).mp3",
         playtimeLength=276,
         albumTrackNumber=5,
         )
-
-    demo11 = Song(
+    demo6= Song(
         userId=1,
         albumId=1,
+        name="RedFrog",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Redbone+(128+kbps).mp3",
+        playtimeLength=276,
+        albumTrackNumber=1,
+        )
+    demo7 = Song(
+        userId=1,
+        albumId=1,
+        name="Lot of Frogs to learn",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Luke+Christopher+-+Lot+to+Learn+(128+kbps).mp3",
+        playtimeLength=276,
+        albumTrackNumber=2,
+        )
+    demo8 = Song(
+        userId=6,
+        albumId=4,
+        name="Glass Frogs",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Glass+Animals+-+Heat+Waves+(Official+Video)+(128+kbps).mp3",
+        playtimeLength=276,
+        albumTrackNumber=1,
+        )
+    demo9 = Song(
+        userId=6,
+        albumId=5,
+        name="Froggie Relax",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Headphone+Activist+-+Haiku+(128+kbps).mp3",
+        playtimeLength=276,
+        albumTrackNumber=1,
+        )
+    demo10 = Song(
+        userId=1,
+        albumId=6,
+        name="Froggie Lake",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Headphone+Activist+-+Ocean+Floors+(128+kbps).mp3",
+        playtimeLength=276,
+        albumTrackNumber=1,
+        )
+
+    demo11 = Song(
+        userId=4,
+        albumId=3,
         name="Is It a Cockroach?",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/La+Cucaracha+(The+Dancing+Cockroach+Video)+by+DARIA+(128+kbps).mp3",
         playtimeLength=377,
         albumTrackNumber=1,
         )
     demo12 = Song(
-        userId=1,
-        albumId=1,
+        userId=4,
+        albumId=3,
         name="Never as Good as the First Leap",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Five+Little+Speckled+Frogs+featuring+The+Super+Simple+Puppets+_+Kids+Songs+_+Super+Simple+Songs+(128+kbps).mp3",
         playtimeLength=239,
         albumTrackNumber=2,
         )
     demo13 = Song(
-        userId=1,
-        albumId=1,
+        userId=4,
+        albumId=3,
         name="Frog Is Stronger Than Pride",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Crazy+Frog+-+Axel+F+(Official+Video)+(128+kbps).mp3",
         playtimeLength=258,
         albumTrackNumber=3,
         )
     demo14 = Song(
-        userId=1,
-        albumId=1,
+        userId=4,
+        albumId=3,
         name="Frogadise",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/froggy-walky-125262.mp3",
         playtimeLength=217,
         albumTrackNumber=4,
         )
     demo15 = Song(
-        userId=1,
-        albumId=1,
+        userId=4,
+        albumId=3,
         name="No Flies Can Come Between Frogs",
-        mp3="",
+        mp3="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Crazy+Frog+-+Popcorn+(Official+Video)+(128+kbps).mp3",
         playtimeLength=233,
         albumTrackNumber=5,
         )
 
     users = User.query.all()
 
-    _ = [demo1.userLikes.append(user) for user in users]
 
-    songs = [demo1, demo2, demo3, demo4, demo5, demo11, demo12, demo13, demo14, demo15]
+    songs = [demo1, demo2, demo3, demo4, demo5, demo6,demo7,demo8,demo9,demo10,demo11, demo12, demo13, demo14, demo15]
 
-    _ = [demo2.userLikes.append(user) for user in users if user.id%2==0]
+    for song in songs:
+        usersToAdd = list(set(choices(users, k=randint(5,17))))
+        for user in usersToAdd:
+            song.userLikes.append(user)
 
     db.session.add_all(songs)
     db.session.commit()

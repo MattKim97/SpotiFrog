@@ -56,20 +56,27 @@ export const thunkGetAlbum = id => async dispatch => {
 }
 
 export const thunkCreateAlbum = formData => async dispatch => {
-    const url = `/api/albums/new/`
-    let headers = {}; let body = formData;
-    if (formData.albumCover)
-      headers = {"Content-Type": "multipart/form-data"}
-    else
-      body = JSON.stringify(formData)
 
-    const answer = await fetchData(url, {
-        method: "POST",
-        body: JSON.stringify(formData)
-    })
-    if (!answer.errors) dispatch(createdAlbum(answer))
-    return answer
-}
+    try {
+      const url = `/api/albums/new`
+
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        dispatch(createdAlbum(responseData));
+      }
+
+      return responseData;
+    } catch (error) {
+      return { errors: { system: error.message } };
+    }
+  };
+
 
 // export const thunkUpdateAlbum = (data, id) => async dispatch => {
 //     const url = `/api/albums/${id}/`

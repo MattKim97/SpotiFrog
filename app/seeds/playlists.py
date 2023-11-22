@@ -10,27 +10,32 @@ from random import choices, randint
 def seed_playlists():
     demo1 = Playlist(
         name="DemoPlaylist",
+        playlistCover = "https://spotifrogmp3.s3.us-west-1.amazonaws.com/istockphoto-1334993248-612x612.jpg",
         userId=1,
         description="Chill playlist for when I want to eat flies"
         )
     demo2 = Playlist(
         name="Bill's Playlist",
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/bill.jpg",
         userId=5,
         description="Happy playlist for when I want to ribbit",
         )
     demo3 = Playlist(
         name="Matt's Playlist",
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/matt.png",
         userId=4,
         description="Energizing playlist for when I want to hop",
         )
     demo4 = Playlist(
         name="Sophia's Playlist",
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/download.png",
         userId=6,
         description="Cute music for tadpoles",
         )
     demo5 = Playlist(
         name="Sophia's Other Playlist",
         userId=6,
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Genshin-Impact-Wanderer-Skills-and-Abilities.webp",
         description="Uplifting playlist for when I want to croak"
         )
 
