@@ -8,9 +8,15 @@ const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
 const DELETED_PLAYLIST = "playlists/DELETED_PLAYLIST";
 const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
 const ADD_TO_PLAYLIST = "playlists/ADD_TO_PLAYLIST";
+const DELETE_FROM_PLAYLIST = "playlists/DELETE_FROM_PLAYLIST";
 
 export const addToPlaylist = playlist => ({
     type: ADD_TO_PLAYLIST,
+    playlist
+})
+
+export const removeFromPlaylist = playlist => ({
+    type: DELETE_FROM_PLAYLIST,
     playlist
 })
 
@@ -119,6 +125,13 @@ export const thunkAddToPlaylist = (playlistId, songId) => async dispatch => {
     return answer
 }
 
+export const thunkRemoveFromPlaylist = (playlistId, songId) => async dispatch => {
+    const url = `/api/playlists/${playlistId}/songs/${songId}`
+    const answer = await fetchData(url, {method: "PATCH"})
+    if (!answer.errors) dispatch(removeFromPlaylist(answer))
+    return answer
+}
+
 export const consumeUserPlaylists = userPlaylists => state => {
     if (!userPlaylists) return []
 
@@ -150,6 +163,9 @@ const playlistReducer = (state = initialState, action) => {
         return {...state, ...normalized}
     }
     case ADD_TO_PLAYLIST: {
+        return {...state, [action.playlist.id]: action.playlist}
+    }
+    case DELETE_FROM_PLAYLIST: {
         return {...state, [action.playlist.id]: action.playlist}
     }
     default:

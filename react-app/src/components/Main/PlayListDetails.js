@@ -116,7 +116,7 @@ export default function PlayListDetails() {
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>
-            <RemoveSongFromPlaylist />
+            <RemoveSongFromPlaylist songId={song.id} playlistId={playlistId}/>
             <div>{song.albumName}</div>
             <div>{song.userLikes}</div>
             <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
