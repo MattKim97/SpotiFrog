@@ -6,9 +6,10 @@ import { thunkGetAllAlbums } from '../../store/albums'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
 import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
+import { useContentLoaded } from '../../context/ContentLoaded'
 
 export default function Library() {
-
+    const {sidebarLoaded, setSidebarLoaded} = useContentLoaded()
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
@@ -28,9 +29,8 @@ export default function Library() {
 
     useEffect(() => {
         if (sessionUser) {
-          console.log("GETTING THE LIBRARY STUFF")
           dispatch(thunkGetAllAlbums())
-          dispatch(thunkGetUserPlaylist(sessionUser.id))
+          dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
         }
     }, [dispatch, sessionUser])
 

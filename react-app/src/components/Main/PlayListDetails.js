@@ -5,8 +5,10 @@ import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
+import { useContentLoaded } from "../../context/ContentLoaded";
 
 export default function PlayListDetails() {
+  const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const { playlistId } = useParams();
   const playlist = useSelector(state => state.playlists[playlistId])
@@ -47,8 +49,10 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
-  }, [dispatch]);
+    if (sidebarLoaded) {
+      dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
+    }
+  }, [dispatch, sidebarLoaded]);
 
   if (!playlist || !isLoaded) return null;
 
