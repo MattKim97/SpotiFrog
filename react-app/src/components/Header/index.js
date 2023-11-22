@@ -8,13 +8,17 @@ import SignupFormPage from "../SignupFormPage";
 import LoginFormPage from "../LoginFormPage";
 import { authenticate } from "../../store/session";
 import './Header.css'
+import { useContentLoaded } from '../../context/ContentLoaded';
 
 export default function Index() {
-
+  const {setUserLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(authenticate()).then(() => {
+      setIsLoaded(true);
+      setUserLoaded(true)
+    });
   }, [dispatch]);
 
   return (
@@ -22,7 +26,7 @@ export default function Index() {
       <Logo/>
       <About/>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && (  
+      {isLoaded && (
         <Switch>
           <Route path="/login" >
             <LoginFormPage />

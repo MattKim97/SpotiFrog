@@ -7,6 +7,7 @@ export default function AlbumCard({format, album}) {
     // final: user's name should link to user
     const year = new Date(album.releaseDate).getFullYear();
     return (
+        <div className={`AlbumCardContainer${format}`}>
         <Link to={`/albums/${album.id}`}>
             <div className={`album${format}`}>
                 <img src={imageUrl}/>
@@ -16,5 +17,6 @@ export default function AlbumCard({format, album}) {
                 </div>
             </div>
         </Link>
+        </div>
     )
 }

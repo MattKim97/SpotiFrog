@@ -4,8 +4,14 @@ import { useParams } from "react-router-dom";
 import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
 import LikeSong from "../SongCard/LikeSong";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AddToPlaylist from '../SongCard/AddToPlaylist'
+import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
+import { useContentLoaded } from "../../context/ContentLoaded";
+import { consumeUserPlaylists } from "../../store/playlists";
+
 
 export default function SongDetails() {
+  const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const history = useHistory();
   const [liked, setLiked] = useState(null);
@@ -16,6 +22,9 @@ export default function SongDetails() {
   const song = useSelector((state) => state.songs[songId]);
   const sessionUser = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const playlists = useSelector(consumeUserPlaylists(sessionUser?.playlists))
+    // .filter(playlist => !playlist.songs.includes(songId))
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -40,9 +49,12 @@ export default function SongDetails() {
     history.push(`/songs/${songId}/edit`);
   };
 
-  useEffect(() => {
-    dispatch(thunkGetSong(songId));
-  }, [dispatch]);
+    useEffect(() => {
+      if (sidebarLoaded){
+        dispatch(thunkGetSong(songId))
+        // dispatch(thunkGetUserPlaylist(sessionUser.id))
+      }
+    }, [dispatch, sidebarLoaded]);
 
   useEffect(() => {
     if (sessionUser && song) {
@@ -56,7 +68,7 @@ export default function SongDetails() {
     }
   }, [song]);
 
-  if (!song) return null;
+  if (!song || !sidebarLoaded) return null;
 
   const {
     albumName,
@@ -74,6 +86,8 @@ export default function SongDetails() {
 
   const sec = playtimeLength % 60;
   const min = Math.floor(playtimeLength / 60);
+
+  const userPlaylists = playlists.filter(playlist => !playlist.songs.includes(parseInt(songId)))
 
   return (
     <div>
@@ -93,15 +107,20 @@ export default function SongDetails() {
           </div>
         </div>
       )}
-      <h3>Song</h3>
-      <img src={coverImg} />
+      <img className="albumCover" src={coverImg} />
       <h2>{name}</h2>
       <h3>{artist}</h3>
       <h3>
         {albumName} • {year} • {min}:{sec} • {userLikes} Likes
       </h3>
 
-      <LikeSong liked={liked} songId={songId} />
+            {sessionUser && (
+                <>
+                <LikeSong liked={liked} songId={songId} />
+                <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
+                </>
+            )}
+
       <h2>Lyrics:</h2>
       {sessionUser
         ? sessionUser.id === song.userId && (
