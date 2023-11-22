@@ -37,7 +37,7 @@ export default function Library() {
           // if there is no user logged in
           setSidebarLoaded(true);
         }
-    }, [dispatch, sessionUser])
+    }, [dispatch, sessionUser, userLoaded])
 
     if (!albums || albums.length === 0) return null
 

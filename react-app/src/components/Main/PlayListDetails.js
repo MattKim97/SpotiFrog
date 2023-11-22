@@ -6,6 +6,7 @@ import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min
 import LikeSong from "../SongCard/LikeSong";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
 import { useContentLoaded } from "../../context/ContentLoaded";
+import RemoveSongFromPlaylist from "./RemoveSongFromPlaylist";
 
 export default function PlayListDetails() {
   const {sidebarLoaded} = useContentLoaded()
@@ -115,6 +116,7 @@ export default function PlayListDetails() {
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>
+            <RemoveSongFromPlaylist />
             <div>{song.albumName}</div>
             <div>{song.userLikes}</div>
             <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
