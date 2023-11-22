@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import AudioPlayer from 'react-h5-audio-player'
+import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
-import { changeCurrentTrack, changePlaylist } from '../../store/audioPlayer'
+
+import { changeTrack, changePlaylist, setIsPlaying } from '../../store/audioPlayer'
+import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton from '../PlayButton'
+
 
 var test1 = [
 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
@@ -13,80 +16,57 @@ var test2 = [
 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
 ]
-var track = 0
-
-class MusicPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tracks: test1,
-      index: 0,
-      src: undefined
-    };
-  }
-
-  handleClickPrevious = () => {
-    console.log('Entering handleClickPrevious')
-    this.setState(prev => ({
-      index: (prev.index === 0 ? this.state.tracks.length : prev.index) - 1,
-    }))
-  }
-
-  handleClickNext = () => {
-    console.log('Entering handleClickNext')
-    this.setState(prev => ({
-      index: prev.index < this.state.tracks.length - 1 ? prev.index + 1 : 0,
-    }))
-  }
-  render() {
-    return (
-      <AudioPlayer
-        src={test1[track]}
-        layout='stacked-reverse'
-        autoplay={true}
-        autoPlayAfterSrcChange={true}
-        loop={true}
-        muted={false}
-        showSkipControls={true}
-        showJumpControls={false}
-        hasDefaultKeyBindings={false}
-        onClickPrevious={this.handleClickPrevious}
-        onClickNext={this.handleClickNext}
-        onEnded={this.handleClickNext}
-      />
-    )}}
 
 
+const MusicPlayer = () => {
+  const { playlist, track, isPlaying } = useSelector(state => state.audioPlayer)
 
-const MusicPlayer2 = () => {
-  // const { playlist, currentTrack } = useSelector(state => state.audioPlayer)
-  const { playlist } = useSelector(state => state.audioPlayer)
-  const { currentTrack } = useSelector(state => state.audioPlayer)
+  const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
+  // let test1 = []
+  // let test2 = []
 
-  console.log('Entering: playlist', playlist, 'test1', test1)
+  useEffect(() => {
+    if (!songs || songs.length === 0)
+      dispatch(thunkGetAllSongs())
+  }, [songs, dispatch])
 
+
+// if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
+// songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
+
+  useEffect(() => {
+    if (!playlist || !playlist.length)
+      dispatch(changePlaylist(test1, 0))
+    else if (!track || track < 0 || track >= playlist.length)
+      dispatch(changeTrack(0)) // Reset track to 0 if out of bounds
+}, [playlist, track]);
+
+if (!songs || songs.length < 2) return null
+// const urls = songs.map(song => song.mp3)
+// test1 = choices(urls, 2)
+// test2 = choices(urls, 2)
+console.log(songs)
 
   const handleClickPrevious = () => {
-    if (!playlist || !playlist?.length) return
-    const nextTrackIndex = (currentTrack + 1) % playlist.length // Loop back to beginning
-    dispatch(changeCurrentTrack(nextTrackIndex))
+    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
+    const nextTrackIndex = (track + 1) % playlist.length // back to beginning
+    dispatch(changeTrack(nextTrackIndex))
+    setIsPlaying(true)
   }
   const handleClickNext = () => {
-    if (!playlist || !playlist?.length) return
-    const nextTrackIndex = (currentTrack + 1) % playlist.length // Loop back to beginning
-    dispatch(changeCurrentTrack(nextTrackIndex))
+    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
+    const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
+    dispatch(changeTrack(nextTrackIndex))
+    setIsPlaying(true)
   }
 
-  if (!playlist && test1) dispatch(changePlaylist(test1, 0))
-  console.log('After dispatch: playlist', playlist, 'test1', test1)
-
-if (!playlist || !playlist.length || currentTrack < 0 || currentTrack >= playlist.length) {
-  console.log('Before return null: playlist', playlist, 'test1', test1)
-  return null
+if (!playlist || !playlist.length || !track ||
+      track < 0 || track >= playlist.length) {
+        setIsPlaying(false)
 }
 
-console.log('After null check: playlist', playlist, 'test1', test1)
+
   return (
     <>
     <h1>MusicPlayer</h1>
@@ -103,21 +83,60 @@ console.log('After null check: playlist', playlist, 'test1', test1)
       </>
     }
       <AudioPlayer
-        src={playlist[currentTrack]}
-        layout='stacked-reverse'
-        autoplay={true}
-        autoPlayAfterSrcChange={true}
-        loop={true}
-        muted={false}
-        showSkipControls={true}
-        showJumpControls={false}
+        autoPlay={isPlaying}
+        autoPlayAfterSrcChange={isPlaying}
         hasDefaultKeyBindings={false}
-        onClickPrevious={handleClickPrevious}
-        onClickNext={handleClickNext}
-        onEnded={handleClickNext}
+        layout='stacked-reverse'
+        loop={false}
+        muted={false}
+        onClickNext={e => handleClickNext()}
+        onClickPrevious={e => handleClickPrevious()}
+        onEnded={e => handleClickNext()}
+        showJumpControls={false}
+        showSkipControls={true}
+        src={playlist[track]}
+        volume={.5}
+
+        // controls={true}
+        // controlsList="nodownload"
+        // customAdditionalControls={[]}
+        // customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
+        // customProgressBarSection={
+        //   [
+        //     RHAP_UI.CURRENT_TIME,
+        //     RHAP_UI.DURATION,
+        //     RHAP_UI.PROGRESS_BAR,
+        //     RHAP_UI.VOLUME,
+        // ]
+        // }
+        // customVolumeControls={[]}
+        // defaultCurrentTime="0:00"
+        // defaultDuration="0:00"
+
       />
     </>
   );
 };
+
+
+// Returns a random integer between min (inclusive) and
+// max (inclusive). Neither max nor min have to be an int.
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function choice(arr) {
+  return arr[getRandomInt(0, arr.length - 1)]
+}
+
+function choices(arr, num) {
+  const result = []
+  for (let i = 0; i < num; i++) {
+    result.push(choice(arr))
+  }
+  return result
+}
 
 export default MusicPlayer;
