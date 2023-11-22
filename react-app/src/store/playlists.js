@@ -68,7 +68,7 @@ export const thunkCreatePlaylist = formData => async dispatch => {
 
     const answer = await fetchData(url, {
         method: "POST",
-        header,
+        headers,
         body
     })
     if (!answer.errors) dispatch(createdPlaylist(answer))
@@ -77,6 +77,7 @@ export const thunkCreatePlaylist = formData => async dispatch => {
 
 export const thunkUpdatePlaylist = (formData, id) => async dispatch => {
     const url = `/api/playlists/${id}/`
+    let headers = {}; let body = formData;
     if (formData.albumCover)
         headers = {"Content-Type": "multipart/form-data"}
     else
@@ -84,7 +85,7 @@ export const thunkUpdatePlaylist = (formData, id) => async dispatch => {
 
     const answer = await fetchData(url, {
         method: 'PUT',
-        header,
+        headers,
         body
     })
     if (!answer.errors) dispatch(updatedPlaylist(answer))
