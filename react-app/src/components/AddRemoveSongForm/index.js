@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { thunkGetAlbum } from '../../store/albums'
+// import { thunkGetAlbum } from '../../store/albums'
 import { thunkGetAllSongs } from '../../store/songs'
 import { fetchData } from '../../store/csrf'
 

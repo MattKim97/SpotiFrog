@@ -119,7 +119,7 @@ export default function AlbumDetails() {
                 : null}
       <div>
       {albumSongs.map((song) => (
-        <div className="SongListContainer" onClick={()=> onClickSong(song.id) }>
+        <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <div>{album.name}</div>
