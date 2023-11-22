@@ -7,6 +7,12 @@ const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
 const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
 const DELETED_PLAYLIST = "playlists/DELETED_PLAYLIST";
 const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
+const ADD_TO_PLAYLIST = "playlists/ADD_TO_PLAYLIST";
+
+export const addToPlaylist = playlist => ({
+    type: ADD_TO_PLAYLIST,
+    playlist
+})
 
 export const gotAllPlaylists = playlists => ({
     type: GOT_ALL_PLAYLISTS,
@@ -106,6 +112,13 @@ export const thunkDeletePlaylist = id => async dispatch => {
     return answer
 }
 
+export const thunkAddToPlaylist = (playlistId, songId) => async dispatch => {
+    const url = `/api/playlists/${playlistId}/songs/${songId}`
+    const answer = await fetchData(url, {method: "PUT"})
+    if (!answer.errors) dispatch(addToPlaylist(answer))
+    return answer
+}
+
 export const consumeUserPlaylists = userPlaylists => state => {
     if (!userPlaylists) return []
 
@@ -113,6 +126,7 @@ export const consumeUserPlaylists = userPlaylists => state => {
 
     return playlists
 }
+
 
 const initialState = {};
 const playlistReducer = (state = initialState, action) => {
@@ -134,6 +148,9 @@ const playlistReducer = (state = initialState, action) => {
         const normalized = {};
         action.playlists.forEach(p => normalized[p.id] = p);
         return {...state, ...normalized}
+    }
+    case ADD_TO_PLAYLIST: {
+        return {...state, [action.playlist.id]: action.playlist}
     }
     default:
       return state;
