@@ -14,6 +14,7 @@ import AddRemoveSongForm from "../AddRemoveSongForm";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import SongForm from "./SongForm";
 import SongUpdateForm from "./SongUpdateForm";
+import AlbumForm from "./AlbumForm";
 
 
 export default function Main() {
@@ -36,6 +37,9 @@ export default function Main() {
             </Route>
             <Route exact path="/songs/new">
                 <SongForm/>
+            </Route>
+            <Route exact path="/albums/new">
+                <AlbumForm/>
             </Route>
             <Route exact path="/search">
                 <Search/>

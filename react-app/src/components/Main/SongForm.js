@@ -37,7 +37,6 @@ export default function SongForm() {
         updatedFormData[name] = value;
       }
 
-
       return updatedFormData;
     });
   };
@@ -56,6 +55,10 @@ export default function SongForm() {
         ...prevErrors,
         mp3: "Please select an mp3 file",
       }));
+    }
+
+    if (formData.albumId === "0" || formData.albumId === 0) {
+      delete formDataToSend.albumId;
     }
     // if (!formData.name) {
     //   setErrors((prevErrors) => ({
@@ -90,7 +93,7 @@ export default function SongForm() {
           value={formData.name}
           onChange={handleInputChange}
         />
-        {errors.name && <div style={{color:"red"}}>{errors.name}</div>}
+        {errors.name && <div style={{ color: "red" }}>{errors.name}</div>}
       </label>
 
       <br />
@@ -108,6 +111,7 @@ export default function SongForm() {
               {album.name}
             </option>
           ))}
+          <option value={0}>None</option>
         </select>
       </label>
 
@@ -121,7 +125,7 @@ export default function SongForm() {
           accept=".mp3"
           onChange={handleInputChange}
         />
-        {errors.mp3 && <div style={{color:"red"}} >{errors.mp3}</div>}
+        {errors.mp3 && <div style={{ color: "red" }}>{errors.mp3}</div>}
       </label>
 
       <br />
