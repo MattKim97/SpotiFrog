@@ -6,6 +6,7 @@ const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
 const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
 const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
 const DELETED_PLAYLIST = "playlists/DELETED_PLAYLIST";
+const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
 
 export const gotAllPlaylists = playlists => ({
     type: GOT_ALL_PLAYLISTS,
@@ -32,14 +33,20 @@ export const deletedPlaylist = id => ({
     id
 });
 
-// export const thunkGetUserPlaylist = userId => async dispatch => {
-//     const url = `/api/users/${userId}/playlists`
-//     let answer = await fetchData(url)
-//     if (!answer.errors) {
-//         answer = answer.playlists
-//         dispatch()
-//     }
-// }
+export const getUserPlaylist = playlists => ({
+    type: GET_USER_PLAYLIST,
+    playlists
+})
+
+
+export const thunkGetUserPlaylist = userId => async dispatch => {
+    const url = `/api/users/${userId}/playlists`
+    let answer = await fetchData(url)
+    if (!answer.errors) {
+        dispatch(getUserPlaylist(answer.playlists))
+    }
+    return answer
+}
 
 export const thunkGetAllPlaylists = () => async dispatch => {
     const url = `/api/playlists/`
@@ -52,7 +59,7 @@ export const thunkGetAllPlaylists = () => async dispatch => {
   }
 
 export const thunkGetPlaylist = id => async dispatch => {
-    const url = `/api/playlists/${id}/`
+    const url = `/api/playlists/${id}`
     const answer = await fetchData(url)
     if (!answer.errors) dispatch(gotPlaylist(answer))
     return answer
@@ -108,6 +115,7 @@ const playlistReducer = (state = initialState, action) => {
       action.playlists.forEach(p => normalized[p.id] = p);
       return normalized;}
     case GOT_PLAYLIST:
+        return { ...state, [action.playlist.id]: action.playlist }
     case CREATED_PLAYLIST:
     case UPDATED_PLAYLIST:
       return { ...state, [action.playlist.id]: action.playlist };
@@ -115,6 +123,11 @@ const playlistReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState[action.id];
       return newState;
+    case GET_USER_PLAYLIST: {
+        const normalized = {};
+        action.playlists.forEach(p => normalized[p.id] = p);
+        return {...state, ...normalized}
+    }
     default:
       return state;
   }

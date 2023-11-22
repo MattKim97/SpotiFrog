@@ -137,5 +137,20 @@ h2 {
 
 /* ******* SongDetails *************** */
 .fa-heart {
-    color: var(--accentGreen)
+    color: var(--accentGreen);
+}
+
+/* .fa-plus {
+    border: 1px black solid;
+    border-radius: 3px;
+} */
+
+.playlistSelect {
+    border: 1px black solid;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.playlistSelect>li {
+    border-bottom: 1px black solid;
 }

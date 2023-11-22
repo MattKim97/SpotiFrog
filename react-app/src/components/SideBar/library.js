@@ -2,12 +2,14 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { thunkGetAllAlbums } from '../../store/albums'
-import { thunkGetUserPlaylist } from '../../store/session'
+// import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
+import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
+import { useContentLoaded } from '../../context/ContentLoaded'
 
 export default function Library() {
-
+    const {sidebarLoaded, setSidebarLoaded} = useContentLoaded()
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
@@ -28,7 +30,7 @@ export default function Library() {
     useEffect(() => {
         if (sessionUser) {
           dispatch(thunkGetAllAlbums())
-          dispatch(thunkGetUserPlaylist(sessionUser.id))
+          dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
         }
     }, [dispatch, sessionUser])
 
@@ -45,7 +47,7 @@ export default function Library() {
   return (
     <div >
       <div>Your Library</div>
-      {sessionUser ? 
+      {sessionUser ?
         <div className='SideBarLinksContainer'>
           <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
           <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
