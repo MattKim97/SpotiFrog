@@ -1,4 +1,4 @@
-from app.models import db, Song, User, environment, SCHEMA
+from app.models import db, Playlist, Song, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import date
 from random import choices, randint
@@ -130,8 +130,14 @@ def seed_songs():
 
     users = User.query.all()
 
+    playlists = Playlist.query.all()
 
     songs = [demo1, demo2, demo3, demo4, demo5, demo6,demo7,demo8,demo9,demo10,demo11, demo12, demo13, demo14, demo15]
+
+    for playlist in playlists:
+        songsToAdd = list(set(choices(songs, k=randint(2,8))))
+        for song in songsToAdd:
+            playlist.songs.append(song)
 
     for song in songs:
         usersToAdd = list(set(choices(users, k=randint(5,17))))
@@ -150,9 +156,11 @@ def seed_songs():
 # it will reset the primary keys for you as well.
 def undo_songs():
     if environment == "production":
+        db.session.execute(f'TRUNCATE table {SCHEMA}.playlists_songs RESTART IDENTITY CASCADE;')
         db.session.execute(f"TRUNCATE table {SCHEMA}.likes RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.songs RESTART IDENTITY CASCADE;")
     else:
+        db.session.execute(text("DELETE FROM playlists_songs"))
         db.session.execute(text("DELETE FROM likes"))
         db.session.execute(text("DELETE FROM songs"))
 
