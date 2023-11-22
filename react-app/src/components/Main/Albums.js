@@ -16,7 +16,7 @@ export default function Albums() {
 
   return (
     <div>
-      <div>
+      <div className='AlbumsContainerMain'>
             {albums.map((album)=> (
             <div key={album.id}>
               <AlbumCard format="main" album={album}/>

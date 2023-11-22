@@ -93,8 +93,7 @@ export default function SongDetails() {
           </div>
         </div>
       )}
-      <h3>Song</h3>
-      <img src={coverImg} />
+      <img className="albumCover" src={coverImg} />
       <h2>{name}</h2>
       <h3>{artist}</h3>
       <h3>

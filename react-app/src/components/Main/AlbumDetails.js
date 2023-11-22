@@ -5,7 +5,8 @@ import { thunkDeleteAlbum, thunkGetAllAlbums } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import "./Main.css";import LikeSong from '../SongCard/LikeSong'
+import "./Main.css";
+import LikeSong from '../SongCard/LikeSong'
 
 export default function AlbumDetails() {
   const { albumId } = useParams();
@@ -81,6 +82,7 @@ export default function AlbumDetails() {
       <div>
         <div>
           <img
+          className="albumCover"
             src={
               album.albumCover
                 ? album.albumCover

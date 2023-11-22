@@ -10,7 +10,7 @@ export default function Search() {
     }
 
     return (
-        <div>
+        <div className='SearchContainer'>
             <button onClick={() => search("playlists")}>Playlists</button>
             <button onClick={() => search("albums")}>Albums</button>
             <button onClick={() => search("songs")}>Songs</button>
