@@ -55,11 +55,17 @@ export const thunkGetAlbum = id => async dispatch => {
     return answer
 }
 
-export const thunkCreateAlbum = data => async dispatch => {
+export const thunkCreateAlbum = formData => async dispatch => {
     const url = `/api/albums/new/`
+    let headers = {}; let body = formData;
+    if (formData.albumCover)
+      headers = {"Content-Type": "multipart/form-data"}
+    else
+      body = JSON.stringify(formData)
+
     const answer = await fetchData(url, {
         method: "POST",
-        body: JSON.stringify(data)
+        body: JSON.stringify(formData)
     })
     if (!answer.errors) dispatch(createdAlbum(answer))
     return answer
