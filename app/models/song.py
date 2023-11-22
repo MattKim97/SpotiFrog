@@ -1,10 +1,8 @@
 # models/song.py
-
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin, current_user
 from datetime import date
 from .user import likes
+
 
 playlists_songs = db.Table(
     'playlists_songs',
@@ -15,6 +13,7 @@ playlists_songs = db.Table(
 
 if environment == "production":
     playlists_songs.schema = SCHEMA
+
 
 class Song(db.Model):
     __tablename__ = 'songs'
