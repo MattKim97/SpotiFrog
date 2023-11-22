@@ -49,7 +49,7 @@ export default function AddToPlaylist({userPlaylists, songId}) {
     return (
         <>
             <button onClick={openMenu}>
-                <i class="fa-solid fa-plus"/>
+                <i className="fa-solid fa-plus"/>
                 <span>Add to Playlist</span>
             </button>
             <ul className={dropDown} ref={ulRef}>

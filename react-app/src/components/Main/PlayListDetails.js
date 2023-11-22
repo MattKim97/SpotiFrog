@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
-import { selectSongsByIds } from "../../store/songs";
+import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
 
 export default function PlayListDetails() {
   const dispatch = useDispatch();
@@ -16,11 +16,12 @@ export default function PlayListDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false)
   const [songIds, setSongIds] = useState([])
-  const playlistSongs = useSelector(selectSongsByIds(songIds))
+  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
   const history = useHistory();
 
   const openModal = () => {
+    console.log(playlistSongs)
     setIsModalOpen(true);
   };
 
@@ -36,6 +37,10 @@ export default function PlayListDetails() {
     openModal();
   };
 
+  const onClickSong = (songId) => {
+    history.push(`/songs/${songId}`)
+  }
+
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeletePlaylist(playlistId)));
     if (response) {
@@ -44,12 +49,8 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    if (!playlist?.songs) dispatch(thunkGetPlaylist(playlistId));
-    else {
-      setSongIds(playlist.songs)
-      setIsLoaded(true)
-    }
-  }, [dispatch, playlist]);
+    dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
+  }, [dispatch]);
 
   if (!playlist || !isLoaded) return null;
 
@@ -106,8 +107,8 @@ export default function PlayListDetails() {
                     </div>
                   )
                 : null}
-      <div>   {playlistSongs.map((song) => (
-            <div key={song.id}>
+      <div>   {playlistSongs && playlistSongs.map((song) => (
+            <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>

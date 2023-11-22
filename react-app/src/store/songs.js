@@ -63,18 +63,13 @@ export const thunkGetSong = id => async dispatch => {
 }
 
 export const thunkCreateSong = formData => async dispatch => {
+
     try {
       const url = `/api/songs/new`;
-      let headers = {}; let body = formData;
-      if (formData.mp3)
-        headers = {"Content-Type": "multipart/form-data"}
-      else
-        body = JSON.stringify(formData)
 
       const response = await fetch(url, {
         method: 'POST',
-        headers,
-        body
+        body: formData
       });
 
       const responseData = await response.json();
@@ -100,7 +95,7 @@ export const thunkUpdateSong = (data, id) => async dispatch => {
 }
 
 export const thunkDeleteSong = id => async dispatch => {
-    const url = `/api/songs/${id}/`
+    const url = `/api/songs/${id}`
     const answer = await fetchData(url, {method: 'DELETE'})
     if (!answer.errors) dispatch(deletedSong(id))
     return answer
@@ -127,16 +122,14 @@ export const thunkUnlikeSong = songId => async dispatch => {
 //   }
 // }
 
-export const selectSongsByIds = (songList) => {
-  function selector(state) {
-      console.log("SONGS IN LIST", songList)
+export const selectSongsByIds = (songList) => state => {
+  if (!songList) return null
+  console.log("LIST OF SONG IDS", songList)
 
-      // const songs = []
-      return songList.map(songId => state.songs[songId])
-      // console.log("SONGS IN SELECTOR", songs)
-      // return songs
-  }
-  return selector
+  const songs = songList.map(songId => state.songs[songId])
+  console.log("SONGS SELECTED", songs)
+  return songs
+  //
 }
 
 
