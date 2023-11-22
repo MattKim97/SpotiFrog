@@ -10,13 +10,11 @@ export default function PlayListDetails() {
   const dispatch = useDispatch();
   const { playlistId } = useParams();
   const playlist = useSelector(state => state.playlists[playlistId])
-
-
   const sessionUser = useSelector((state) => state.session.user);
+  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false)
-  const [songIds, setSongIds] = useState([])
-  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
   const history = useHistory();
 
