@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../../store/playlists";
+import { thunkDeletePlaylist, thunkGetPlaylist} from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
@@ -115,8 +115,13 @@ export default function PlayListDetails() {
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
             <div>{song.name}</div>
             <div>{song.artist}</div>
-            <LikeSong songId={song.id} liked={song.liked}/>
-            <RemoveSongFromPlaylist songId={song.id} playlistId={playlistId}/>
+
+            {sessionUser &&
+              <>
+              {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
+              <RemoveSongFromPlaylist songId={song.id}playlistId={playlistId}/>
+              </>
+            }
             <div>{song.albumName}</div>
             <div>{song.userLikes}</div>
             <div>{Math.floor(song.playtimeLength/60)}:{song.playtimeLength%60}</div>
