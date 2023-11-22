@@ -72,34 +72,32 @@ export const thunkGetPlaylist = id => async dispatch => {
 }
 
 export const thunkCreatePlaylist = formData => async dispatch => {
-    const url = `/api/playlists/new/`
-    let headers = {}; let body = formData;
-    if (formData.playlistCover)
-      headers = {"Content-Type": "multipart/form-data"}
-    else
-      body = JSON.stringify(formData)
-
-    const answer = await fetchData(url, {
-        method: "POST",
-        headers,
-        body
-    })
-    if (!answer.errors) dispatch(createdPlaylist(answer))
-    return answer
+    try {
+        const url = `/api/playlists/new`
+  
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData
+        });
+  
+        const responseData = await response.json();
+  
+        if (response.ok) {
+          dispatch(createdPlaylist(responseData));
+        }
+  
+        return responseData;
+      } catch (error) {
+        return { errors: { system: error.message } };
+      }
 }
 
 export const thunkUpdatePlaylist = (formData, id) => async dispatch => {
-    const url = `/api/playlists/${id}/`
-    let headers = {}; let body = formData;
-    if (formData.albumCover)
-        headers = {"Content-Type": "multipart/form-data"}
-    else
-        body = JSON.stringify(formData)
-
-    const answer = await fetchData(url, {
+    const url = `/api/playlists/${id}`
+    
+    const answer = await fetch(url, {
         method: 'PUT',
-        headers,
-        body
+        body: formData
     })
     if (!answer.errors) dispatch(updatedPlaylist(answer))
     return answer

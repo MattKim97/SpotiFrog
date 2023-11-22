@@ -37,6 +37,10 @@ export default function PlayListDetails() {
     openModal();
   };
 
+  const onClickEdit = () => {
+    return history.push(`/playlists/${playlistId}/edit`)
+  };
+
   const onClickSong = (songId) => {
     history.push(`/songs/${songId}`)
   }
@@ -96,16 +100,16 @@ export default function PlayListDetails() {
                 ? sessionUser.id === playlist.userId && (
                     <div className="groupOwnerButtonsContainer">
                       <button
-                        onClick={(e) => onClickAdd()}
-                        className="groupOwnerButtons"
-                      >
-                        Add a song
-                      </button>
-                      <button
                         onClick={(e) => onClickDelete()}
                         className="groupOwnerButtons"
                       >
                         Delete Playlist
+                      </button>
+                      <button
+                        onClick={(e) => onClickEdit()}
+                        className="groupOwnerButtons"
+                      >
+                        Edit a playlist
                       </button>
                     </div>
                   )

@@ -30,9 +30,6 @@ export default function AlbumDetails() {
     return history.push(`/albums/${albumId}/change-songs`)
   };
 
-  const onClickUpdate = () => {
-  };
-
   const onClickDelete = () => {
     openModal();
   };
@@ -103,12 +100,6 @@ export default function AlbumDetails() {
                         className="groupOwnerButtons"
                       >
                         Add a song
-                      </button>
-                      <button
-                        onClick={(e) => onClickUpdate()}
-                        className="groupOwnerButtons"
-                      >
-                        Update Album
                       </button>
                       <button
                         onClick={(e) => onClickDelete()}
