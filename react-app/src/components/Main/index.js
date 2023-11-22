@@ -15,6 +15,8 @@ import ProtectedRoute from "../auth/ProtectedRoute";
 import SongForm from "./SongForm";
 import SongUpdateForm from "./SongUpdateForm";
 import AlbumForm from "./AlbumForm";
+import PlaylistForm from "./PlaylistForm";
+import PlaylistUpdateForm from "./PlaylistUpdateForm";
 
 
 export default function Main() {
@@ -41,8 +43,14 @@ export default function Main() {
             <Route exact path="/albums/new">
                 <AlbumForm/>
             </Route>
+            <Route exact path="/playlists/new">
+                <PlaylistForm/>
+            </Route>
             <Route exact path="/search">
                 <Search/>
+            </Route>
+            <Route exact path="/playlists/:playlistId/edit">
+                <PlaylistUpdateForm/>
             </Route>
             <Route exact path="/playlists/:playlistId">
                 <PlayListDetails/>

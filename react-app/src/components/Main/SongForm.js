@@ -86,7 +86,7 @@ export default function SongForm() {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Name:
+        Song Name:
         <input
           type="text"
           name="name"
