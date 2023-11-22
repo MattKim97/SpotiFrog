@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { consumeUserPlaylists } from '../../store/playlists'
+import { consumeUserPlaylists, thunkAddToPlaylist } from '../../store/playlists'
 import { useContentLoaded } from "../../context/ContentLoaded";
 // import { thunkAddSongToPlaylist } from '../../store/songs'
 
@@ -29,8 +29,9 @@ export default function AddToPlaylist({userPlaylists, songId}) {
     }
 
     const addSong = async playlistId => {
-        return console.log("adding song")
-        // await dispatch(thunkAddSongToPlaylist(playlistId, songId))
+        // return console.log("adding song")
+        const answer = await dispatch(thunkAddToPlaylist(playlistId, songId))
+        alert(`Added to playlist, ${answer}`)
     }
 
     useEffect(() => {
