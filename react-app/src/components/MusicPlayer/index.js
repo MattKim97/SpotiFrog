@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
@@ -8,33 +8,28 @@ import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton from '../PlayButton'
 
 
-var test1 = [
-'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
-]
-var test2 = [
-'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-]
+// var test1 = [
+// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
+// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
+// ]
+// var test2 = [
+// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+// ]
 
 
-const MusicPlayer = () => {
+const MusicPlayer = memo(function MusicPlayer() {
   const { playlist, track, isPlaying } = useSelector(state => state.audioPlayer)
 
   const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
-  // let test1 = []
-  // let test2 = []
+  let test1 = []
+  let test2 = []
 
-  useEffect(() => {
-    if (!songs || songs.length === 0)
-      dispatch(thunkGetAllSongs())
-  }, [songs, dispatch])
 
 
 // if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
 // songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
-
 
   useEffect(() => {
     if (!playlist || !playlist.length)
@@ -43,10 +38,17 @@ const MusicPlayer = () => {
       dispatch(changeTrack(0)) // Reset track to 0 if out of bounds
 }, [playlist, track]);
 
+
+const [ref] = useState({current:{}});
+if (!Array.isArray(songs) || !songs.length) {
+    if (!ref.current["allSongs"]) ref.current["allSongs"] = dispatch(thunkGetAllSongs())
+    return null;
+} else if (ref.current["allSongs"]) delete ref.current["allSongs"]
+
 if (!songs || songs.length < 2) return null
-// const urls = songs.map(song => song.mp3)
-// test1 = choices(urls, 2)
-// test2 = choices(urls, 2)
+const urls = songs.map(song => song.mp3)
+test1 = choices(urls, 2)
+test2 = choices(urls, 2)
 console.log(songs)
 
   const handleClickPrevious = () => {
@@ -152,7 +154,7 @@ if (!playlist || !playlist.length || !track ||
       />
     </>
   );
-};
+})
 
 
 // Returns a random integer between min (inclusive) and
