@@ -1,19 +1,27 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { thunkDeletePlaylist, thunkGetAllPlaylists } from "../../store/playlists";
+import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
+import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
+import { useContentLoaded } from "../../context/ContentLoaded";
 
 export default function PlayListDetails() {
+  const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
-  const allPlaylists = Object.values(useSelector((state) => state.playlists));
   const { playlistId } = useParams();
+  const playlist = useSelector(state => state.playlists[playlistId])
   const sessionUser = useSelector((state) => state.session.user);
+  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false)
+
   const history = useHistory();
 
   const openModal = () => {
+    console.log(playlistSongs)
     setIsModalOpen(true);
   };
 
@@ -41,14 +49,12 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    dispatch(thunkGetAllPlaylists());
-  }, [dispatch]);
+    if (sidebarLoaded) {
+      dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
+    }
+  }, [dispatch, sidebarLoaded]);
 
-  if (!allPlaylists) return null;
-
-  const playlist = allPlaylists.filter((playlist) => playlist.id === +playlistId)[0];
-
-  if (!playlist) return null;
+  if (!playlist || !isLoaded) return null;
 
   return (
 
@@ -72,6 +78,7 @@ export default function PlayListDetails() {
       <div>
         <div>
           <img
+          className="playlistCover"
             src={
               playlist.playlistCover
                 ? playlist.playlistCover
@@ -103,8 +110,8 @@ export default function PlayListDetails() {
                     </div>
                   )
                 : null}
-      <div>   {playlist.songs.map((song) => (
-            <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
+      <div>   {playlistSongs && playlistSongs.map((song) => (
+            <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>

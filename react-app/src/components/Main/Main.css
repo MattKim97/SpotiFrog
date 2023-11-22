@@ -56,6 +56,9 @@
   .SongListContainer{
     border: 2px black solid;
     cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 500px;
   }
 
   .landingMainContainer{
@@ -67,3 +70,50 @@
   .aboutContainer{
     width: 900px;
   }
+
+  .SearchContainer{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px ;
+  }
+
+  .PlayListContainerMain{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px ;
+  }
+
+  .AlbumsContainerMain{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px ;
+  }
+
+  .SongsContainerMain{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px ;
+  }
+
+  .albumCover{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.playlistCover{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}

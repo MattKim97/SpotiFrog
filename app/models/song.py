@@ -54,6 +54,9 @@ class Song(db.Model):
         back_populates="songs",
     )
 
+    def playlist_ids(self):
+        return [list.id for list in self.playlist]
+
     def to_dict(self,scope="default"):
         d = {
             "id": self.id,
@@ -72,6 +75,7 @@ class Song(db.Model):
 
         if hasattr(current_user, "id"):
             d.update({"liked": self in current_user.songsLiked})
+            d.update({"playlistIds": [playlist.id for playlist in self.playlist]})
 
         if scope == "detailed":
             # d["user"] = self.user.to_dict()

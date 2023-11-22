@@ -17,7 +17,7 @@ export default function Songs() {
 
   return (
     <div>
-      <div>
+      <div className='SongsContainerMain'>
       {songs.map((song) => (
         <div key={song.id}><SongCard format="main" song={song}/></div>
           ))}

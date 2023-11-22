@@ -1,0 +1,15 @@
+.songsmaincontainer{
+    background-color: grey;
+    width: 900px;
+    border: 2px black solid;
+
+}
+
+.songmain{
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: column;
+    margin-right: 10px;
+    width: 300px;
+    justify-content: center;
+}

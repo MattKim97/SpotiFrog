@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
 import LikeSong from "../SongCard/LikeSong";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AddToPlaylist from '../SongCard/AddToPlaylist'
+import { thunkGetAllPlaylists } from '../../store/playlists'
 
 export default function SongDetails() {
   const dispatch = useDispatch();
@@ -40,9 +42,10 @@ export default function SongDetails() {
     history.push(`/songs/${songId}/edit`);
   };
 
-  useEffect(() => {
-    dispatch(thunkGetSong(songId));
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(thunkGetSong(songId))
+        dispatch(thunkGetAllPlaylists)
+    }, [dispatch]);
 
   useEffect(() => {
     if (sessionUser && song) {
@@ -93,15 +96,20 @@ export default function SongDetails() {
           </div>
         </div>
       )}
-      <h3>Song</h3>
-      <img src={coverImg} />
+      <img className="albumCover" src={coverImg} />
       <h2>{name}</h2>
       <h3>{artist}</h3>
       <h3>
         {albumName} • {year} • {min}:{sec} • {userLikes} Likes
       </h3>
 
-      <LikeSong liked={liked} songId={songId} />
+            {sessionUser && (
+                <>
+          <LikeSong liked={liked} songId={songId} />
+                <AddToPlaylist userPlaylists={sessionUser.playlists} songId={songId}/>
+                </>
+            )}
+
       <h2>Lyrics:</h2>
       {sessionUser
         ? sessionUser.id === song.userId && (
