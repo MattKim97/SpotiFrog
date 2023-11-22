@@ -5,18 +5,18 @@ import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
+import { useContentLoaded } from "../../context/ContentLoaded";
 
 export default function PlayListDetails() {
+  const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const { playlistId } = useParams();
   const playlist = useSelector(state => state.playlists[playlistId])
-
-
   const sessionUser = useSelector((state) => state.session.user);
+  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false)
-  const [songIds, setSongIds] = useState([])
-  const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
   const history = useHistory();
 
@@ -49,8 +49,10 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
-  }, [dispatch]);
+    if (sidebarLoaded) {
+      dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
+    }
+  }, [dispatch, sidebarLoaded]);
 
   if (!playlist || !isLoaded) return null;
 
@@ -76,6 +78,7 @@ export default function PlayListDetails() {
       <div>
         <div>
           <img
+          className="playlistCover"
             src={
               playlist.playlistCover
                 ? playlist.playlistCover

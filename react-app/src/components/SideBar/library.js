@@ -6,8 +6,10 @@ import { thunkGetAllAlbums } from '../../store/albums'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
 import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
+import { useContentLoaded } from '../../context/ContentLoaded'
 
 export default function Library() {
+    const {userLoaded, setSidebarLoaded} = useContentLoaded()
 
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
@@ -28,9 +30,12 @@ export default function Library() {
 
     useEffect(() => {
         if (sessionUser) {
-          console.log("GETTING THE LIBRARY STUFF")
           dispatch(thunkGetAllAlbums())
-          dispatch(thunkGetUserPlaylist(sessionUser.id))
+          dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
+        }
+        else if (userLoaded) {
+          // if there is no user logged in
+          setSidebarLoaded(true);
         }
     }, [dispatch, sessionUser])
 

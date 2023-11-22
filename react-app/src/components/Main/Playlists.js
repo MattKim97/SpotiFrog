@@ -17,7 +17,7 @@ export default function Playlists() {
 
   return (
     <div>
-      <div>
+      <div className='PlayListContainerMain'>
             {playlists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="main" playlist={playlist}/>

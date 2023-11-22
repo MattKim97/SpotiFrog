@@ -106,6 +106,13 @@ export const thunkDeletePlaylist = id => async dispatch => {
     return answer
 }
 
+export const consumeUserPlaylists = userPlaylists => state => {
+    if (!userPlaylists) return []
+
+    const playlists = userPlaylists.map(playlistId => state.playlists[playlistId])
+
+    return playlists
+}
 
 const initialState = {};
 const playlistReducer = (state = initialState, action) => {
