@@ -1,10 +1,15 @@
 import { useDispatch } from 'react-redux'
-import { changePlaylist } from  '../../store/audioPlayer'
+import { changePlaylist, setIsPlaying } from  '../../store/audioPlayer'
 
-const PlayButton = ({ playlist, trackIndex }) => {
+const PlayButton = ({ tracks, trackIndex }) => {
+  // console.log(`Entering PlayButton: playlist${tracks} track${trackIndex}`)
   const dispatch = useDispatch()
 
-  const handlePlayClick = () => dispatch(changePlaylist(playlist, trackIndex))
+  const handlePlayClick = () => {
+    dispatch(setIsPlaying(true))
+    // console.log(`Entering handlePlayClick: playlist${tracks} track${trackIndex}`)
+    dispatch(changePlaylist(tracks, trackIndex))
+  }
 
   return (
     <button type='button' onClick={handlePlayClick}>
