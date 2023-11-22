@@ -65,7 +65,7 @@ const handleSubmit = async (e) => {
 return (
   <form onSubmit={handleSubmit}>
     <label>
-      Name:
+      Album Name:
       <input
         type="text"
         name="name"

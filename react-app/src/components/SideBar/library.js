@@ -7,14 +7,21 @@ import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
 import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
 import { useContentLoaded } from '../../context/ContentLoaded'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function Library() {
     const {userLoaded, setSidebarLoaded} = useContentLoaded()
-
+    const history = useHistory()
     const sessionUser = useSelector(state => state.session.user)
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
     const playlists = Object.values(useSelector(state => state.playlists))
+
+  const onClickSong = () => {
+    console.log('clicked')
+    history.push('/songs/new')
+  }
+
 
     let userAlbums = []
     let userPlaylists = []
@@ -37,7 +44,7 @@ export default function Library() {
           // if there is no user logged in
           setSidebarLoaded(true);
         }
-    }, [dispatch, sessionUser])
+    }, [dispatch, sessionUser, userLoaded])
 
     if (!albums || albums.length === 0) return null
 
@@ -66,17 +73,20 @@ export default function Library() {
             {userAlbums.length > 0 ? userAlbums.map((album)=> (
             <div key={album.id}>
               <AlbumCard format="side" album={album}/>
-            </div>)): <a href='/albums/new'>Create an album</a>}
+            </div>)): null}
+            <a href='/albums/new'>Create an album</a>
            </div>
            : activeTab === 'playlists' ?
            <div>
             {userPlaylists.length > 0 ? userPlaylists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist}/>
-            </div>)): <a href='/playlists/new'>Create a playlist</a>}
+            </div>)): null}
+            <a href='/playlists/new'>Create a playlist</a>
            </div>
            : "No active tab set"
           }
+          <button type='button' onClick={onClickSong}>Upload a Song</button>
         </div>
         : null}
     </div>

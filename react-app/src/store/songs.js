@@ -101,19 +101,19 @@ export const thunkDeleteSong = id => async dispatch => {
     return answer
 }
 
-export const thunkLikeSong = songId => async dispatch => {
-    const url = `/api/songs/${songId}/likes`
-    const answer = await fetchData(url, {method: "POST"})
-    if (!answer.errors) dispatch(likeSong(songId))
-    return answer
-}
+// export const thunkLikeSong = songId => async dispatch => {
+//     const url = `/api/songs/${songId}/likes`
+//     const answer = await fetchData(url, {method: "POST"})
+//     if (!answer.errors) dispatch(likeSong(songId))
+//     return answer
+// }
 
-export const thunkUnlikeSong = songId => async dispatch => {
-    const url = `/api/songs/${songId}/likes`
-    const answer = await fetchData(url, {method: "DELETE"})
-    if (!answer.errors) dispatch(unlikeSong(songId))
-    return answer
-}
+// export const thunkUnlikeSong = songId => async dispatch => {
+//     const url = `/api/songs/${songId}/likes`
+//     const answer = await fetchData(url, {method: "DELETE"})
+//     if (!answer.errors) dispatch(unlikeSong(songId))
+//     return answer
+// }
 
 // export const thunkAddSongToPlaylist = (playlistId, songId) => async dispatch => {
 //   const answer = await fetchData(`/api/playlists/${playlistId}/songs/${songId}`, {method: "PUT"})
@@ -151,10 +151,12 @@ const songReducer = (state = initialState, action) => {
       return newState;
     }
     case LIKE_SONG:{
-        return {...state, [action.id]: {...state[action.id], liked: true}}
+        const prevLikes = state[action.id].userLikes
+        return {...state, [action.id]: {...state[action.id], userLikes: prevLikes + 1}}
     }
     case UNLIKE_SONG:
-        return {...state, [action.id]: {...state[action.id], liked: false}}
+      const prevLikes = state[action.id].userLikes
+      return {...state, [action.id]: {...state[action.id], userLikes: prevLikes - 1}}
     default:
       return state;
   }

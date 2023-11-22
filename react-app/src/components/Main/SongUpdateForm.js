@@ -22,7 +22,6 @@ export default function UpdateSongForm() {
     albumId: 0,
     lyrics: "",
   });
-  console.log("🚀 ~ file: SongUpdateForm.js:25 ~ UpdateSongForm ~ formData:", formData)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
