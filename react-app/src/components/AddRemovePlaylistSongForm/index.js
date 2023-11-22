@@ -2,27 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { thunkAddSongToAlbum, thunkGetAlbum, thunkRemoveSongFromAlbum } from '../../store/albums'
+// import thunks from playlist
 import { thunkGetAllSongs } from '../../store/songs'
-import { fetchData } from '../../store/csrf'
 
-export default function AddRemoveSongForm() {
+export default function AddRemovePlaylistSongForm() {
     const history = useHistory()
     const dispatch = useDispatch()
-    const {albumId} = useParams()
+    const {playlistId} = useParams()
 
     const sessionUser = useSelector(state => state.session.user)
-    // const album = useSelector(state => state.albums[albumId])
     const allSongs = useSelector(state => state.songs)
 
-    // const [isLoaded, setIsLoaded] = useState(false)
-
-    // list of songs in album / playlist
-    const [albumSongs, setAlbumSongs] = useState([])
+    // list of songs in playlist
+    const [playlistSongs, setPlaylistSongs] = useState([])
     const [removedSongs, setRemovedSongs] = useState(new Set())
 
     // list of songs user has that is not in album / playlist
-    const [userSingles, setUserSingles] = useState([])
+    const [notInPlaylist, setNotInPlaylist] = useState([])
     const [addedSongs, setAddedSongs] = useState(new Set())
 
     const [errors, setErrors] = useState({})
@@ -68,31 +64,17 @@ export default function AddRemoveSongForm() {
         if (removedSongs.size) {
             console.log("REMOVING SONGS: ", removedSongs)
             for (let songId of [...removedSongs]) {
-                const res = await dispatch(thunkRemoveSongFromAlbum(albumId, songId))
-                console.log("RESULTS", res)
-                if (res.errors) {
-                    for (let [type, msg] of Object.entries(res.errors)) {
-                    errors[songId] = `${type}: ${msg}`
-                    }
-                }
+                dispatch(thunkRemoveSongFromAlbum(albumId, songId))
             }
         }
         if (addedSongs.size) {
             console.log("ADDING SONGS", addedSongs)
             for (let songId of [...addedSongs]) {
-                const res = await dispatch(thunkAddSongToAlbum(albumId, songId))
-                if (res.errors) {
-                    for (let [type, msg] of Object.entries(res.errors)) {
-                    errors[songId] = `${type}: ${msg}`
-                    }
-                }
+                dispatch(thunkAddSongToAlbum(albumId, songId))
             }
         }
 
-        if (!Object.values(errors).length) {
-            return history.push(`/albums/${albumId}`)
-        }
-        setErrors(errors)
+        return history.push(`/albums/${albumId}`)
     }
 
     if (!allSongs) return <>Loading update page</>
@@ -103,9 +85,7 @@ export default function AddRemoveSongForm() {
                 <h3>Select songs to remove from album</h3>
                 {albumSongs.map(song => {
                     return (
-                    <div key={song.id}>
-                    {errors[song.id] && <div>{errors[song.id]}</div>}
-                    <label htmlFor={song.id}>
+                    <label key={song.id} htmlFor={song.id}>
                         {song.name}
                         <input
                             id={song.id}
@@ -114,9 +94,7 @@ export default function AddRemoveSongForm() {
                             onClick={removeSong}
                             defaultChecked
                         />
-                    </label>
-                    </div>
-                    )
+                    </label>)
                 })}
             </div>
 
@@ -136,7 +114,7 @@ export default function AddRemoveSongForm() {
                 })}
             </div>
 
-            <button>UPDATE ALBUM SONGS</button>
+            <button>UPDATE PLAYLIST</button>
         </form>
     )
 }

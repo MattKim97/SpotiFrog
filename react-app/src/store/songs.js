@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { fetchData } from "./csrf"
 
 const GOT_ALL_SONGS = "songs/GOT_ALL_SONGS";
@@ -114,6 +115,22 @@ export const thunkUnlikeSong = songId => async dispatch => {
     return answer
 }
 
+// export const thunkAddSongToPlaylist = (playlistId, songId) => async dispatch => {
+//   const answer = await fetchData(`/api/playlists/${playlistId}/songs/${songId}`, {method: "PUT"})
+//   if (!answer.errors) {
+//       dispatch(addSongToPlaylist(playlistId, songId))
+//   }
+// }
+
+export const selectSongsByIds = (songList) => state => {
+  if (!songList) return null
+  console.log("LIST OF SONG IDS", songList)
+
+  const songs = songList.map(songId => state.songs[songId])
+  console.log("SONGS SELECTED", songs)
+  return songs
+  //
+}
 
 
 const initialState = {};
@@ -124,6 +141,7 @@ const songReducer = (state = initialState, action) => {
       action.songs.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_SONG:
+      return {...state, [action.song.id]: action.song };
     case CREATED_SONG:
     case UPDATED_SONG:
       return { ...state, [action.song.id]: action.song };

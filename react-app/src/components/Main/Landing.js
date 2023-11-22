@@ -17,7 +17,7 @@ export default function Landing() {
     dispatch(thunkGetAllPlaylists());
   }, [dispatch]);
 
-  if (!albums || albums.length === 0 || !playlists || playlists.length === 0)
+  if (!albums || albums.length === 0 || !playlists || playlists.length < 4)
     return null;
 
   function randominator(arr) {
