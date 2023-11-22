@@ -1,14 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { thunkDeletePlaylist, thunkGetAllPlaylists } from "../../store/playlists";
+import { thunkDeletePlaylist, thunkGetPlaylist, thunkGetAllPlaylists } from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import LikeSong from "../SongCard/LikeSong";
 
 export default function PlayListDetails() {
   const dispatch = useDispatch();
-  const allPlaylists = Object.values(useSelector((state) => state.playlists));
+  // const allPlaylists = Object.values(useSelector((state) => state.playlists));
   const { playlistId } = useParams();
+  const playlist = useSelector(state => state.playlists[playlistId])
   const sessionUser = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const history = useHistory();
@@ -37,12 +38,12 @@ export default function PlayListDetails() {
   };
 
   useEffect(() => {
-    dispatch(thunkGetAllPlaylists());
+    dispatch(thunkGetPlaylist(playlistId));
   }, [dispatch]);
 
-  if (!allPlaylists) return null;
+  // if (!allPlaylists) return null;
 
-  const playlist = allPlaylists.filter((playlist) => playlist.id === +playlistId)[0];
+  // const playlist = allPlaylists.filter((playlist) => playlist.id === +playlistId)[0];
 
   if (!playlist) return null;
 

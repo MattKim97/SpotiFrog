@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { fetchData } from "./csrf"
 
 const GOT_ALL_SONGS = "songs/GOT_ALL_SONGS";
@@ -68,13 +69,13 @@ export const thunkCreateSong = data => async dispatch => {
         method: 'POST',
         body: data,
       });
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         dispatch(createdSong(responseData));
       }
-  
+
       return responseData;
     } catch (error) {
       return { errors: { system: error.message } };
@@ -112,6 +113,12 @@ export const thunkUnlikeSong = songId => async dispatch => {
     return answer
 }
 
+// export const thunkAddSongToPlaylist = (playlistId, songId) => async dispatch => {
+//   const answer = await fetchData(`/api/playlists/${playlistId}/songs/${songId}`, {method: "PUT"})
+//   if (!answer.errors) {
+//       dispatch(addSongToPlaylist(playlistId, songId))
+//   }
+// }
 
 
 const initialState = {};
@@ -122,7 +129,7 @@ const songReducer = (state = initialState, action) => {
       action.songs.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_SONG:
-        return {...state, [action.song.id]: action.song }
+      return {...state, [action.song.id]: action.song };
     case CREATED_SONG:
     case UPDATED_SONG:
       return { ...state, [action.song.id]: action.song };

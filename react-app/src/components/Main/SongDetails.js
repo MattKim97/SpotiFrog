@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { thunkGetSong } from '../../store/songs'
 import LikeSong from '../SongCard/LikeSong'
+import AddToPlaylist from '../SongCard/AddToPlaylist'
+import { thunkGetAllPlaylists } from '../../store/playlists'
 
 export default function SongDetails() {
     const dispatch = useDispatch()
@@ -14,6 +16,7 @@ export default function SongDetails() {
 
     useEffect(() => {
         dispatch(thunkGetSong(songId))
+        dispatch(thunkGetAllPlaylists)
     }, [dispatch])
 
     useEffect(() => {
@@ -45,7 +48,13 @@ export default function SongDetails() {
             <h3>{artist}</h3>
             <h3>{albumName} • {year} • {min}:{sec} • {userLikes} Likes</h3>
 
-            <LikeSong liked={liked} songId={songId} />
+            {sessionUser && (
+                <>
+                <LikeSong liked={liked} songId={songId} />
+                <AddToPlaylist userPlaylists={sessionUser.playlists} songId={songId}/>
+                </>
+            )}
+
             <h2>Lyrics:</h2>
             {sessionUser && sessionUser.id === song.userId && <a href={`/songs/${songId}/edit`}>Edit Song</a>}
             <p>
