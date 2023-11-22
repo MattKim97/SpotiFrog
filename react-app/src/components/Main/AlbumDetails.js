@@ -30,9 +30,6 @@ export default function AlbumDetails() {
     return history.push(`/albums/${albumId}/change-songs`)
   };
 
-  const onClickUpdate = () => {
-  };
-
   const onClickDelete = () => {
     openModal();
   };
@@ -105,12 +102,6 @@ export default function AlbumDetails() {
                         Add a song
                       </button>
                       <button
-                        onClick={(e) => onClickUpdate()}
-                        className="groupOwnerButtons"
-                      >
-                        Update Album
-                      </button>
-                      <button
                         onClick={(e) => onClickDelete()}
                         className="groupOwnerButtons"
                       >
@@ -125,7 +116,7 @@ export default function AlbumDetails() {
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <div>{album.name}</div>
-            <LikeSong songId={song.id} liked={song.liked}/>
+            {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
             <div>{song.userLikes}</div>
             <div>
             {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}

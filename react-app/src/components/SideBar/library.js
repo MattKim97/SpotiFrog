@@ -37,7 +37,7 @@ export default function Library() {
           // if there is no user logged in
           setSidebarLoaded(true);
         }
-    }, [dispatch, sessionUser])
+    }, [dispatch, sessionUser, userLoaded])
 
     if (!albums || albums.length === 0) return null
 
@@ -66,14 +66,16 @@ export default function Library() {
             {userAlbums.length > 0 ? userAlbums.map((album)=> (
             <div key={album.id}>
               <AlbumCard format="side" album={album}/>
-            </div>)): <a href='/albums/new'>Create an album</a>}
+            </div>)): null}
+            <a href='/albums/new'>Create an album</a>
            </div>
            : activeTab === 'playlists' ?
            <div>
             {userPlaylists.length > 0 ? userPlaylists.map((playlist)=> (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist}/>
-            </div>)): <a href='/playlists/new'>Create a playlist</a>}
+            </div>)): null}
+            <a href='/playlists/new'>Create a playlist</a>
            </div>
            : "No active tab set"
           }

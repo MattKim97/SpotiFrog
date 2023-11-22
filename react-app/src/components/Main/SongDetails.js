@@ -116,7 +116,7 @@ export default function SongDetails() {
 
             {sessionUser && (
                 <>
-                <LikeSong liked={liked} songId={songId} />
+                <LikeSong liked={sessionUser.songsLiked} songId={songId} />
                 <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
                 </>
             )}

@@ -8,9 +8,15 @@ const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
 const DELETED_PLAYLIST = "playlists/DELETED_PLAYLIST";
 const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
 const ADD_TO_PLAYLIST = "playlists/ADD_TO_PLAYLIST";
+const DELETE_FROM_PLAYLIST = "playlists/DELETE_FROM_PLAYLIST";
 
 export const addToPlaylist = playlist => ({
     type: ADD_TO_PLAYLIST,
+    playlist
+})
+
+export const removeFromPlaylist = playlist => ({
+    type: DELETE_FROM_PLAYLIST,
     playlist
 })
 
@@ -72,34 +78,32 @@ export const thunkGetPlaylist = id => async dispatch => {
 }
 
 export const thunkCreatePlaylist = formData => async dispatch => {
-    const url = `/api/playlists/new/`
-    let headers = {}; let body = formData;
-    if (formData.playlistCover)
-      headers = {"Content-Type": "multipart/form-data"}
-    else
-      body = JSON.stringify(formData)
-
-    const answer = await fetchData(url, {
-        method: "POST",
-        headers,
-        body
-    })
-    if (!answer.errors) dispatch(createdPlaylist(answer))
-    return answer
+    try {
+        const url = `/api/playlists/new`
+  
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData
+        });
+  
+        const responseData = await response.json();
+  
+        if (response.ok) {
+          dispatch(createdPlaylist(responseData));
+        }
+  
+        return responseData;
+      } catch (error) {
+        return { errors: { system: error.message } };
+      }
 }
 
 export const thunkUpdatePlaylist = (formData, id) => async dispatch => {
-    const url = `/api/playlists/${id}/`
-    let headers = {}; let body = formData;
-    if (formData.albumCover)
-        headers = {"Content-Type": "multipart/form-data"}
-    else
-        body = JSON.stringify(formData)
-
-    const answer = await fetchData(url, {
+    const url = `/api/playlists/${id}`
+    
+    const answer = await fetch(url, {
         method: 'PUT',
-        headers,
-        body
+        body: formData
     })
     if (!answer.errors) dispatch(updatedPlaylist(answer))
     return answer
@@ -116,6 +120,13 @@ export const thunkAddToPlaylist = (playlistId, songId) => async dispatch => {
     const url = `/api/playlists/${playlistId}/songs/${songId}`
     const answer = await fetchData(url, {method: "PUT"})
     if (!answer.errors) dispatch(addToPlaylist(answer))
+    return answer
+}
+
+export const thunkRemoveFromPlaylist = (playlistId, songId) => async dispatch => {
+    const url = `/api/playlists/${playlistId}/songs/${songId}`
+    const answer = await fetchData(url, {method: "PATCH"})
+    if (!answer.errors) dispatch(removeFromPlaylist(answer))
     return answer
 }
 
@@ -150,6 +161,9 @@ const playlistReducer = (state = initialState, action) => {
         return {...state, ...normalized}
     }
     case ADD_TO_PLAYLIST: {
+        return {...state, [action.playlist.id]: action.playlist}
+    }
+    case DELETE_FROM_PLAYLIST: {
         return {...state, [action.playlist.id]: action.playlist}
     }
     default:
