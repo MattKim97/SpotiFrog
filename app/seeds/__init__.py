@@ -22,15 +22,15 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
-        undo_playlists()
         undo_songs()
+        undo_playlists()
         undo_albums()
         undo_users()
 
     seed_users()
     seed_albums()
-    seed_songs()
     seed_playlists()
+    seed_songs()
     # Add other seed functions here
 
     # relationships
@@ -40,8 +40,8 @@ def seed():
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
-    undo_playlists()
     undo_songs()
+    undo_playlists()
     undo_albums()
     undo_users()
     # Add other undo functions here
