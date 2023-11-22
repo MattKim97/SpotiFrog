@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 // import { thunkAddSongToPlaylist } from '../../store/songs'
 
 export default function AddToPlaylist({userPlaylists, songId}) {
+    // need to check if song in playlist
     const dispatch = useDispatch()
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef()
-    const playlists = Object.values(useSelector(state => state.playlists)).filter(playlist => userPlaylists.includes(playlist.id))
+    const playlists = Object.values(useSelector(state => state.playlists))
+        .filter(playlist => userPlaylists.includes(playlist.id))
 
     // const [playlists, setPlaylists] = useState([])
 
