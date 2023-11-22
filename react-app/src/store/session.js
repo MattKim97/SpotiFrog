@@ -76,11 +76,14 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signUp = (formData) => async (dispatch) => {
+	let headers = {}; let body = formData;
+	if (formData.profilePicture)
+		headers = {"Content-Type": "multipart/form-data"}
+	else
+		body = JSON.stringify(formData)
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
-		// headers: {
-		// 	"Content-Type": "multipart/form-data",
-		// },
+		headers,
 		body: formData,
 	});
 

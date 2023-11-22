@@ -61,20 +61,27 @@ export const thunkGetSong = id => async dispatch => {
     return answer
 }
 
-export const thunkCreateSong = data => async dispatch => {
+export const thunkCreateSong = formData => async dispatch => {
     try {
       const url = `/api/songs/new`;
+      let headers = {}; let body = formData;
+      if (formData.mp3)
+        headers = {"Content-Type": "multipart/form-data"}
+      else
+        body = JSON.stringify(formData)
+
       const response = await fetch(url, {
         method: 'POST',
-        body: data,
+        headers,
+        body
       });
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         dispatch(createdSong(responseData));
       }
-  
+
       return responseData;
     } catch (error) {
       return { errors: { system: error.message } };
@@ -122,7 +129,6 @@ const songReducer = (state = initialState, action) => {
       action.songs.forEach(p => normalized[p.id] = p);
       return normalized;
     case GOT_SONG:
-        return {...state, [action.song.id]: action.song }
     case CREATED_SONG:
     case UPDATED_SONG:
       return { ...state, [action.song.id]: action.song };
