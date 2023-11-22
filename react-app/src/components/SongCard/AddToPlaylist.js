@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { thunkAddToPlaylist } from '../../store/playlists'
 import { useContentLoaded } from "../../context/ContentLoaded";
+import {useHistory} from 'react-router-dom'
 
 export default function AddToPlaylist({userPlaylists, songId}) {
     // need to check if song in playlist
@@ -9,6 +10,7 @@ export default function AddToPlaylist({userPlaylists, songId}) {
     const {sidebarLoaded} = useContentLoaded()
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef()
+    const history = useHistory()
 
     // select playlist dropdown
     const openMenu = () => {
@@ -19,7 +21,7 @@ export default function AddToPlaylist({userPlaylists, songId}) {
 
     const addSong = async playlistId => {
         const answer = await dispatch(thunkAddToPlaylist(playlistId, songId))
-        alert(`Added to playlist, ${answer}`)
+        history.push(`/playlists/${playlistId}`)
     }
 
     useEffect(() => {
