@@ -92,12 +92,16 @@ if (!playlist || !playlist.length || !track ||
         onClickNext={e => handleClickNext()}
         onClickPrevious={e => handleClickPrevious()}
         onEnded={e => handleClickNext()}
+        preload='auto'
+        showDownloadProgress={true}
+        showFilledProgress={true}
+        showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
         src={playlist[track]}
         volume={.5}
 
-        // controls={true}
+        // controls={false}
         // controlsList="nodownload"
         // customAdditionalControls={[]}
         // customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
@@ -112,6 +116,34 @@ if (!playlist || !playlist.length || !track ||
         // customVolumeControls={[]}
         // defaultCurrentTime="0:00"
         // defaultDuration="0:00"
+        // progressJumpSteps={{ backward: 5000, forward: 5000 }}
+
+
+// rhap_theme-color: #868686 !default;   // Color of all buttons and volume/progress indicators
+// rhap_background-color: #fff !default; // Color of the player background
+// rhap_bar-color: #e4e4e4 !default;     // Color of volume and progress bar
+// rhap_time-color: #333 !default;       // Font color of current time and duration
+// rhap_font-family: inherit !default;   // Font family of current time and duration
+
+
+// customProgressBarSection: [RHAP_UI.CURRENT_TIME, RHAP_UI.PROGRESS_BAR, RHAP_UI.DURATION],
+// customControlsSection: [RHAP_UI.ADDITIONAL_CONTROLS, RHAP_UI.MAIN_CONTROLS, RHAP_UI.VOLUME_CONTROLS],
+// customAdditionalControls: [RHAP_UI.LOOP],
+// customVolumeControls: [RHAP_UI.VOLUME],
+
+// interface CustomIcons {
+//   play?: ReactNode
+//   pause?: ReactNode
+//   rewind?: ReactNode
+//   forward?: ReactNode
+//   previous?: ReactNode
+//   next?: ReactNode
+//   loop?: ReactNode
+//   loopOff?: ReactNode
+//   volume?: ReactNode
+//   volumeMute?: ReactNode
+// }
+
 
       />
     </>

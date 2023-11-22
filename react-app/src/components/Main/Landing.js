@@ -5,6 +5,8 @@ import { thunkGetAllAlbums } from "../../store/albums";
 import { thunkGetAllPlaylists } from "../../store/playlists";
 import AlbumCard from "../AlbumCard";
 import PlaylistCard from "../PlaylistCard";
+import "./Main.css";
+
 export default function Landing() {
   const dispatch = useDispatch();
   const albums = Object.values(useSelector((state) => state.albums));
@@ -35,8 +37,8 @@ export default function Landing() {
 
   return (
     <div>
-      <div>
-        <h2>Discover a New Froggy Albums today!</h2>
+        <h2>Discover a New Froggy Album today!</h2>
+      <div className="landingMainContainer">
         {randomAlbums.map((album) => (
           <div key={album.id}>
             <AlbumCard format="main" album={album} />
@@ -44,8 +46,8 @@ export default function Landing() {
         ))}
         <a href="/albums">See all albums</a>
       </div>
-      <div>
         <h2>Discover our carefully curated croaktastic playlists!</h2>
+      <div className="landingMainContainer">
         {randomPlaylists.map((playlist) => (
           <div key={playlist.id}>
             <PlaylistCard format="main" playlist={playlist} />
