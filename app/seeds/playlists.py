@@ -35,7 +35,7 @@ def seed_playlists():
     demo5 = Playlist(
         name="Sophia's Other Playlist",
         userId=6,
-        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/Genshin-Impact-Wanderer-Skills-and-Abilities.webp",
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/matt.png",
         description="Uplifting playlist for when I want to croak"
         )
 
