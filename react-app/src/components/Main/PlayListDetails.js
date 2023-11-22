@@ -104,7 +104,7 @@ export default function PlayListDetails() {
                   )
                 : null}
       <div>   {playlist.songs.map((song) => (
-            <div className="SongListContainer" onClick={()=> onClickSong(song.id) }>
+            <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <LikeSong songId={song.id} liked={song.liked}/>

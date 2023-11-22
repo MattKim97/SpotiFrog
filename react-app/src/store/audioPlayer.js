@@ -1,5 +1,6 @@
 const CHANGE_PLAYLIST = 'audioPlayer/CHANGE_PLAYLIST'
-const CHANGE_CURRENT_TRACK = 'audioPlayer/CHANGE_CURRENT_TRACK'
+const CHANGE_TRACK = 'audioPlayer/CHANGE_TRACK'
+const SET_IS_PLAYING = 'audioPlayer/SET_IS_PLAYING'
 
 export const changePlaylist = (playlist, track) => ({
     type: CHANGE_PLAYLIST,
@@ -7,32 +8,45 @@ export const changePlaylist = (playlist, track) => ({
     track
 })
 
-export const changeCurrentTrack = track => ({
-    type: CHANGE_CURRENT_TRACK,
+export const changeTrack = track => ({
+    type: CHANGE_TRACK,
     track
+})
+
+export const setIsPlaying = isPlaying => ({
+    type: SET_IS_PLAYING,
+    isPlaying
 })
 
 const initialState = {
     playlist: [],       // playlist is an array of mp3 URLs
-    currentTrack: 0
+    track: 0,
+    isPlaying: false
 }
 function audioPlayerReducer(state = initialState, action) {
+    // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
+    // console.log(`action: type${action.type} action${action}`)
     switch (action.type) {
         case CHANGE_PLAYLIST:
             if (state.playlist !== action.playlist)
                 return {
                     ...state,
                     playlist: action.playlist,
-                    currentTrack: action.track
+                    track: action.track,
+                    isPlaying: true
                 }
-            else if (state.currentTrack === action.track) return state
+            else if (state.track === action.track) return state
         /* intentional fall-through */
-        case CHANGE_CURRENT_TRACK:
-            if (state.currentTrack === action.track) return state
+        case CHANGE_TRACK:
+            if (state.track === action.track) return state
             return {
                 ...state,
-                currentTrack: action.track
+                track: action.track
             }
+        case SET_IS_PLAYING:
+            return state.isPlaying === action.isPlaying
+                ? state
+                : { ...state, isPlaying: action.isPlaying }
         default:
             return state
     }
