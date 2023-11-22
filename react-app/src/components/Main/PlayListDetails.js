@@ -116,7 +116,7 @@ export default function PlayListDetails() {
             <div>{song.name}</div>
             <div>{song.artist}</div>
 
-            {sessionUser &&
+            {sessionUser && sessionUser.id == playlist.userId &&
               <>
               {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
               <RemoveSongFromPlaylist songId={song.id}playlistId={playlistId}/>
