@@ -4,10 +4,13 @@ const ContentLoadedContext = React.createContext();
 
 export function ContentLoadedProvider({ children }) {
   const [sidebarLoaded, setSidebarLoaded] = useState(false);
+  const [userLoaded, setUserLoaded] = useState(false);
 
   const contextValue = {
     sidebarLoaded,
     setSidebarLoaded,
+    userLoaded,
+    setUserLoaded
   };
 
   return (

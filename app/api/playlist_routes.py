@@ -120,7 +120,7 @@ def add_song(playlistId, songId):
                 return error_message("song", "Song does not exist in playlist"), 403
         db.session.add(song)
         db.session.commit()
-        return song.to_dict(), 200
+        return playlist.to_dict(scope="songs_details"), 200
     else:
         return error_message("song", "Invalid songId"), 403
 
