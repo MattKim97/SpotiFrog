@@ -47,9 +47,14 @@ time, mark, audio, video {
 	font-size: 100% ;
 	font: inherit ;
 	vertical-align: baseline ;
-    background-color: var(--backgroundColor);
+    /* background-color: var(--backgroundColor); */
     color: var(--textColor);
 }
+
+html {
+    background-color: var(--backgroundColor);
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -148,6 +153,21 @@ h2 {
     grid-area: sound;
 }
 
+.hidden-modal-button {
+    border: none;
+    background-color: rgba(0,0,0,0);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--buttonBorderRadius);
+    padding: 5px;
+}
+
+.hidden-modal-button:hover {
+    background-color: rgba(0,0,0,0);
+    font-weight: bold;
+}
+
+
 /********************** NAVIGATION ************************* */
 .profile-button {
     position: absolute;
@@ -162,13 +182,13 @@ h2 {
 .fa-user-circle {
     color: var(--backgroundColor);
     background-color: var(--buttonBackgroundColor);
-    font-size: large;
+    font-size: xx-large;
 }
 
 .profile-dropdown {
   position: absolute;
   right: 10px;
-  top: 40px;
+  top: 53px;
   border: var(--borderColor) 1px solid;
   padding: 10px;
   border-radius: var(--buttonBorderRadius);
@@ -179,17 +199,42 @@ h2 {
 .profile-dropdown * {
     background-color: var(--buttonBackgroundColor);
     color: var(--buttonTextColor);
+    display: flex;
+    flex-direction: column;
 }
 
-.logout-button {
+.profile-dropdown>button, .logout-button {
     border: var(--buttonBorder);
     border-radius: var(--buttonBorderRadius);
     margin-top: 5px;
+    padding: 0;
+    width: 100%;
+}
+
+.logout-button {
     padding: 5px;
 }
 
-.logout-button:hover, .profile-button:hover {
+.logout-button:hover, .profile-dropdown>button:hover {
     background-color: var(--buttonBackgroundAccent);
+}
+
+.profile-button:hover {
+    background-color: var(--buttonBackgroundAccent);
+    .fa-user-circle {
+        background-color: var(--buttonBackgroundAccent);
+    }
+}
+
+/*********** LOGIN MODAL **********************/
+.login-modal * {
+    background-color: white;
+    border: red 1px dashed;
+}
+
+/****************** MAIN CONTAINER ***********************/
+.MainContainer {
+    background: linear-gradient(var(--backgroundAccent), black);
 }
 
 /* ******* SongDetails *************** */
