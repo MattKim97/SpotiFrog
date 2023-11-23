@@ -57,15 +57,12 @@ export default function SongForm() {
       }));
     }
 
-    if (formData.albumId === "0" || formData.albumId === 0) {
-      delete formDataToSend.albumId;
+    if (!formData.name) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "Please enter a name",
+      }));
     }
-    // if (!formData.name) {
-    //   setErrors((prevErrors) => ({
-    //     ...prevErrors,
-    //     name: "Please enter a name",
-    //   }));
-    // }
     const response = await dispatch(thunkCreateSong(formDataToSend));
 
     if (!response.errors) {
@@ -105,7 +102,7 @@ export default function SongForm() {
           value={formData.albumId}
           onChange={handleInputChange}
         >
-          <option value={null}>Select an album</option>
+          <option value={0}>Select an album</option>
           {userAlbums.map((album) => (
             <option key={album.id} value={album.id}>
               {album.name}

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { thunkDeleteAlbum, thunkGetAllAlbums } from "../../store/albums";
+import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -44,7 +44,7 @@ export default function AlbumDetails() {
     }
   };
   useEffect(() => {
-    dispatch(thunkGetAllAlbums());
+    dispatch(thunkGetAlbum(albumId));
     dispatch(thunkGetAllSongs());
   }, [dispatch]);
 

@@ -7,7 +7,6 @@ import { thunkCreatePlaylist } from '../../store/playlists';
 export default function PlaylistForm() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const sessionUser = useSelector((state) => state.session.user);
     const [errors, setErrors] = useState({});
     
     const [formData, setFormData] = useState({

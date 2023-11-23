@@ -2,15 +2,26 @@
 :root { /* Nunito?. Montserrat? cf public/index.html */
     --fontFamily: "Figtree", sans-serif ;
     --fontSize: 14px ;
-    --inputBackground: rgb(247,247,247) ;
     --headingSize: 24pt ;
     --subheadingSize: 16pt ;
     --subheadingWeight: 550 ;
     --buttonBorderRadius: 10px ;
     --imgBorderRadius: 14px ;
+
+    --inputBackground: rgb(247,247,247) ;
     --boxShadow: 2px 2px darkgray ;
     --boxShadowHover: 4px 4px darkgray ;
-    --accentGreen: rgb(0,255,100)
+    --accentGreen: rgb(0,255,100);
+    --borderColor: rgb(0,0,0);
+    --backgroundColor: rgb(0,0,0);
+    --backgroundAccent: rgb(50,50,50);
+    --textColor: rgb(255,255,255);
+    --backgroundTextColor: rgb(230,230,230);
+    --buttonBackgroundColor: rgb(255,255,255);
+    --buttonTextColor: rgb(0,0,0);
+    --buttonBorder: 1px rgb(0,0,0) solid;
+    --buttonBackgroundAccent: rgb(230,230,230);
+
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -36,7 +47,14 @@ time, mark, audio, video {
 	font-size: 100% ;
 	font: inherit ;
 	vertical-align: baseline ;
+    /* background-color: var(--backgroundColor); */
+    color: var(--textColor);
 }
+
+html, form {
+    background-color: var(--backgroundColor);
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -126,6 +144,7 @@ h2 {
 }
 .MainContainer{
     grid-area: main;
+    background: linear-gradient(var(--backgroundAccent), black);
 }
 .FooterContainer{
     grid-area: footer;
@@ -133,6 +152,90 @@ h2 {
 
 .SoundBarContainer{
     grid-area: sound;
+}
+
+.hidden-modal-button {
+    border: none;
+    background-color: rgba(0,0,0,0);
+    width: 100%;
+    height: 100%;
+    border-radius: var(--buttonBorderRadius);
+    padding: 5px;
+}
+
+.hidden-modal-button:hover {
+    background-color: rgba(0,0,0,0);
+    font-weight: bold;
+}
+
+
+/********************** NAVIGATION ************************* */
+.profile-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: var(--borderColor) 1px solid;
+    border-radius: var(--buttonBorderRadius);
+    padding: 5px;
+    background-color: var(--buttonBackgroundColor);
+}
+
+.fa-user-circle {
+    color: var(--backgroundColor);
+    background-color: var(--buttonBackgroundColor);
+    font-size: xx-large;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 10px;
+  top: 53px;
+  border: var(--borderColor) 1px solid;
+  padding: 10px;
+  border-radius: var(--buttonBorderRadius);
+  background-color: var(--buttonBackgroundColor);
+  color: var(--buttonTextColor);
+}
+
+.profile-dropdown * {
+    background-color: var(--buttonBackgroundColor);
+    color: var(--buttonTextColor);
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-dropdown>button, .logout-button {
+    border: var(--buttonBorder);
+    border-radius: var(--buttonBorderRadius);
+    margin-top: 5px;
+    padding: 0;
+    width: 100%;
+}
+
+.logout-button {
+    padding: 5px;
+}
+
+.logout-button:hover, .profile-dropdown>button:hover {
+    background-color: var(--buttonBackgroundAccent);
+}
+
+.profile-button:hover {
+    background-color: var(--buttonBackgroundAccent);
+    .fa-user-circle {
+        background-color: var(--buttonBackgroundAccent);
+    }
+}
+
+/*********** LOGIN MODAL **********************/
+/* .login-modal * {
+    background-color: white;
+    border: red 1px dashed;
+} */
+
+/****************** MAIN CONTAINER ***********************/
+.MainContainer {
+    background: linear-gradient(var(--backgroundAccent), black);
 }
 
 /* ******* SongDetails *************** */
@@ -146,7 +249,7 @@ h2 {
 } */
 
 .playlistSelect {
-    border: 1px black solid;
+    border: 1px var(--borderColor) solid;
     width: fit-content;
     cursor: pointer;
 }

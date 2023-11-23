@@ -3,7 +3,7 @@ import { thunkCreateAlbum } from '../../store/albums';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 
 export default function AlbumForm() {
 
@@ -15,7 +15,7 @@ const [errors, setErrors] = useState({});
 const [formData, setFormData] = useState({
   name: "",
   albumCover: null,
-  releaseDate: "",
+  releaseDate: null,
 });
 console.log("🚀 ~ file: AlbumForm.js:19 ~ AlbumForm ~ formData:", formData)
 
@@ -45,8 +45,15 @@ const handleSubmit = async (e) => {
   const formattedDate = format(new Date(formData.releaseDate), 'yyyy-MM-dd');
   formDataToSend.append("releaseDate", formattedDate);
 
+  if(!formData.formattedDate){
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      releaseDate: "Please select a release date",
+    }));
+  }
 
   const response = await dispatch(thunkCreateAlbum(formDataToSend));
+
 
   if (!response.errors) {
     history.push(`/albums/${response.id}`);

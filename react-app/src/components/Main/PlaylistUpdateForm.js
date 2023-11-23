@@ -2,41 +2,39 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
-import { thunkCreatePlaylist, thunkGetPlaylist, thunkUpdatePlaylist } from '../../store/playlists';
+import { thunkGetPlaylist, thunkUpdatePlaylist } from '../../store/playlists';
 
 export default function PlaylistUpdateForm() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const sessionUser = useSelector((state) => state.session.user);
     const [errors, setErrors] = useState({});
     const {playlistId} = useParams()
-    
+
     const [formData, setFormData] = useState({
       name: "",
       playlistCover: null,
       description: "",
     });
-    
+
     const handleInputChange = (e) => {
       const { name, value, type, files } = e.target;
-    
+
       setFormData((prevFormData) => {
         const updatedFormData = { ...prevFormData };
-    
+
         if (type === "file") {
           updatedFormData[name] = files[0];
         } else {
           updatedFormData[name] = value;
         }
-    
-    
+
+
         return updatedFormData;
       });
     };
 
-    console.log("🚀 ~ file: PlaylistUpdateForm.js:19 ~ PlaylistUpdateForm ~ formData:", formData)
 
-    
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       setErrors({});
@@ -47,11 +45,10 @@ export default function PlaylistUpdateForm() {
         delete formDataToSend["playlistCover"]
       }
       formDataToSend.append("description", formData.description);
-    
-    
+
+
       const response = await dispatch(thunkUpdatePlaylist(formDataToSend,playlistId));
-      console.log("🚀 ~ file: PlaylistUpdateForm.js:53 ~ handleSubmit ~ response:", response)
-    
+
       if (!response.errors) {
         history.push(`/playlists/${playlistId}`);
       } else {
@@ -71,8 +68,8 @@ export default function PlaylistUpdateForm() {
         fetchPlaylistData();
       }
     , [dispatch, playlistId]);
-    
-    
+
+
     return (
       <form onSubmit={handleSubmit}>
         <label>
@@ -85,17 +82,17 @@ export default function PlaylistUpdateForm() {
           />
           {errors.name && <div style={{color:"red"}}>{errors.name}</div>}
         </label>
-    
+
         <br />
-    
+
         <label>
-          Playlist Cover:
+          Update Playlist Cover (Optional):
           <input type="file" name="playlistCover" onChange={handleInputChange} />
           {errors.playlistCover && <div style={{color:"red"}} >{errors.playlistCover}</div>}
         </label>
-    
+
         <br />
-    
+
         <label>
           Description:
           <textarea
@@ -106,9 +103,9 @@ export default function PlaylistUpdateForm() {
           />
           {errors.description && <div style={{color:"red"}} >{errors.description}</div>}
         </label>
-    
+
         <br />
-    
+
         <button type="submit">Submit</button>
       </form>
     );

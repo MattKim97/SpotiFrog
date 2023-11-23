@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { thunkAddSongToAlbum, thunkGetAlbum, thunkRemoveSongFromAlbum } from '../../store/albums'
-
+import { thunkAddSongToAlbum, thunkRemoveSongFromAlbum } from '../../store/albums'
 import { thunkGetAllSongs } from '../../store/songs'
-import { fetchData } from '../../store/csrf'
 
 export default function AddRemoveSongForm() {
     const history = useHistory()
@@ -13,10 +11,7 @@ export default function AddRemoveSongForm() {
     const {albumId} = useParams()
 
     const sessionUser = useSelector(state => state.session.user)
-    // const album = useSelector(state => state.albums[albumId])
     const allSongs = useSelector(state => state.songs)
-
-    // const [isLoaded, setIsLoaded] = useState(false)
 
     // list of songs in album / playlist
     const [albumSongs, setAlbumSongs] = useState([])
@@ -30,7 +25,7 @@ export default function AddRemoveSongForm() {
 
     useEffect(() => {
         dispatch(thunkGetAllSongs())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (sessionUser){
@@ -67,10 +62,8 @@ export default function AddRemoveSongForm() {
         let errors = {}
 
         if (removedSongs.size) {
-            console.log("REMOVING SONGS: ", removedSongs)
             for (let songId of [...removedSongs]) {
                 const res = await dispatch(thunkRemoveSongFromAlbum(albumId, songId))
-                console.log("RESULTS", res)
                 if (res.errors) {
                     for (let [type, msg] of Object.entries(res.errors)) {
                     errors[songId] = `${type}: ${msg}`
@@ -79,7 +72,6 @@ export default function AddRemoveSongForm() {
             }
         }
         if (addedSongs.size) {
-            console.log("ADDING SONGS", addedSongs)
             for (let songId of [...addedSongs]) {
                 const res = await dispatch(thunkAddSongToAlbum(albumId, songId))
                 if (res.errors) {

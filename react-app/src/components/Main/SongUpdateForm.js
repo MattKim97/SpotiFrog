@@ -45,7 +45,7 @@ export default function UpdateSongForm() {
     if (!response.errors) {
       history.push(`/songs/${songId}`);
     } else {
-      setErrors(response.errors);
+      setErrors((prevErrors) => ({ ...prevErrors, ...response.errors }));
     }
   };
 
@@ -81,7 +81,7 @@ export default function UpdateSongForm() {
         <br />
 
         <label>
-            Album (optional):
+        Update Album (optional):
             <select
             name="albumId"
             value={formData.albumId}
