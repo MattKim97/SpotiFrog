@@ -43,14 +43,23 @@ def create_song():
 
         if "url" not in upload:
             return upload, 401
-
-        new_song = {
+        
+        if form.albumId.data is 0 or form.albumId.data is "0":
+            new_song = {
             "userId": current_user.id,
-            "albumId": form.albumId.data,
+            "albumId": None,
             "name": form.name.data,
             "mp3": upload["url"],
             "lyrics": form.lyrics.data,
         }
+        else:
+            new_song = {
+                "userId": current_user.id,
+                "albumId": form.albumId.data,
+                "name": form.name.data,
+                "mp3": upload["url"],
+                "lyrics": form.lyrics.data,
+            }
         new_song["playtimeLength"] = analyzePlayTime(mp3_data)
         if new_song["albumId"]:
             album = Album.query.get(new_song["albumId"])
