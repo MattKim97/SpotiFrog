@@ -10,7 +10,7 @@ export default function AlbumCard({format, album}) {
         <div className={`AlbumCardContainer${format}`}>
         <Link to={`/albums/${album.id}`}>
             <div className={`album${format}`}>
-                <img src={imageUrl}/>
+                <img src={imageUrl} alt="Album"/>
                 <div>
                     <h3>{album.name}</h3>
                     <h4>{year} • {album.artist}</h4>

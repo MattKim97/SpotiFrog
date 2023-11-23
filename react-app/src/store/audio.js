@@ -1,6 +1,6 @@
-const CHANGE_PLAYLIST = 'audioPlayer/CHANGE_PLAYLIST'
-const CHANGE_TRACK = 'audioPlayer/CHANGE_TRACK'
-const SET_IS_PLAYING = 'audioPlayer/SET_IS_PLAYING'
+const CHANGE_PLAYLIST = 'audio/CHANGE_PLAYLIST'
+const CHANGE_TRACK = 'audio/CHANGE_TRACK'
+const SET_IS_PLAYING = 'audio/SET_IS_PLAYING'
 
 export const changePlaylist = (playlist, track) => ({
     type: CHANGE_PLAYLIST,
@@ -23,7 +23,7 @@ const initialState = {
     track: 0,
     isPlaying: false
 }
-function audioPlayerReducer(state = initialState, action) {
+function audioReducer(state = initialState, action) {
     // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
     // console.log(`action: type${action.type} action${action}`)
     switch (action.type) {
@@ -36,7 +36,7 @@ function audioPlayerReducer(state = initialState, action) {
                     isPlaying: true
                 }
             else if (state.track === action.track) return state
-        /* intentional fall-through */
+	// eslint-disable-next-line no-fallthrough
         case CHANGE_TRACK:
             if (state.track === action.track) return state
             return {
@@ -52,4 +52,4 @@ function audioPlayerReducer(state = initialState, action) {
     }
 }
 
-export default audioPlayerReducer
+export default audioReducer

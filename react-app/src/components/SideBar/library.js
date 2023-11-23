@@ -70,7 +70,7 @@ export default function Library() {
           // if there is no user logged in
           setSidebarLoaded(true);
         }
-    }, [dispatch, sessionUser, userLoaded])
+    }, [dispatch, sessionUser, userLoaded, setSidebarLoaded])
 
     if (!albums || albums.length === 0) return null
     if (!playlists || playlists.length === 0) return null

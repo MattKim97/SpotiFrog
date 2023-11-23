@@ -20,7 +20,7 @@ export default function AddToPlaylist({userPlaylists, songId}) {
     }
 
     const addSong = async playlistId => {
-        const answer = await dispatch(thunkAddToPlaylist(playlistId, songId))
+        await dispatch(thunkAddToPlaylist(playlistId, songId))
         history.push(`/playlists/${playlistId}`)
     }
 

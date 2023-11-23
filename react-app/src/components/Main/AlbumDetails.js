@@ -6,7 +6,6 @@ import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./Main.css";
-import LikeSong from '../SongCard/LikeSong'
 
 export default function AlbumDetails() {
   const { albumId } = useParams();
@@ -46,7 +45,7 @@ export default function AlbumDetails() {
   useEffect(() => {
     dispatch(thunkGetAlbum(albumId));
     dispatch(thunkGetAllSongs());
-  }, [dispatch]);
+  }, [dispatch, albumId]);
 
   if (!albums) return null;
   if (!allSongs) return null;

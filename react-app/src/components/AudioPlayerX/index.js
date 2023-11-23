@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
-import { setIsPlaying } from '../../store/audioPlayer'
+import { setIsPlaying } from '../../store/audio'
 
 
 function AudioPlayerX({playlist, selectionIndex, onRemove}) {
