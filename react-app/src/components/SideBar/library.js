@@ -5,9 +5,11 @@ import { thunkGetAllAlbums } from '../../store/albums'
 // import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
-import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
+import { thunkGetUserPlaylist } from '../../store/playlists'
 import { useContentLoaded } from '../../context/ContentLoaded'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { thunkGetAllSongs } from '../../store/songs'
+import SongCard from '../SongCard'
 
 export default function Library() {
     const {userLoaded, setSidebarLoaded} = useContentLoaded()
@@ -16,18 +18,41 @@ export default function Library() {
     const dispatch = useDispatch()
     const albums = Object.values(useSelector(state => state.albums))
     const playlists = Object.values(useSelector(state => state.playlists))
+    const songs = Object.values(useSelector(state => state.songs))
 
   const onClickSong = () => {
-    console.log('clicked')
     history.push('/songs/new')
   }
+
+  const onClickAlbum = () => {
+    history.push('/albums')
+  }
+
+  const onClickPlaylist = () => {
+    history.push('/playlists')
+  }
+
+  const onClickAlbumCreate = () =>{
+    history.push('/albums/new')
+  }
+
+  const onClickPlaylistCreate = () =>{
+    history.push('/playlists/new')
+  }
+
+  const seeSongs = () => {
+    history.push('/songs')
+  }
+
 
 
     let userAlbums = []
     let userPlaylists = []
+    let userSongs = []
     if (sessionUser){
       userAlbums = albums.filter(album => album.userId === sessionUser.id)
       userPlaylists = playlists.filter(playlist => playlist.userId === sessionUser.id)
+      userSongs = songs.filter(song => song.userId === sessionUser.id)
     }
 
     const [activeTab, setActiveTab] = useState('albums')
@@ -39,6 +64,7 @@ export default function Library() {
         if (sessionUser) {
           dispatch(thunkGetAllAlbums())
           dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
+          dispatch(thunkGetAllSongs)
         }
         else if (userLoaded) {
           // if there is no user logged in
@@ -47,14 +73,8 @@ export default function Library() {
     }, [dispatch, sessionUser, userLoaded])
 
     if (!albums || albums.length === 0) return null
-
-  // useEffect(() => {
-  //   if (sessionUser) {
-  //       dispatch(thunkGetUserPlaylist())
-  //   }
-  // }, [dispatch, sessionUser])
-
-  // if (!playlists || playlists.length === 0) return null
+    if (!playlists || playlists.length === 0) return null
+    if (!songs || songs.length === 0) return null
 
   return (
     <div >
@@ -63,32 +83,47 @@ export default function Library() {
         <div className='SideBarLinksContainer'>
           <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
           <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
+          <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}>Songs</div>
+
         </div>
        : <a href='/login'>Log in to view your library</a>}
 
-      {sessionUser ?
+{sessionUser ?
+  <div>
+    {activeTab === 'albums' ?
+      <div>
+        {userAlbums.length > 0 ? userAlbums.map((album) => (
+          <div key={album.id}>
+            <AlbumCard format="side" album={album} />
+          </div>
+        )) : null}
+          <button onClick={onClickAlbumCreate}>Create a Album</button>
+        <button type='button' onClick={onClickAlbum}>See All Albums</button>
+      </div>
+      : activeTab === 'playlists' ?
         <div>
-          {activeTab === 'albums' ?
-           <div>
-            {userAlbums.length > 0 ? userAlbums.map((album)=> (
-            <div key={album.id}>
-              <AlbumCard format="side" album={album}/>
-            </div>)): null}
-            <a href='/albums/new'>Create an album</a>
-           </div>
-           : activeTab === 'playlists' ?
-           <div>
-            {userPlaylists.length > 0 ? userPlaylists.map((playlist)=> (
+          {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
             <div key={playlist.id}>
-              <PlaylistCard format="side" playlist={playlist}/>
-            </div>)): null}
-            <a href='/playlists/new'>Create a playlist</a>
-           </div>
-           : "No active tab set"
-          }
-          <button type='button' onClick={onClickSong}>Upload a Song</button>
+              <PlaylistCard format="side" playlist={playlist} />
+            </div>
+          )) : null}
+          <button onClick={onClickPlaylistCreate}>Create a Playlist</button>
+          <button type='button' onClick={onClickPlaylist}>See All Playlists</button>
         </div>
-        : null}
+        : activeTab === 'songs' ?
+          <div>
+            {userSongs.length > 0 ? userSongs.map((song) => (
+              <div key={song.id}>
+                <SongCard format={"side"} song={song}/>
+              </div>
+            )) : null}
+            <button type='button' onClick={onClickSong}>Create a song</button>
+            <button type='button' onClick={seeSongs}>See All Songs</button>
+          </div>
+          : "No active tab set"
+    }
+  </div>
+  : null}
     </div>
   )
 }
