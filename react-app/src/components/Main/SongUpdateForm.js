@@ -45,7 +45,7 @@ export default function UpdateSongForm() {
     if (!response.errors) {
       history.push(`/songs/${songId}`);
     } else {
-      setErrors(response.errors);
+      setErrors((prevErrors) => ({ ...prevErrors, ...response.errors }));
     }
   };
 

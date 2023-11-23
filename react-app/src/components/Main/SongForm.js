@@ -57,12 +57,12 @@ export default function SongForm() {
       }));
     }
 
-    // if (!formData.name) {
-    //   setErrors((prevErrors) => ({
-    //     ...prevErrors,
-    //     name: "Please enter a name",
-    //   }));
-    // }
+    if (!formData.name) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        name: "Please enter a name",
+      }));
+    }
     const response = await dispatch(thunkCreateSong(formDataToSend));
 
     if (!response.errors) {
