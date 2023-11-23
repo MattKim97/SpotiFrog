@@ -20,6 +20,8 @@
     --buttonBackgroundColor: rgb(255,255,255);
     --buttonTextColor: rgb(0,0,0);
     --buttonBorder: 1px rgb(0,0,0) solid;
+    --buttonBackgroundAccent: rgb(230,230,230);
+
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -182,6 +184,12 @@ h2 {
 .logout-button {
     border: var(--buttonBorder);
     border-radius: var(--buttonBorderRadius);
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.logout-button:hover, .profile-button:hover {
+    background-color: var(--buttonBackgroundAccent);
 }
 
 /* ******* SongDetails *************** */
