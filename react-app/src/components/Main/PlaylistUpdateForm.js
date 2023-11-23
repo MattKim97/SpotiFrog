@@ -89,7 +89,7 @@ export default function PlaylistUpdateForm() {
         <br />
     
         <label>
-          Playlist Cover:
+          Update Playlist Cover:
           <input type="file" name="playlistCover" onChange={handleInputChange} />
           {errors.playlistCover && <div style={{color:"red"}} >{errors.playlistCover}</div>}
         </label>
