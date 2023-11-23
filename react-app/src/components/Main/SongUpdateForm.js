@@ -81,7 +81,7 @@ export default function UpdateSongForm() {
         <br />
 
         <label>
-            Album (optional):
+        Update Album (optional):
             <select
             name="albumId"
             value={formData.albumId}
