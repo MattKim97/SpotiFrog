@@ -61,6 +61,7 @@ export default function PlayListDetails() {
   }, [dispatch, sidebarLoaded]);
 
   if (!playlist) return null;
+  if (!playlistSongs) return null;
 
   return (
 
