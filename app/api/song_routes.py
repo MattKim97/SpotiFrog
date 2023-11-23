@@ -43,8 +43,8 @@ def create_song():
 
         if "url" not in upload:
             return upload, 401
-        
-        if form.albumId.data is 0 or form.albumId.data is "0":
+
+        if not form.albumId.data or form.albumId.data == "0":
             new_song = {
             "userId": current_user.id,
             "albumId": None,
@@ -90,7 +90,7 @@ def update_song(id):
     form = UpdateSongForm()
     album_ids = [album.id for album in current_user.albums]
 
-    
+
     if form.albumId.data is not None and form.albumId.data not in album_ids:
         return error_message("album", "Invalid Album"), 401
 
