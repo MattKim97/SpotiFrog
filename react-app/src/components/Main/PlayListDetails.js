@@ -17,7 +17,7 @@ export default function PlayListDetails() {
   const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false)
+  // const [isLoaded, setIsLoaded] = useState(false)
 
   const history = useHistory();
 
@@ -55,11 +55,12 @@ export default function PlayListDetails() {
 
   useEffect(() => {
     if (sidebarLoaded) {
-      dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId))).then(()=>setIsLoaded(true))
+      dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId)))
+      // .then(()=>setIsLoaded(true))
     }
   }, [dispatch, sidebarLoaded]);
 
-  if (!playlist || !isLoaded) return null;
+  if (!playlist) return null;
 
   return (
 
@@ -115,7 +116,7 @@ export default function PlayListDetails() {
                     </div>
                   )
                 : null}
-      <div>   {playlistSongs && playlistSongs.map((song) => (
+      <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song) => (
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
             <div>{song.name}</div>
             <div>{song.artist}</div>

@@ -33,6 +33,6 @@ class Album(db.Model):
                     "releaseDate": self.releaseDate
                 }
         if scope == "songs_details":
-            d["songs"] = [song.to_dict() for song in self.songs]
+            d["songs"] = [song.id for song in self.songs]
 
         return d

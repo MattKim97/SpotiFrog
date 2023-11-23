@@ -1,6 +1,5 @@
 import { fetchData } from "./csrf"
 
-
 const GOT_ALL_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
 const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
 const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
@@ -80,18 +79,18 @@ export const thunkGetPlaylist = id => async dispatch => {
 export const thunkCreatePlaylist = formData => async dispatch => {
     try {
         const url = `/api/playlists/new`
-  
+
         const response = await fetch(url, {
           method: 'POST',
           body: formData
         });
-  
+
         const responseData = await response.json();
-  
+
         if (response.ok) {
           dispatch(createdPlaylist(responseData));
         }
-  
+
         return responseData;
       } catch (error) {
         return { errors: { system: error.message } };
@@ -100,7 +99,7 @@ export const thunkCreatePlaylist = formData => async dispatch => {
 
 export const thunkUpdatePlaylist = (formData, id) => async dispatch => {
     const url = `/api/playlists/${id}`
-    
+
     const answer = await fetch(url, {
         method: 'PUT',
         body: formData
