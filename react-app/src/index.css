@@ -51,7 +51,7 @@ time, mark, audio, video {
     color: var(--textColor);
 }
 
-html {
+html, form {
     background-color: var(--backgroundColor);
 }
 
@@ -144,6 +144,7 @@ h2 {
 }
 .MainContainer{
     grid-area: main;
+    background: linear-gradient(var(--backgroundAccent), black);
 }
 .FooterContainer{
     grid-area: footer;
@@ -227,10 +228,10 @@ h2 {
 }
 
 /*********** LOGIN MODAL **********************/
-.login-modal * {
+/* .login-modal * {
     background-color: white;
     border: red 1px dashed;
-}
+} */
 
 /****************** MAIN CONTAINER ***********************/
 .MainContainer {
