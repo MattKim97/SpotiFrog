@@ -2,15 +2,24 @@
 :root { /* Nunito?. Montserrat? cf public/index.html */
     --fontFamily: "Figtree", sans-serif ;
     --fontSize: 14px ;
-    --inputBackground: rgb(247,247,247) ;
     --headingSize: 24pt ;
     --subheadingSize: 16pt ;
     --subheadingWeight: 550 ;
     --buttonBorderRadius: 10px ;
     --imgBorderRadius: 14px ;
+
+    --inputBackground: rgb(247,247,247) ;
     --boxShadow: 2px 2px darkgray ;
     --boxShadowHover: 4px 4px darkgray ;
-    --accentGreen: rgb(0,255,100)
+    --accentGreen: rgb(0,255,100);
+    --borderColor: rgb(0,0,0);
+    --backgroundColor: rgb(0,0,0);
+    --backgroundAccent: rgb(50,50,50);
+    --textColor: rgb(255,255,255);
+    --backgroundTextColor: rgb(230,230,230);
+    --buttonBackgroundColor: rgb(255,255,255);
+    --buttonTextColor: rgb(0,0,0);
+    --buttonBorder: 1px rgb(0,0,0) solid;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -36,6 +45,8 @@ time, mark, audio, video {
 	font-size: 100% ;
 	font: inherit ;
 	vertical-align: baseline ;
+    background-color: var(--backgroundColor);
+    color: var(--textColor);
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -135,6 +146,44 @@ h2 {
     grid-area: sound;
 }
 
+/********************** NAVIGATION ************************* */
+.profile-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: var(--borderColor) 1px solid;
+    border-radius: var(--buttonBorderRadius);
+    padding: 5px;
+    background-color: var(--buttonBackgroundColor);
+}
+
+.fa-user-circle {
+    color: var(--backgroundColor);
+    background-color: var(--buttonBackgroundColor);
+    font-size: large;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  border: var(--borderColor) 1px solid;
+  padding: 10px;
+  border-radius: var(--buttonBorderRadius);
+  background-color: var(--buttonBackgroundColor);
+  color: var(--buttonTextColor);
+}
+
+.profile-dropdown * {
+    background-color: var(--buttonBackgroundColor);
+    color: var(--buttonTextColor);
+}
+
+.logout-button {
+    border: var(--buttonBorder);
+    border-radius: var(--buttonBorderRadius);
+}
+
 /* ******* SongDetails *************** */
 .fa-heart {
     color: var(--accentGreen);
@@ -146,7 +195,7 @@ h2 {
 } */
 
 .playlistSelect {
-    border: 1px black solid;
+    border: 1px var(--borderColor) solid;
     width: fit-content;
     cursor: pointer;
 }

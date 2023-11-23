@@ -8,13 +8,11 @@ export default function RemoveSongFromPlaylist({songId, playlistId}) {
 
     const openModal = (e) => {
         e.stopPropagation()
-        e.preventDefault()
         setIsModalOpen(true)
     }
 
     const closeModal = (e) => {
         e.stopPropagation()
-        e.preventDefault()
         setIsModalOpen(false)
     }
 
