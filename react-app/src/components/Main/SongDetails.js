@@ -13,7 +13,6 @@ export default function SongDetails() {
   const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const history = useHistory();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [liked, setLiked] = useState(null);
   const [coverImg, setCoverImg] = useState(
     "https://static.thenounproject.com/png/4974686-200.png"

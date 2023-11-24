@@ -9,7 +9,6 @@ import MusicPlayer from "./components/MusicPlayer";
 import { ContentLoadedProvider } from "./context/ContentLoaded";
 function App() {
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-unused-vars
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
