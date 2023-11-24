@@ -22,9 +22,10 @@ export async function csrfFetch(url, options = {}) {
   // call the default window's fetch with the url and the options passed in
   let res;
     try {
-      // console.trace();
+      console.trace();
       res = await window.fetch(url, options);
     } catch (error) {
+      // console.error(error);
       error.status = error.status || 500;
       if (error.errors) error.errors.fetch = "Failed to Fetch"
       else error.errors = {"fetch": "Failed to Fetch"}

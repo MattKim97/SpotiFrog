@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer /*, { RHAP_UI } */ from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
 
-import { changeTrack, setIsPlaying } from '../../store/audio'
+import { changeTrack, setIsPaused, setIsPlaying } from '../../store/audio'
 import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton2 from '../PlayButton2'
 
@@ -71,7 +71,15 @@ if (!mp3s["first"]?.length) {
 }
 // END TEMPORARY CODE
 
-const handleClickPrevious = () => {
+  function handleClickNext() {
+    const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
+    console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
+    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
+    // const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
+    dispatch(changeTrack(nextTrackIndex))
+    setIsPlaying(true)
+  }
+  const handleClickPrevious = () => {
     const prevTrackIndex = (track ? track : playlist.length) - 1 // back to end
     console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
 
@@ -80,14 +88,15 @@ const handleClickPrevious = () => {
     dispatch(changeTrack(prevTrackIndex))
     setIsPlaying(true)
   }
-  const handleClickNext = () => {
-    const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
-    console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
-    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
-    // const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
-    dispatch(changeTrack(nextTrackIndex))
-    setIsPlaying(true)
-  }
+
+function handleEnded() {
+  console.log(`ENDED: ${track} ${playlist[track]}`)
+  handleClickNext()
+}
+function handlePause() {
+  console.log(`PAUSE: ${track} ${playlist[track]}`)
+  dispatch(setIsPaused(true))
+}
 
 if (!playlist || !playlist.length ||
       track < 0 || track >= playlist.length) {
@@ -116,9 +125,27 @@ if (!playlist || !playlist.length ||
         layout='stacked-reverse'
         loop={false}
         muted={false}
+        onAbort={() => console.log("ABORT")}
+        onCanPlay={() => console.log("CAN PLAY")}
+        onCanPlayThrough={() => console.log("CAN PLAY THROUGH")}
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPrevious}
-        onEnded={handleClickNext}
+        onEmptied={() => console.log("EMPTIED")}
+        onEnded={handleEnded}
+        onError={() => console.log("ERROR")}
+        onLoadStart={() => console.log("LOAD START")}
+        onLoadedData={() => console.log("LOADED DATA")}
+        onLoadedMetaData={() => console.log("LOADED META DATA")}
+        onPause={handlePause}
+        onPlay={() => console.log("PLAY")}
+        onPlayError={() => console.log("PLAY ERROR")}
+        onPlaying={() => console.log("PLAYING")}
+        onProgress={() => console.log("PROGRESS")}
+        onSeeked={() => console.log("SEEKED")}
+        onSeeking={() => console.log("SEEKING")}
+        onSuspend={() => console.log("SUSPEND")}
+        onVolumeChanged={() => console.log("VOLUME CHANGED")}
+        onWaiting={() => console.log("WAITING")}
         preload='auto'
         ref={audio}
         showFilledProgress={true}
@@ -192,16 +219,16 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function choice(arr) {
-  return arr[getRandomInt(0, arr.length - 1)]
-}
+// function choice(arr) {
+//   return arr[getRandomInt(0, arr.length - 1)]
+// }
 
-function choices(arr, num) {
-  const result = []
-  for (let i = 0; i < num; i++) {
-    result.push(choice(arr))
-  }
-  return result
-}
+// function choices(arr, num) {
+//   const result = []
+//   for (let i = 0; i < num; i++) {
+//     result.push(choice(arr))
+//   }
+//   return result
+// }
 // END TEMPORARY CODE
 export default MusicPlayer;
