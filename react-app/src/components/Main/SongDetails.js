@@ -5,7 +5,6 @@ import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
 import LikeSong from "../SongCard/LikeSong";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AddToPlaylist from '../SongCard/AddToPlaylist'
-import { thunkGetAllPlaylists, thunkGetUserPlaylist } from '../../store/playlists'
 import { useContentLoaded } from "../../context/ContentLoaded";
 import { consumeUserPlaylists } from "../../store/playlists";
 
@@ -14,7 +13,8 @@ export default function SongDetails() {
   const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const history = useHistory();
-  const [liked, setLiked] = useState(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const [liked, setLiked] = useState(null);
   const [coverImg, setCoverImg] = useState(
     "https://static.thenounproject.com/png/4974686-200.png"
   );
@@ -54,7 +54,7 @@ export default function SongDetails() {
         dispatch(thunkGetSong(songId))
         // dispatch(thunkGetUserPlaylist(sessionUser.id))
       }
-    }, [dispatch, sidebarLoaded]);
+    }, [dispatch, sidebarLoaded, songId]);
 
   useEffect(() => {
     if (sessionUser && song) {
@@ -73,10 +73,10 @@ export default function SongDetails() {
   const {
     albumName,
     name,
-    mp3,
+    // mp3,
     uploadedAt,
     playtimeLength,
-    albumTrackNumber,
+    // albumTrackNumber,
     lyrics,
     userLikes,
     artist,
@@ -107,7 +107,7 @@ export default function SongDetails() {
           </div>
         </div>
       )}
-      <img className="albumCover" src={coverImg} />
+      <img className="albumCover" src={coverImg} alt="Album Cover"/>
       <h2>{name}</h2>
       <h3>{artist}</h3>
       <h3>

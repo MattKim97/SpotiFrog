@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
-import { thunkCreatePlaylist, thunkGetPlaylist, thunkUpdatePlaylist } from '../../store/playlists';
+import { thunkGetPlaylist, thunkUpdatePlaylist } from '../../store/playlists';
 
 export default function PlaylistUpdateForm() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const sessionUser = useSelector((state) => state.session.user);
     const [errors, setErrors] = useState({});
     const {playlistId} = useParams()
 
@@ -34,7 +33,6 @@ export default function PlaylistUpdateForm() {
       });
     };
 
-    console.log("🚀 ~ file: PlaylistUpdateForm.js:19 ~ PlaylistUpdateForm ~ formData:", formData)
 
 
     const handleSubmit = async (e) => {
@@ -50,7 +48,6 @@ export default function PlaylistUpdateForm() {
 
 
       const response = await dispatch(thunkUpdatePlaylist(formDataToSend,playlistId));
-      console.log("🚀 ~ file: PlaylistUpdateForm.js:53 ~ handleSubmit ~ response:", response)
 
       if (!response.errors) {
         history.push(`/playlists/${playlistId}`);

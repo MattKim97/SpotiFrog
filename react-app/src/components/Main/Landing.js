@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkGetAllAlbums } from "../../store/albums";
 import { thunkGetAllPlaylists } from "../../store/playlists";

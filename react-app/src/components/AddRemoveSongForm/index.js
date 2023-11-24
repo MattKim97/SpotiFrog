@@ -31,9 +31,9 @@ export default function AddRemoveSongForm() {
         if (sessionUser){
             const songs = Object.values(allSongs)
 
-            setAlbumSongs(songs.filter(song => song.albumId==albumId))
+            setAlbumSongs(songs.filter(song => song.albumId===albumId))
 
-            setUserSingles(songs.filter(song => song.userId==sessionUser.id && !song.albumId))
+            setUserSingles(songs.filter(song => song.userId===sessionUser.id && !song.albumId))
         }
     }, [allSongs, sessionUser, albumId])
 
