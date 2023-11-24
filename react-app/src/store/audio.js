@@ -46,7 +46,8 @@ function audioReducer(state = initialState, action) {
                     ...state,
                     playlist: action.playlist,
                     track: action.track,
-                    isPlaying: true
+                    isPlaying: true,
+                    isPaused: false
                 }
             else if (state.track === action.track) return state
 	// eslint-disable-next-line no-fallthrough
@@ -57,9 +58,13 @@ function audioReducer(state = initialState, action) {
                 track: action.track
             }
         case SET_IS_PLAYING:
-            return state.isPlaying === action.isPlaying
-                ? state
-                : { ...state, isPlaying: action.isPlaying }
+            if (state.isPlaying === action.isPlaying) return state
+            if (action.isPlaying && state.isPaused) return { ...state, isPaused: false, isPlaying: true }
+            return { ...state, isPlaying: action.isPlaying }
+        case SET_IS_PAUSED:
+            if (state.isPaused === action.isPaused) return state
+            return { ...state, isPaused: action.isPaused, isPlaying: !action.isPaused
+            }
         case CHANGE_SONGS:
             return state.songs === action.songs
                 ? state
