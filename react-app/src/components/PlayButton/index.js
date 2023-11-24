@@ -11,9 +11,6 @@ const PlayButton = memo(
   const [isOn, setIsOn] = useState(false)
 
 
-
-
-
   if (isOn && !(playlist === tracks && trackIndex === track && isPlaying))
      setIsOn(false)
 

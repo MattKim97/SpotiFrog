@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { createRef, memo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer /*, { RHAP_UI } */ from 'react-h5-audio-player'
 import 'react-h5-audio-player/lib/styles.css'
@@ -23,6 +23,7 @@ const MusicPlayer = memo(function MusicPlayer() {
 
   const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
+  const audio = createRef()
   let test1 = []; let test2 = []; // TEMPORARY CODE
 
 
@@ -79,11 +80,11 @@ if (!playlist || !playlist.length ||
     <>
       <h1>test1</h1>
       <ul>
-        {test1.map((url, i) => <li key={i}><PlayButton2 tracks={test1} trackIndex={i} />{url}</li>)}
+        {test1.map((url, i) => <li key={i}><PlayButton2 tracks={test1} trackIndex={i} audio={audio} />{url}</li>)}
       </ul>
       <h1>test2</h1>
       <ul>
-        {test2.map((url, i) => <li key={i}><PlayButton2 tracks={test2} trackIndex={i} /> {url} </li>)}
+        {test2.map((url, i) => <li key={i}><PlayButton2 tracks={test2} trackIndex={i} audio={audio} /> {url} </li>)}
       </ul>
       </>
     }
@@ -98,6 +99,7 @@ if (!playlist || !playlist.length ||
         onClickPrevious={handleClickPrevious}
         onEnded={handleClickNext}
         preload='auto'
+        ref={audio}
         showDownloadProgress={true}
         showFilledProgress={true}
         showFilledVolume={true}
