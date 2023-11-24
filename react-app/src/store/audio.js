@@ -1,6 +1,8 @@
 const CHANGE_PLAYLIST = 'audio/CHANGE_PLAYLIST'
 const CHANGE_TRACK = 'audio/CHANGE_TRACK'
 const SET_IS_PLAYING = 'audio/SET_IS_PLAYING'
+const CHANGE_SONGS = 'audio/CHANGE_SONGS'
+const SET_IS_PAUSED = 'audio/SET_IS_PAUSED'
 
 export const changePlaylist = (playlist, track) => ({
     type: CHANGE_PLAYLIST,
@@ -8,9 +10,19 @@ export const changePlaylist = (playlist, track) => ({
     track
 })
 
+export const changeSongs = songs => ({
+    type: CHANGE_PLAYLIST,
+    songs
+})
+
 export const changeTrack = track => ({
     type: CHANGE_TRACK,
     track
+})
+
+export const setIsPaused = isPaused => ({
+    type: SET_IS_PAUSED,
+    isPaused
 })
 
 export const setIsPlaying = isPlaying => ({
@@ -21,7 +33,8 @@ export const setIsPlaying = isPlaying => ({
 const initialState = {
     playlist: [],       // playlist is an array of mp3 URLs
     track: 0,
-    isPlaying: false
+    isPlaying: false,
+    songs: []
 }
 function audioReducer(state = initialState, action) {
     // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
@@ -47,6 +60,10 @@ function audioReducer(state = initialState, action) {
             return state.isPlaying === action.isPlaying
                 ? state
                 : { ...state, isPlaying: action.isPlaying }
+        case CHANGE_SONGS:
+            return state.songs === action.songs
+                ? state
+                : { ...state, songs: action.songs }
         default:
             return state
     }
