@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetPlaylist} from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
-import LikeSong from "../SongCard/LikeSong";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
 import { useContentLoaded } from "../../context/ContentLoaded";
 import RemoveSongFromPlaylist from "./RemoveSongFromPlaylist";
@@ -30,9 +29,9 @@ export default function PlayListDetails() {
     setIsModalOpen(false);
   };
 
-  const onClickAdd = () => {
-    return history.push(`/playlists/${playlistId}/change-songs`)
-  };
+  // const onClickAdd = () => {
+  //   return history.push(`/playlists/${playlistId}/change-songs`)
+  // };
 
   const onClickDelete = () => {
     openModal();
@@ -58,7 +57,7 @@ export default function PlayListDetails() {
       dispatch(thunkGetAllSongs()).then(()=>dispatch(thunkGetPlaylist(playlistId)))
       // .then(()=>setIsLoaded(true))
     }
-  }, [dispatch, sidebarLoaded]);
+  }, [dispatch, sidebarLoaded, playlistId]);
 
   if (!playlist) return null;
   if (!playlistSongs) return null;
@@ -122,7 +121,7 @@ export default function PlayListDetails() {
             <div>{song.name}</div>
             <div>{song.artist}</div>
 
-            {sessionUser && sessionUser.id == playlist.userId &&
+            {sessionUser && sessionUser.id === playlist.userId &&
               <>
               {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
               <RemoveSongFromPlaylist songId={song.id}playlistId={playlistId}/>

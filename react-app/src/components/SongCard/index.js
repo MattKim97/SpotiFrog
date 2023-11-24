@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import "./SongCard.css"
-import LikeSong from './LikeSong'
+// import LikeSong from './LikeSong'
 
 export default function SongCard({format, song}) {
     return (

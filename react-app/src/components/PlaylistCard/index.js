@@ -10,7 +10,7 @@ export default function PlaylistCard({format, playlist}) {
         <Link to={`/playlists/${playlist.id}`}>
             <div className={`playlist${format}`}>
                 <div>
-                    <img src={imageUrl}/>
+                    <img src={imageUrl} alt="Playlist"/>
                 </div>
                 <h3>{playlist.name}</h3>
                 {format === "main" ? <h4>{playlist.description}</h4> : null}

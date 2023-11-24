@@ -19,7 +19,7 @@ export default function Index() {
       setIsLoaded(true);
       setUserLoaded(true)
     });
-  }, [dispatch]);
+  }, [dispatch, setUserLoaded]);
 
   return (
     <div className='HeaderStyle'>

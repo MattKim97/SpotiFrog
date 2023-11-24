@@ -1,15 +1,14 @@
 import React from 'react'
 import { thunkCreateAlbum } from '../../store/albums';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
-import { format, set } from 'date-fns';
+import { format } from 'date-fns';
 
 export default function AlbumForm() {
 
 const dispatch = useDispatch();
 const history = useHistory();
-const sessionUser = useSelector((state) => state.session.user);
 const [errors, setErrors] = useState({});
 
 const [formData, setFormData] = useState({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { thunkLikeSong, thunkUnlikeSong } from '../../store/session'
-import { likeSong, thunkGetSong, unlikeSong } from '../../store/songs'
+import { likeSong, unlikeSong } from '../../store/songs'
 
 export default function LikeSong({likedSongs, songId}) {
     const dispatch = useDispatch()

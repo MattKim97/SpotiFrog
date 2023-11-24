@@ -86,16 +86,15 @@ export const logout = () => async (dispatch) => {
 	}
 };
 
-export const signUp = (formData) => async (dispatch) => {
-	let headers = {}; let body = formData;
+export const signUp = formData => async dispatch => {
+	const headers = {};
+	const body = formData;
 	if (formData.profilePicture)
-		headers = {"Content-Type": "multipart/form-data"}
-	else
-		body = JSON.stringify(formData)
+		headers["Content-Type"] = "multipart/form-data"
 	const response = await fetch("/api/auth/signup", {
 		method: "POST",
 		headers,
-		body: formData,
+		body
 	});
 
 	if (response.ok) {
@@ -158,7 +157,7 @@ function sessionReducer(state = initialState, action) {
 		}
 		case UNLIKE_SONG:
 			const songsLiked = [...state.user.songsLiked]
-			return {user: {...state.user, songsLiked: songsLiked.filter(songId => songId != action.songId)}}
+			return {user: {...state.user, songsLiked: songsLiked.filter(songId => songId !== action.songId)}}
 		default:
 			return state;
 	}

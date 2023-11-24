@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { thunkGetAllSongs } from '../../store/songs'
 import SongCard from '../SongCard'
