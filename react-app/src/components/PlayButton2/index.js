@@ -18,7 +18,6 @@ const PlayButton2 = memo(
   const [isOn, setIsOn] = useState(false)
 
   const dispatch = useDispatch();
-  const [ref] = useState({});
   let isMyTrack = (playlist === tracks && trackIndex === track)
 
   console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} ${trackIndex} isOn: ${isOn} `)
@@ -43,10 +42,11 @@ const PlayButton2 = memo(
       console.log(`Setting ${trackIndex} to on`)
     }
     if (!isMyTrack) { /* start playing new track */
-      if (!ref[rKey]) ref[rKey] = dispatch(changePlaylist(tracks, trackIndex))
+      console.log(" dispatching changePlaylist ")
+      dispatch(changePlaylist(tracks, trackIndex))
+      console.log("returning null")
       return null;
   } else {
-      if (ref[rKey]) delete ref[rKey]
       if (isPaused) {
         console.log(" resuming paused track ")
         audio.current.audio.current.play()
