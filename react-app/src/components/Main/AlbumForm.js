@@ -16,7 +16,6 @@ const [formData, setFormData] = useState({
   albumCover: null,
   releaseDate: null,
 });
-console.log("🚀 ~ file: AlbumForm.js:19 ~ AlbumForm ~ formData:", formData)
 
 const handleInputChange = (e) => {
   const { name, value, type, files } = e.target;
@@ -60,12 +59,6 @@ const handleSubmit = async (e) => {
     setErrors((prevErrors) => ({ ...prevErrors, ...response.errors }));
   }
 };
-
-// useEffect(() => {
-//   if (sessionUser) {
-//     dispatch(thunkGetAllAlbums());
-//   }
-// }, [dispatch, sessionUser]);
 
 
 return (
