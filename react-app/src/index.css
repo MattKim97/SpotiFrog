@@ -170,6 +170,7 @@ h2 {
 .MainContainer{
     grid-area: main;
     background: linear-gradient(var(--backgroundAccent), black);
+    padding: 20px 30px;
 }
 .FooterContainer{
     grid-area: footer;
