@@ -8,7 +8,7 @@ import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton2 from '../PlayButton2'
 
 const MusicPlayer = memo(function MusicPlayer() {
-  const { playlist, track, isPlaying } = useSelector(state => state.audio)
+  const { playlist, track, isPlaying, current } = useSelector(state => state.audio)
 
   const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
@@ -22,12 +22,10 @@ const MusicPlayer = memo(function MusicPlayer() {
 
 // BEGIN TEMPORARY CODE
 // just fills in random songs; remove when info passed
-const rKey = "allSongs"
-const [ref] = useState({[rKey]: null});
 if (!Array.isArray(songs) || !songs.length) {
-    if (!ref[rKey]) ref[rKey] = dispatch(thunkGetAllSongs())
+    dispatch(thunkGetAllSongs())
     return null;
-} else if (ref[rKey]) delete ref[rKey]
+}
 
 console.log("checking songs")
 if (!songs || songs.length < 4) return null
@@ -145,7 +143,7 @@ if (!playlist || !playlist.length ||
         showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
-        src={songMp3(playlist, track)}
+        src={current}
         volume={.5}
 
         // unused settings for react-h5-audio-player

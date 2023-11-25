@@ -3,6 +3,7 @@ const CHANGE_TRACK = 'audio/CHANGE_TRACK'
 const SET_IS_PLAYING = 'audio/SET_IS_PLAYING'
 const CHANGE_SONGS = 'audio/CHANGE_SONGS'
 const SET_IS_PAUSED = 'audio/SET_IS_PAUSED'
+const CURRENT_SELECTION = 'audio/CURRENT_SELECTION'
 
 export const changePlaylist = (playlist, track) => ({
     type: CHANGE_PLAYLIST,
@@ -34,7 +35,8 @@ const initialState = {
     playlist: [],       // playlist is an array of mp3 URLs
     track: 0,
     isPlaying: false,
-    songs: []
+    songs: [],
+    current: ''
 }
 function audioReducer(state = initialState, action) {
     // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
@@ -47,7 +49,8 @@ function audioReducer(state = initialState, action) {
                     playlist: action.playlist,
                     track: action.track,
                     isPlaying: true,
-                    isPaused: false
+                    isPaused: false,
+                    current: action.playlist[action.track]
                 }
             else if (state.track === action.track) return state
 	// eslint-disable-next-line no-fallthrough
@@ -55,7 +58,8 @@ function audioReducer(state = initialState, action) {
             if (state.track === action.track) return state
             return {
                 ...state,
-                track: action.track
+                track: action.track,
+                current: action.playlist[action.track]
             }
         case SET_IS_PLAYING:
             if (state.isPlaying === action.isPlaying) return state
@@ -63,7 +67,10 @@ function audioReducer(state = initialState, action) {
             return { ...state, isPlaying: action.isPlaying }
         case SET_IS_PAUSED:
             if (state.isPaused === action.isPaused) return state
-            return { ...state, isPaused: action.isPaused, isPlaying: !action.isPaused
+            return {
+                ...state,
+                isPaused: action.isPaused,
+                isPlaying: !action.isPaused
             }
         case CHANGE_SONGS:
             return state.songs === action.songs
