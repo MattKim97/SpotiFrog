@@ -86,7 +86,7 @@ const [liked, setLiked] = useState(null);
   const sec = playtimeLength % 60;
   const min = Math.floor(playtimeLength / 60);
 
-  const userPlaylists = playlists.filter(playlist => !playlist.songs.includes(parseInt(songId)))
+  const userPlaylists = playlists ? playlists.filter(playlist => !playlist.songs.includes(parseInt(songId))) : []
 
   return (
     <div>
