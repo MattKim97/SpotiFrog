@@ -73,7 +73,7 @@ def update_playlist(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
 
-        if form.playlistCover.data:
+        if form.playlistCover.data is not None:
             image = form.playlistCover.data
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
