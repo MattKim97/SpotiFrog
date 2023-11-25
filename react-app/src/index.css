@@ -271,9 +271,16 @@ input[type=file] {
 }
 
 /****************** MAIN CONTAINER ***********************/
-.MainContainer {
+/* .MainContainer {
     background: linear-gradient(var(--backgroundAccent), black);
+} */
+/*************** ABOUT ************************/
+.aboutContainer>* {
+    padding: 5px;
 }
+
+
+
 
 /* ******* SongDetails *************** */
 .fa-heart {
