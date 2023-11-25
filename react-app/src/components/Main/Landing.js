@@ -36,24 +36,28 @@ export default function Landing() {
   const randomPlaylists = randominator(playlists);
 
   return (
-    <div>
+    <div className="landing-container">
+      <div className="landing-main-header">
         <h2>Discover a New Froggy Album today!</h2>
+        <a href="/albums">See all albums</a>
+      </div>
       <div className="landingMainContainer">
         {randomAlbums.map((album) => (
-          <div key={album.id}>
+          <div className="album-card" key={album.id}>
             <AlbumCard format="main" album={album} />
           </div>
         ))}
-        <a href="/albums">See all albums</a>
       </div>
+      <div className="landing-main-header">
         <h2>Discover our carefully curated croaktastic playlists!</h2>
+        <a href="/playlists">See all playlists</a>
+      </div>
       <div className="landingMainContainer">
         {randomPlaylists.map((playlist) => (
           <div key={playlist.id}>
             <PlaylistCard format="main" playlist={playlist} />
           </div>
         ))}
-        <a href="/playlists">See all playlists</a>
       </div>
     </div>
   );

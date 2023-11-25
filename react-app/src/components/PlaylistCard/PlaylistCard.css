@@ -1,4 +1,4 @@
-.playlistmain{
+/* .playlistmain{
     display: flex;
     margin-bottom: 10px;
     width: 250px;
@@ -8,13 +8,13 @@
     background-color: grey;
     align-items: center;
 
-}
-.playlistmain div img{
+} */
+/* .playlistmain div img{
     width: 200px;
     height: 200px;
     object-fit: cover;
-}
-.playlistside{
+} */
+/* .playlistside{
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -28,9 +28,9 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
-}
+} */
 
-.PlaylistCardContainermain{
+/* .PlaylistCardContainermain{
     border: 2px black solid;
     cursor: pointer;
     background-color: grey;
@@ -40,9 +40,9 @@
     margin-right: 10px;
     margin-bottom: 5px;
 
-}
+} */
 
-.PlaylistCardContainerside{
+/* .PlaylistCardContainerside{
     display: flex;
     border: 2px black solid;
     cursor: pointer;
@@ -50,4 +50,4 @@
     background-color: grey;
     margin-bottom: 5px;
 
-}
+} */
