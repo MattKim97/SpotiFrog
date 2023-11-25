@@ -2,6 +2,15 @@ import React, { memo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
 
+
+function songMp3(playlist,track){
+  return playlist[track]
+}
+
+function stripAWSURL(url) {
+  return !url ? "" : url.slice(url.lastIndexOf('/') + 1)
+}
+
 const PlayButton2 = memo(
   function PlayButton2({ tracks, trackIndex, audio }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -10,25 +19,29 @@ const PlayButton2 = memo(
 
   const dispatch = useDispatch();
   const [ref] = useState({});
-  let isMyTrack = (playlist[trackIndex] === tracks[trackIndex] && trackIndex === track)
+  let isMyTrack = (playlist === tracks && trackIndex === track)
 
-  console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} isOn: ${isOn} `)
+  console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} ${trackIndex} isOn: ${isOn} `)
   // if (!trackIndex)
   //   console.log(typeof audio.current.state==='object'?Object.keys(audio.current.state):"no audio state")
 
   if (isOn && !isMyTrack) {
     setIsOn(false)
+    console.log(`Setting ${trackIndex} to off`)
     return null
   }
 
   function formatTrackInfoClick(){
-    return `playlist: ${playlist[track]===tracks[track]?'same':playlist[track]?.slice(playlist.length - 30, playlist.length - 14)} track: ${track===trackIndex?"same":track}`
+    return `playlist: ${playlist===tracks?'same':stripAWSURL(songMp3(playlist,track))} track: ${track===trackIndex?"same":trackIndex}`
   }
 
   const handleClick = () => {
     const rKey = "changePlaylist"
-    console.log(`PB2 CLICK: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()}`)
-    if (!isOn) setIsOn(true)
+    console.log(`PB2 CLICK: ${isPlaying?"playing ":""} ${isMyTrack?"mine"+trackIndex:""} ${isOn?"on":"off"} ${isPaused?"paused":""}`)
+    if (!isOn) {
+      setIsOn(true)
+      console.log(`Setting ${trackIndex} to on`)
+    }
     if (!isMyTrack) { /* start playing new track */
       if (!ref[rKey]) ref[rKey] = dispatch(changePlaylist(tracks, trackIndex))
       return null;

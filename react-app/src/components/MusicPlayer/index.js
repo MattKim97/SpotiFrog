@@ -7,17 +7,6 @@ import { changeTrack, setIsPaused, setIsPlaying } from '../../store/audio'
 import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton2 from '../PlayButton2'
 
-// BEGIN TEMPORARY CODE
-// var test1 = [
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
-// ]
-// var test2 = [
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-// ]
-// END TEMPORARY CODE
-
 const MusicPlayer = memo(function MusicPlayer() {
   const { playlist, track, isPlaying } = useSelector(state => state.audio)
 
@@ -31,13 +20,6 @@ const MusicPlayer = memo(function MusicPlayer() {
 // if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
 // songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
 
-//   useEffect(() => {
-//     if (!playlist || !playlist.length)
-//       dispatch(changePlaylist(test1, 0))
-//     else if (!track || track < 0 || track >= playlist.length)
-//       dispatch(changeTrack(0)) // Reset track to 0 if out of bounds
-// }, [playlist, track]);
-
 // BEGIN TEMPORARY CODE
 // just fills in random songs; remove when info passed
 const rKey = "allSongs"
@@ -49,6 +31,10 @@ if (!Array.isArray(songs) || !songs.length) {
 
 console.log("checking songs")
 if (!songs || songs.length < 4) return null
+
+function songMp3(playlist,track){
+  return playlist[track]
+}
 
 let uniqueSongs
 function getRandomUniqueSong() {
@@ -66,8 +52,8 @@ if (!mp3s["first"]?.length) {
   for (let i = 0; i < 4; i++)
     mp3s["second"].push(getRandomUniqueSong().mp3)
   console.log(songs)
-  console.log(mp3s["first"].map(e => e.slice(e.length - 20)))
-  console.log(mp3s["second"].map(e => e.slice(e.length - 20)))
+  console.log(mp3s["first"].map(e => stripAWSURL(e)))
+  console.log(mp3s["second"].map(e => stripAWSURL(e)))
 }
 // END TEMPORARY CODE
 
@@ -90,11 +76,18 @@ if (!mp3s["first"]?.length) {
   }
 
 function handleEnded() {
-  console.log(`ENDED: ${track} ${playlist[track]}`)
+  console.log(`ENDED: ${track} ${songMp3(playlist, track)}`)
   handleClickNext()
 }
+
+function handleMetaData(event) {
+  if (!event) return
+  const { duration, album, artist, title } = event.target
+  console.log(`METADATA: ${album} ${artist}`)
+  console.log(`METADATA: ${title} ${duration}`)
+}
 function handlePause() {
-  console.log(`PAUSE: ${track} ${playlist[track]}`)
+  console.log(`PAUSE: ${track} ${songMp3(playlist, track)}`)
   dispatch(setIsPaused(true))
 }
 
@@ -135,7 +128,7 @@ if (!playlist || !playlist.length ||
         onError={() => console.log("ERROR")}
         onLoadStart={() => console.log("LOAD START")}
         onLoadedData={() => console.log("LOADED DATA")}
-        onLoadedMetaData={() => console.log("LOADED META DATA")}
+        onLoadedMetaData={(event) => handleMetaData(event)}
         onPause={handlePause}
         onPlay={() => console.log("PLAY")}
         onPlayError={() => console.log("PLAY ERROR")}
@@ -152,7 +145,7 @@ if (!playlist || !playlist.length ||
         showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
-        src={playlist[track]}
+        src={songMp3(playlist, track)}
         volume={.5}
 
         // unused settings for react-h5-audio-player
@@ -218,17 +211,5 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-// function choice(arr) {
-//   return arr[getRandomInt(0, arr.length - 1)]
-// }
-
-// function choices(arr, num) {
-//   const result = []
-//   for (let i = 0; i < num; i++) {
-//     result.push(choice(arr))
-//   }
-//   return result
-// }
 // END TEMPORARY CODE
 export default MusicPlayer;
