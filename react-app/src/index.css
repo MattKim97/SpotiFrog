@@ -289,8 +289,8 @@ input[type=file] {
 /****************** MAIN CONTAINER ***********************/
 .landingMainContainer{
     display: grid;
-    grid-template-columns: repeat(4, 22.5%);
-    column-gap: 3%;
+    grid-template-columns: repeat(4, 220px);
+    column-gap: 2.5%;
     height: 100%;
     margin-bottom: 25px;
 }
@@ -328,7 +328,8 @@ input[type=file] {
 .albummain img, .playlistmain img{
     border-radius: var(--imgBorderRadius);
     object-fit: cover;
-    max-width: 100%;
+    width: 180px;
+    height: 180px;
     background-color: white;
     margin-bottom: 7px;
 }
