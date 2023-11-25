@@ -7,6 +7,8 @@
     --subheadingWeight: 550 ;
     --buttonBorderRadius: 10px ;
     --imgBorderRadius: 14px ;
+    --modalBorderRadius: 15px;
+    --inputBorderRadius: 5px;
 
     --inputBackground: rgb(247,247,247) ;
     --boxShadow: 2px 2px darkgray ;
@@ -21,7 +23,8 @@
     --buttonTextColor: rgb(0,0,0);
     --buttonBorder: 1px rgb(0,0,0) solid;
     --buttonBackgroundAccent: rgb(230,230,230);
-
+    --lightBorder: 1px solid rgb(230,230,230);
+    --errorTextColor: rgb(255,100,100);
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -102,7 +105,10 @@ button,input,textarea {
     background: var(--inputBackground) ;
 }
 input,textarea {
+    padding: 5px;
     width: 100% ;
+    border: none;
+    border-radius: var(--inputBorderRadius);
 }
 label {
     font-weight: bold ;
@@ -154,21 +160,6 @@ h2 {
     grid-area: sound;
 }
 
-.hidden-modal-button {
-    border: none;
-    background-color: rgba(0,0,0,0);
-    width: 100%;
-    height: 100%;
-    border-radius: var(--buttonBorderRadius);
-    padding: 5px;
-}
-
-.hidden-modal-button:hover {
-    background-color: rgba(0,0,0,0);
-    font-weight: bold;
-}
-
-
 /********************** NAVIGATION ************************* */
 .profile-button {
     position: absolute;
@@ -178,6 +169,7 @@ h2 {
     border-radius: var(--buttonBorderRadius);
     padding: 5px;
     background-color: var(--buttonBackgroundColor);
+    width: 50px;
 }
 
 .fa-user-circle {
@@ -195,6 +187,7 @@ h2 {
   border-radius: var(--buttonBorderRadius);
   background-color: var(--buttonBackgroundColor);
   color: var(--buttonTextColor);
+  width: 100px;
 }
 
 .profile-dropdown * {
@@ -202,22 +195,24 @@ h2 {
     color: var(--buttonTextColor);
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 
-.profile-dropdown>button, .logout-button {
+.logout-button, .hidden-modal-button, button {
     border: var(--buttonBorder);
     border-radius: var(--buttonBorderRadius);
-    margin-top: 5px;
-    padding: 0;
     width: 100%;
+    padding: 5px;
+    text-align: center;
 }
 
 .logout-button {
-    padding: 5px;
+    margin-top: 10px;
 }
 
-.logout-button:hover, .profile-dropdown>button:hover {
+.hidden-modal-button:hover, .logout-button:hover, button:hover {
     background-color: var(--buttonBackgroundAccent);
+    font-weight: bold;
 }
 
 .profile-button:hover {
@@ -227,11 +222,42 @@ h2 {
     }
 }
 
-/*********** LOGIN MODAL **********************/
-/* .login-modal * {
-    background-color: white;
-    border: red 1px dashed;
-} */
+/*********** LOGIN / SIGNUP MODALs **********************/
+#modal-content {
+    position: absolute;
+    background-color: var(--backgroundColor);
+    border-radius: var(--modalBorderRadius);
+    border: var(--lightBorder);
+    padding: 20px;
+    color: var(--textColor);
+    width: 300px;
+}
+
+#modal-content > form {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-content>form>button {
+    margin: 10px 0;
+}
+
+input {
+    margin: 10px 0;
+}
+
+#modal-content input {
+    width: 290px;
+}
+
+.error {
+    color: var(--errorTextColor)
+}
+
+input[type=file] {
+    background-color: var(--backgroundColor);
+}
 
 /****************** MAIN CONTAINER ***********************/
 .MainContainer {
