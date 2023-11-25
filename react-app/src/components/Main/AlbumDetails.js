@@ -50,7 +50,7 @@ export default function AlbumDetails() {
   if (!albums) return null;
   if (!allSongs) return null;
 
-  const album = albums[albumId - 1]
+  const album = albums.find((album) => album.id === Number(albumId));
   const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
   console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
 
