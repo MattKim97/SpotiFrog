@@ -10,17 +10,23 @@
     --modalBorderRadius: 15px;
     --inputBorderRadius: 5px;
     --cardBorderRadius: 15px;
+    --headerHeight: 65px;
+    --mainPaddingY: 20px;
+    --mainPaddingX: 25px;
+
 
     --inputBackground: rgb(247,247,247) ;
-    --boxShadow: 2px 2px darkgray ;
+    --boxShadow: 5px -5px 20px rgba(0,0,0,1);
     --boxShadowHover: 4px 4px darkgray ;
     --accentGreen: rgb(0,255,100);
     --borderColor: rgb(0,0,0);
+
     --backgroundColor: rgb(0,0,0);
-    --sectionBackground: rgb(20,20,20);
     --backgroundAccent: rgb(50,50,50);
+    --sectionBackground: rgb(20,20,20);
+    --detailsTopSectionColor: rgb(70,70,70);
     --textColor: rgb(255,255,255);
-    --backgroundTextColor: rgb(230,230,230);
+    --backgroundTextColor: rgb(210,210,210);
     --buttonBackgroundColor: rgb(255,255,255);
     --buttonTextColor: rgb(0,0,0);
     --buttonBorder: 1px rgb(0,0,0) solid;
@@ -129,8 +135,8 @@ label {
     font-weight: bold ;
 }
 
-a:hover {
-    font-weight: bold;
+a {
+    text-decoration: none;
 }
 
 h1 {
@@ -152,17 +158,22 @@ h2 {
 
 .PageGridContainer{
     display: grid;
-    grid-template-areas: "header header header"
+    grid-template-areas:
+                        /* "header header header" */
                          "sidebar main main"
                          "sound sound sound"
                          "footer footer footer" ;
     grid-template-columns: 1fr 4fr ;
-    grid-template-rows: 1fr 3fr 1fr 1fr;
+    grid-template-rows: 3fr 1fr 1fr;
     height: 100vh;
+    margin-top: var(--headerHeight);
 }
 
 .HeaderContainer{
-    grid-area: header;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: var(--sectionBackground);
 }
 
 .SiderBarContainer{
@@ -170,8 +181,8 @@ h2 {
 }
 .MainContainer{
     grid-area: main;
-    background: linear-gradient(var(--backgroundAccent), black);
-    padding: 20px 30px;
+    background: linear-gradient(var(--backgroundAccent), var(--backgroundColor));
+    /* padding: 20px 30px; */
 }
 .FooterContainer{
     grid-area: footer;
@@ -261,7 +272,7 @@ input[type=file] {
 
 /************************* HEADER ********************************/
 .HeaderStyle {
-    height: 65px;
+    height: var(--headerHeight);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -271,31 +282,260 @@ input[type=file] {
     font-size: var(--fontSize);
 }
 
+.about-link:hover {
+    font-weight: bold;
+}
+
 /****************** MAIN CONTAINER ***********************/
 .landingMainContainer{
     display: grid;
-    grid-template-columns: repeat(4, 22.5%);
-    column-gap: 3%;
-    /* flex-direction: row;
-    flex-wrap: wrap; */
-}
-
-.albummain{
-    display: flex;
-    margin-bottom: 10px;
-    width: 100%;
+    grid-template-columns: repeat(4, 220px);
+    column-gap: 2.5%;
     height: 100%;
-    flex-direction: column;
-    margin-right: 10px;
-    align-items: center;
-}
-.albummain img{
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    background-color: white;
+    margin-bottom: 25px;
 }
 
+.landing-container {
+    margin: var(--mainPaddingY) var(--mainPaddingX);
+}
+
+.landing-main-header {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.landing-main-header>a {
+    color: var(--backgroundTextColor)
+}
+
+.landing-main-header>a:hover {
+    font-weight: bold;
+    color: var(--textColor)
+}
+
+.landing-main-header>h2 {
+    font-weight: bold;
+}
+
+.albummain, .playlistmain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.albummain img, .playlistmain img{
+    border-radius: var(--imgBorderRadius);
+    object-fit: cover;
+    width: 180px;
+    height: 180px;
+    background-color: white;
+    margin-bottom: 7px;
+}
+
+.albummain h3, .playlistmain h3 {
+    font-weight: bold;
+    font-size: 15px;
+    margin: 5px 0;
+    color: var(--textColor);
+}
+
+.albummain h4, .playlistmain h4 {
+    margin-top: 8px;
+    color: var(--backgroundTextColor);
+}
+
+.AlbumCardContainermain, .PlaylistCardContainermain{
+    cursor: pointer;
+    border-radius: var(--cardBorderRadius);
+    background-color: var(--sectionBackground);
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 15px;
+}
+
+.AlbumCardContainermain:hover, .PlaylistCardContainermain:hover {
+    background-color: var(--backgroundAccent);
+}
+
+/*************** ABOUT ************************/
+.aboutContainer>* {
+    padding: 5px;
+}
+
+/* ******* DETAILS PAGES *************** */
+
+.playlistSelect {
+    border: 1px var(--borderColor) solid;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.playlistSelect>li {
+    border-bottom: 1px black solid;
+}
+
+.details-container {
+    background: linear-gradient(var(--detailsTopSectionColor),var(--sectionBackground));
+}
+
+.details-section-top {
+    display: flex;
+    padding-left: var(--mainPaddingX);
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+.albumCover {
+    object-fit: cover;
+    max-width: 100%;
+    background-color: white;
+    box-shadow: var(--boxShadow);
+}
+
+.details-section-summary {
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.details-section-summary>h2 {
+    font-size: var(--headingSize);
+    font-weight: bold;
+}
+
+.details-section-summary>* {
+    padding: 10px 0;
+}
+
+.details-section-summary a:hover {
+    text-decoration: underline;
+}
+
+.details-section-artist, .details-section-type {
+    font-weight: bold;
+}
+
+.details-section-user-options {
+    background-color: var(--sectionBackground);
+    padding: var(--mainPaddingX);
+    display: grid;
+    grid-template-columns: 65px 65px 90px;
+    align-items: center;
+    box-sizing: border-box;
+    height: 100px;
+}
+
+.fa-heart {
+    align-self: center;
+    justify-self: center;
+    font-size: 24pt;
+}
+
+.fa-heart.fa-solid {
+    color: var(--accentGreen);
+}
+
+.fa-heart.fa-regular {
+    color: var(--backgroundTextColor);
+}
+
+.fa-heart:hover {
+    font-size: 26pt;
+}
+
+.fa-heart.fa-heart.fa-regular:hover {
+    color: var(--textColor);
+}
+
+.details-section-user-options>.fas.fa-play-circle {
+    color: var(--accentGreen);
+    font-size: 40pt;
+}
+
+.add-to-playlist {
+    /* justify-self: center; */
+    margin-left: 10px;
+    background-color: var(--backgroundAccent);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* border: none; */
+}
+
+.add-to-playlist>* {
+    color: var(--backgroundTextColor);
+}
+
+.fa-plus {
+    font-size: var(--subheadingSize);
+    padding-left: 3px;
+}
+
+.add-to-playlist:hover {
+    background-color: var(--backgroundAccent);
+    .fa-plus, span {
+        color: var(--textColor);
+        font-weight: bold;
+    }
+}
+
+.no-bottom-radius {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.playlistSelect {
+    background-color: var(--backgroundAccent);
+    padding: 3px;
+    width: 125px;
+    border-radius: var(--modalBorderRadius);
+    border-top-left-radius: 0;
+    margin-left: 141px;
+    margin-top: -5px;
+    border: none;
+    z-index: 1;
+}
+
+.playlistSelect>li {
+    border-radius: var(--modalBorderRadius);
+    padding: 7px;
+    border: none;
+}
+
+.playlistSelect>li:hover {
+    background-color: var(--sectionBackground);
+    font-weight: bold;
+}
+
+.playlistSelect>.inactive {
+    pointer-events: none;
+}
+
+.SongsContainerMain{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px ;
+}
+
+.SongListContainer{
+    border: 2px black solid;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 500px;
+}
+
+/********************** SIDEBAR ********************/
 .albumside{
     display: flex;
     margin-top: 10px;
@@ -312,16 +552,6 @@ input[type=file] {
     object-fit: cover;
 }
 
-.AlbumCardContainermain{
-    cursor: pointer;
-    border-radius: var(--cardBorderRadius);
-    background-color: var(--sectionBackground);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    margin-right: 10px;
-    margin-bottom: 5px;
-}
 
 .AlbumCardContainerside{
     display: flex;
@@ -333,34 +563,28 @@ input[type=file] {
 
 }
 
-.AlbumCardContainermain:hover {
-    background-color: var(--backgroundAccent);
+.playlistside{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+
+}
+.playlistside div img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
 
-/*************** ABOUT ************************/
-.aboutContainer>* {
-    padding: 5px;
-}
-
-
-
-
-/* ******* SongDetails *************** */
-.fa-heart {
-    color: var(--accentGreen);
-}
-
-/* .fa-plus {
-    border: 1px black solid;
-    border-radius: 3px;
-} */
-
-.playlistSelect {
-    border: 1px var(--borderColor) solid;
-    width: fit-content;
+.PlaylistCardContainerside{
+    display: flex;
+    border: 2px black solid;
     cursor: pointer;
-}
+    width: 150px;
+    background-color: grey;
+    margin-bottom: 5px;
 
-.playlistSelect>li {
-    border-bottom: 1px black solid;
 }

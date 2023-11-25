@@ -156,8 +156,8 @@ function sessionReducer(state = initialState, action) {
 			return {user: {...state.user, songsLiked}}
 		}
 		case UNLIKE_SONG:
-			const songsLiked = [...state.user.songsLiked]
-			return {user: {...state.user, songsLiked: songsLiked.filter(songId => songId !== action.songId)}}
+			const songsLiked = [...state.user.songsLiked].filter(songId => songId != action.songId)
+			return {user: {...state.user, songsLiked: songsLiked}}
 		default:
 			return state;
 	}

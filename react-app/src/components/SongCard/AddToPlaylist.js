@@ -39,14 +39,15 @@ export default function AddToPlaylist({userPlaylists, songId}) {
     }, [showMenu])
 
     const dropDown = showMenu ? "playlistSelect" : "hidden playlistSelect"
+    const buttonClass = showMenu ? "add-to-playlist no-bottom-radius" : "add-to-playlist"
 
     return (
         <>
-            <button onClick={openMenu}>
+            <button onClick={openMenu} className={buttonClass}>
                 <i className="fa-solid fa-plus"/>
                 <span>Add to Playlist</span>
             </button>
-            <ul className={dropDown} ref={ulRef}>
+            <ul id="playlist-dropdown" className={dropDown} ref={ulRef}>
                 {sidebarLoaded ?
                 userPlaylists.length ?
                 userPlaylists.map(playlist => (
@@ -54,8 +55,8 @@ export default function AddToPlaylist({userPlaylists, songId}) {
                         Add to Playlist "{playlist.name}"
                     </li>
                 ))
-                : <li>No Playlists Available</li>
-                : <li>Loading Playlists</li>
+                : <li className="inactive">No Playlists Available</li>
+                : <li className="inactive">Loading Playlists</li>
                 }
             </ul>
         </>
