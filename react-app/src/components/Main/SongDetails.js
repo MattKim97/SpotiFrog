@@ -128,10 +128,11 @@ const [liked, setLiked] = useState(null);
         )}
       </div>
 
-      <h2>Lyrics:</h2>
-      {sessionUser
+      <div className="details-section-buttons">
+        <h2>Lyrics:</h2>
+        {sessionUser
         ? sessionUser.id === song.userId && (
-            <div>
+            <div className="group-owner-buttons-container">
               <button
                 onClick={(e) => onClickUpdate()}
                 className="groupOwnerButtons"
@@ -147,7 +148,9 @@ const [liked, setLiked] = useState(null);
             </div>
           )
         : null}
-      <p>{lyrics ? lyrics : "no lyrics available"}</p>
+      </div>
+
+      <p className="details-section-body">{lyrics ? lyrics : "no lyrics available"}</p>
     </div>
   );
 }

@@ -459,14 +459,17 @@ input[type=file] {
 }
 
 .add-to-playlist {
-    /* justify-self: center; */
     margin-left: 10px;
+}
+
+.add-to-playlist, .groupOwnerButtons {
     background-color: var(--backgroundAccent);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /* border: none; */
+    border: none;
+    color: var(--backgroundTextColor);
 }
 
 .add-to-playlist>* {
@@ -478,8 +481,9 @@ input[type=file] {
     padding-left: 3px;
 }
 
-.add-to-playlist:hover {
+.add-to-playlist:hover, .groupOwnerButtons:hover {
     background-color: var(--backgroundAccent);
+    color: var(--textColor);
     .fa-plus, span {
         color: var(--textColor);
         font-weight: bold;
@@ -516,6 +520,28 @@ input[type=file] {
 
 .playlistSelect>.inactive {
     pointer-events: none;
+}
+
+.details-section-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--mainPaddingY) var(--mainPaddingX);
+}
+
+.group-owner-buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.groupOwnerButtons {
+    width: 65px;
+    font-size: small;
+}
+
+.details-section-body {
+    padding: var(--mainPaddingY) var(--mainPaddingX);
 }
 
 .SongsContainerMain{
