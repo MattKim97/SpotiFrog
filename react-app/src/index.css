@@ -16,6 +16,7 @@
     --accentGreen: rgb(0,255,100);
     --borderColor: rgb(0,0,0);
     --backgroundColor: rgb(0,0,0);
+    --sectionBackground: rgb(20,20,20);
     --backgroundAccent: rgb(50,50,50);
     --textColor: rgb(255,255,255);
     --backgroundTextColor: rgb(230,230,230);
@@ -99,19 +100,36 @@ body {
 button { /* buttons sneakily ignore inheriting */
     font-family: var(--fontFamily) ;
     font-size: var(--fontSize) ;
+    border: var(--buttonBorder);
+    border-radius: var(--buttonBorderRadius);
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: var(--buttonBackgroundAccent);
+    font-weight: bold;
 }
 
 button,input,textarea {
     background: var(--inputBackground) ;
+    box-sizing: border-box;
 }
+
 input,textarea {
     padding: 5px;
     width: 100% ;
     border: none;
     border-radius: var(--inputBorderRadius);
 }
+
 label {
     font-weight: bold ;
+}
+
+a:hover {
+    font-weight: bold;
 }
 
 h1 {
@@ -128,7 +146,7 @@ h2 {
 }
 
 .error,.errors {
-    color: red ;
+    color: var(--errorTextColor);
 }
 
 .PageGridContainer{
@@ -145,12 +163,14 @@ h2 {
 .HeaderContainer{
     grid-area: header;
 }
+
 .SiderBarContainer{
     grid-area: sidebar;
 }
 .MainContainer{
     grid-area: main;
     background: linear-gradient(var(--backgroundAccent), black);
+    padding: 20px 30px;
 }
 .FooterContainer{
     grid-area: footer;
@@ -198,21 +218,8 @@ h2 {
     text-align: center;
 }
 
-.logout-button, .hidden-modal-button, button {
-    border: var(--buttonBorder);
-    border-radius: var(--buttonBorderRadius);
-    width: 100%;
-    padding: 5px;
-    text-align: center;
-}
-
 .logout-button {
     margin-top: 10px;
-}
-
-.hidden-modal-button:hover, .logout-button:hover, button:hover {
-    background-color: var(--buttonBackgroundAccent);
-    font-weight: bold;
 }
 
 .profile-button:hover {
@@ -247,16 +254,20 @@ input {
     margin: 10px 0;
 }
 
-#modal-content input {
-    width: 290px;
-}
-
-.error {
-    color: var(--errorTextColor)
-}
-
 input[type=file] {
     background-color: var(--backgroundColor);
+}
+
+/************************* HEADER ********************************/
+.HeaderStyle {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about-link {
+    font-size: var(--fontSize);
 }
 
 /****************** MAIN CONTAINER ***********************/
