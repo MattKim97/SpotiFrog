@@ -53,13 +53,13 @@
 
   }
 
-  .SongListContainer{
+  /* .SongListContainer{
     border: 2px black solid;
     cursor: pointer;
     margin-top: 5px;
     margin-bottom: 5px;
     width: 500px;
-  }
+  } */
 
   /* .landingMainContainer{
     display: flex;
@@ -97,14 +97,14 @@
     gap: 10px ;
   }
 
-  .SongsContainerMain{
+  /* .SongsContainerMain{
     width: 900px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     gap: 10px ;
-  }
+  } */
 
   .albumCover{
     width: 200px;

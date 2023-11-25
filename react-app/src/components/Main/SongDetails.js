@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
 import LikeSong from "../SongCard/LikeSong";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -79,6 +79,7 @@ const [liked, setLiked] = useState(null);
     lyrics,
     userLikes,
     artist,
+    albumId,
   } = song;
 
   const year = new Date(uploadedAt).getFullYear();
@@ -89,7 +90,7 @@ const [liked, setLiked] = useState(null);
   const userPlaylists = playlists ? playlists.filter(playlist => !playlist.songs.includes(parseInt(songId))) : []
 
   return (
-    <div>
+    <div className="details-container">
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -106,19 +107,26 @@ const [liked, setLiked] = useState(null);
           </div>
         </div>
       )}
-      <img className="albumCover" src={coverImg} alt="Album Cover"/>
-      <h2>{name}</h2>
-      <h3>{artist}</h3>
-      <h3>
-        {albumName} • {year} • {min}:{sec} • {userLikes} Likes
-      </h3>
+      <div className="details-section-top">
+        <img className="albumCover" src={coverImg} alt="Album Cover"/>
+        <div className="details-section-summary">
+          <h3 className="details-section-type">Song</h3>
+          <h2>{name}</h2>
+          <h3>
+          <span className="details-section-artist">{artist}</span> • <Link to={`/albums/${albumId}`}>{albumName}</Link> • {year} • {min}:{sec} • {userLikes} Likes
+          </h3>
+        </div>
+      </div>
 
-            {sessionUser && (
-                <>
-                <LikeSong liked={sessionUser.songsLiked} songId={songId} />
-                <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
-                </>
-            )}
+      <div className="details-section-user-options">
+        <i className="fas fa-play-circle"></i>
+        {sessionUser && (
+            <>
+            <LikeSong liked={sessionUser.songsLiked} songId={songId} />
+            <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
+            </>
+        )}
+      </div>
 
       <h2>Lyrics:</h2>
       {sessionUser

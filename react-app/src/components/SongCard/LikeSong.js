@@ -8,18 +8,10 @@ export default function LikeSong({likedSongs, songId}) {
     const sessionUser = useSelector(state => state.session.user)
 
     if (!sessionUser) return null
-
+    console.log(sessionUser.songsLiked, "SESSION USER****")
     const liked = sessionUser.songsLiked.includes(parseInt(songId))
 
     const handleLike = async () => {
-        // const res = liked ? await dispatch(thunkUnlikeSong(songId))
-        //     : await dispatch(thunkLikeSong(songId))
-
-        // if (!res.errors) {
-        //     console.log("GETTING SONG")
-        //     dispatch(thunkGetSong(songId))
-        // }
-
         if (liked) {
             const res = await dispatch(thunkUnlikeSong(songId))
             if (!res.errors) dispatch(unlikeSong(songId))
