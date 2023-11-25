@@ -119,7 +119,7 @@ const [liked, setLiked] = useState(null);
       </div>
 
       <div className="details-section-user-options">
-        <i className="fas fa-play-circle"></i>
+        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
         {sessionUser && (
             <>
             <LikeSong liked={sessionUser.songsLiked} songId={songId} />
