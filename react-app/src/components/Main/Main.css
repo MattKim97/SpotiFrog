@@ -10,7 +10,7 @@
     background: rgba(0, 0, 0, 0.7);
     flex-direction: column;
   }
-  
+
   .modal-content {
     position: absolute;
     background-color: whitesmoke;
@@ -23,13 +23,13 @@
     padding-bottom: 20px;
     text-align: center;
   }
-  
-  
+
+
   .modalButtons {
     display: flex;
     flex-direction: column;
   }
-  
+
   .deleteButton {
     background: red;
     color: white;
@@ -41,7 +41,7 @@
     box-shadow: 5px 2px 2px black;
     margin-bottom: 10px;
   }
-  
+
   .keepButton {
     background: darkgray;
     color: white;
@@ -50,7 +50,7 @@
     height: 50px;
     cursor: pointer;
     box-shadow: 5px 2px 2px black;
-  
+
   }
 
   .SongListContainer{
@@ -61,11 +61,11 @@
     width: 500px;
   }
 
-  .landingMainContainer{
+  /* .landingMainContainer{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-  }
+  } */
 
   .aboutContainer{
     width: 900px;

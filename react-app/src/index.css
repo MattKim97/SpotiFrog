@@ -9,6 +9,7 @@
     --imgBorderRadius: 14px ;
     --modalBorderRadius: 15px;
     --inputBorderRadius: 5px;
+    --cardBorderRadius: 15px;
 
     --inputBackground: rgb(247,247,247) ;
     --boxShadow: 2px 2px darkgray ;
@@ -271,9 +272,71 @@ input[type=file] {
 }
 
 /****************** MAIN CONTAINER ***********************/
-/* .MainContainer {
-    background: linear-gradient(var(--backgroundAccent), black);
-} */
+.landingMainContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 22.5%);
+    column-gap: 3%;
+    /* flex-direction: row;
+    flex-wrap: wrap; */
+}
+
+.albummain{
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    margin-right: 10px;
+    align-items: center;
+}
+.albummain img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    background-color: white;
+}
+
+.albumside{
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 150px;
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+}
+
+.albumside img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.AlbumCardContainermain{
+    cursor: pointer;
+    border-radius: var(--cardBorderRadius);
+    background-color: var(--sectionBackground);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.AlbumCardContainerside{
+    display: flex;
+    border: 2px black solid;
+    cursor: pointer;
+    width: 150px;
+    background-color: grey;
+    margin-bottom: 5px;
+
+}
+
+.AlbumCardContainermain:hover {
+    background-color: var(--backgroundAccent);
+}
+
 /*************** ABOUT ************************/
 .aboutContainer>* {
     padding: 5px;
