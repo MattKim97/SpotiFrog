@@ -262,6 +262,7 @@ input[type=file] {
     height: 65px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .about-link {
