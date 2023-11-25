@@ -57,8 +57,15 @@ export default function AlbumDetails() {
   if(!album) return null
   if(!albumSongs) return null
 
+  const releaseYear = new Date(album.releaseDate).getFullYear();
+  const albumLength = albumSongs.length;
+  const albumDuration = albumSongs.reduce((sum,song) => sum+song.playtimeLength, 0)
+  const albumHr = Math.floor(albumDuration/3600);
+  const albumMin = Math.floor((albumDuration%3600)/60);
+  const albumSec = albumDuration%60;
+
   return (
-    <div>
+    <div className="details-container">
        {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -75,41 +82,44 @@ export default function AlbumDetails() {
           </div>
         </div>
       )}
-      <div>
-        <div>
-          <img
+      <div className="details-section-top">
+        <img
           className="albumCover"
-            src={
-              album.albumCover
-                ? album.albumCover
-                : "https://static.thenounproject.com/png/4974686-200.png"
-            }
-            alt={album.name}
-          />
+          src={
+            album.albumCover
+              ? album.albumCover
+              : "https://static.thenounproject.com/png/4974686-200.png"
+          }
+          alt={album.name}
+        />
+        <div className="details-section-summary">
+          <h3 className="details-section-type">{albumLength==1 ? "Single": "Album"}</h3>
+          <h2>{album.name}</h2>
+          <h3><span className="details-section-artist">{album.artist}</span> • {releaseYear} • {albumLength} {albumLength==1 ? "song": "songs"}, {albumHr} hr {albumMin} min {albumSec} sec</h3>
         </div>
-        <div>{album.name}</div>
-        <div>{album.artist}</div>
-        <div>{album.releaseDate}</div>
       </div>
-      {sessionUser
-                ? sessionUser.id === album.userId && (
-                    <div className="">
-                      <button
-                        onClick={(e) => onClickAdd()}
-                        className="groupOwnerButtons"
-                      >
-                        Add a song
-                      </button>
-                      <button
-                        onClick={(e) => onClickDelete()}
-                        className="groupOwnerButtons"
-                      >
-                        Delete Album
-                      </button>
-                    </div>
-                  )
-                : null}
-      <div>
+      <div className="details-section-user-options">
+        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
+        {sessionUser
+        ? sessionUser.id === album.userId && (
+            <div className="group-owner-buttons-container">
+              <button
+                onClick={(e) => onClickAdd()}
+                className="groupOwnerButtons"
+              >
+                Add a song
+              </button>
+              <button
+                onClick={(e) => onClickDelete()}
+                className="groupOwnerButtons"
+              >
+                Delete Album
+              </button>
+            </div>
+          )
+        : null}
+      {/* <div> */}
+      </div>
       {albumSongs.map((song) => (
         <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <div>{song.name}</div>
@@ -122,7 +132,7 @@ export default function AlbumDetails() {
           </div>
         </div>
       ))}
-      </div>
+      {/* </div> */}
     </div>
   );
 }
