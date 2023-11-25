@@ -10,7 +10,7 @@ export default function About() {
   // if(clicked === false) return <Redirect to="/" />
 
   return (
-    <div>
+    <div className='about-link'>
       <NavLink to="/about">About</NavLink>
     </div>
   )
