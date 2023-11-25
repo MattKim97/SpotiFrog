@@ -3,8 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
 
 
+function songMp3(playlist,track){
+  return playlist[track]
+}
+
 function stripAWSURL(url) {
-  return url.slice(url.lastIndexOf('/') + 1)
+  return !url ? "" : url.slice(url.lastIndexOf('/') + 1)
 }
 
 const PlayButton2 = memo(
@@ -15,7 +19,7 @@ const PlayButton2 = memo(
 
   const dispatch = useDispatch();
   const [ref] = useState({});
-  let isMyTrack = (playlist[trackIndex] === tracks[trackIndex] && trackIndex === track)
+  let isMyTrack = (playlist === tracks && trackIndex === track)
 
   console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} ${trackIndex} isOn: ${isOn} `)
   // if (!trackIndex)
@@ -28,7 +32,7 @@ const PlayButton2 = memo(
   }
 
   function formatTrackInfoClick(){
-    return `playlist: ${playlist===tracks?'same':stripAWSURL(playlist[track])} track: ${track===trackIndex?"same":trackIndex}`
+    return `playlist: ${playlist===tracks?'same':stripAWSURL(songMp3(playlist,track))} track: ${track===trackIndex?"same":trackIndex}`
   }
 
   const handleClick = () => {
