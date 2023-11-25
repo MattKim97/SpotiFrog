@@ -21,6 +21,21 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    setEmail('demo@aa.io');
+    setPassword('password');
+    try {
+      const response = await dispatch(login(email, password));
+      if (response.ok) {
+        const data = await response.json();
+      } else {
+        console.error('Something went wrong');
+      }
+    } catch (error) {
+      console.error('An error occurred during login:', error);
+    }
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -49,6 +64,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemoLogin}>Log in as Demo User</button>
       </form>
     </>
   );

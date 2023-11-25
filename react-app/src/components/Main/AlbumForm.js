@@ -40,15 +40,15 @@ const handleSubmit = async (e) => {
   const formDataToSend = new FormData();
   formDataToSend.append("name", formData.name);
   formDataToSend.append("albumCover", formData.albumCover);
-  const formattedDate = format(new Date(formData.releaseDate), 'yyyy-MM-dd');
-  formDataToSend.append("releaseDate", formattedDate);
-
-  if(!formData.formattedDate){
+  if(!formData.releaseDate){
     setErrors((prevErrors) => ({
       ...prevErrors,
       releaseDate: "Please select a release date",
     }));
   }
+  const formattedDate = format(new Date(formData.releaseDate), 'yyyy-MM-dd');
+  formDataToSend.append("releaseDate", formattedDate);
+
 
   const response = await dispatch(thunkCreateAlbum(formDataToSend));
 
