@@ -18,6 +18,7 @@
 
     --inputBackground: rgb(247,247,247) ;
     --boxShadow: 5px -5px 20px rgba(0,0,0,1);
+    --dropdownBoxShadow: 5px 0px 15px rgba(0,0,0,1);
     --boxShadowHover: 4px 4px darkgray ;
     --accentGreen: rgb(0,255,100);
     --borderColor: rgb(0,0,0);
@@ -481,6 +482,12 @@ input[type=file] {
     padding-right: 8px;
 }
 
+.fa-clock {
+    pointer-events: none;
+    color: var(--backgroundTextColor);
+    justify-self: end;
+}
+
 .details-section-user-options>.fas.fa-play-circle {
     color: var(--accentGreen);
     font-size: 40pt;
@@ -544,26 +551,27 @@ input[type=file] {
     padding: 0;
     display: grid;
     grid-template-columns: 125px 125px;
-    column-gap: 5px;
+    column-gap: 8px;
     width: 100%;
     align-items: self-start;
 }
-
 
 .playlist-dropdown {
     width: fit-content;
     cursor: pointer;
     padding: 3px;
     width: 125px;
+    box-shadow: var(--dropdownBoxShadow);
 }
 
 .playlist-dropdown>li {
     border-radius: var(--dropdownBorderRadius);
-    padding: 7px;
-    padding-top: 13px;
+    padding: 13px 0;
+    /* padding-top: 13px; */
     color: var(--backgroundTextColor);
     height: 100%;
     vertical-align: center;
+    text-align: center;
 }
 
 .playlist-dropdown>li:hover {
@@ -571,16 +579,9 @@ input[type=file] {
     color: var(--textColor);
 }
 
-.playlist-dropdown>.inactive {
+.dropdown .inactive {
     pointer-events: none;
-}
-
-.details-section-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: var(--mainPaddingY) var(--mainPaddingX);
+    padding-left: 5px;
 }
 
 .groupOwnerButtons {
@@ -591,7 +592,23 @@ input[type=file] {
     padding: var(--mainPaddingY) var(--mainPaddingX);
 }
 
-.SongsContainerMain{
+.details-section-body>h3 {
+    border-bottom: 1px var(--detailsTopSectionColor) solid;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.details-section-body * {
+    color: var(--backgroundTextColor);
+}
+
+.details-section-body.album-details>h3 {
+    display: grid;
+    grid-template-columns: 7% 7% 80%;
+    justify-items: center;
+}
+
+.SongsContainerMain {
     width: 900px;
     display: flex;
     align-items: center;
@@ -600,12 +617,23 @@ input[type=file] {
     gap: 10px ;
 }
 
-.SongListContainer{
-    border: 2px black solid;
+.SongListContainer {
+    box-sizing: border-box;
     cursor: pointer;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 500px;
+    margin: 5px auto;
+    width: 95%;
+    display: grid;
+    grid-template-areas: "name artist album  likes duration";
+    grid-template-columns: repeat(5,1fr);
+    grid-gap: 10px;
+    align-items: center;
+}
+
+.SongListContainer:hover {
+    background-color: rgba(255,255,255,.05);
+    div {
+        color: var(--textColor);
+    }
 }
 
 /********************** SIDEBAR ********************/

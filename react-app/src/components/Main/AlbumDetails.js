@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
@@ -15,6 +15,8 @@ export default function AlbumDetails() {
   const sessionUser = useSelector((state) => state.session.user);
   const allSongs = Object.values(useSelector((state) => state.songs));
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
   const history = useHistory()
 
@@ -36,6 +38,30 @@ export default function AlbumDetails() {
   const onClickSong = (songId) => {
     history.push(`/songs/${songId}`)
   }
+
+  const openDropdown = () => {
+    if (!showMenu) {
+        setShowMenu(true)
+    }
+  }
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      try {
+        if (!ulRef.current.contains(e.target)) {
+            setShowMenu(false)
+        }
+      } catch (e) {
+        setShowMenu(false)
+      }
+    }
+
+    document.addEventListener("click", closeMenu)
+
+    return () => document.removeEventListener("click", closeMenu)
+  }, [showMenu])
 
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeleteAlbum(albumId)));
@@ -64,6 +90,8 @@ export default function AlbumDetails() {
   const albumHr = Math.floor(albumDuration/3600);
   const albumMin = Math.floor((albumDuration%3600)/60);
   const albumSec = albumDuration%60;
+
+  const dropDown = showMenu ? "user-options-dropdown dropdown" : "hidden user-options-dropdown dropdown"
 
   return (
     <div className="details-container">
@@ -101,40 +129,51 @@ export default function AlbumDetails() {
       </div>
       <div className="details-section-user-options">
         <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
-        {sessionUser
-        ? sessionUser.id === album.userId && (
-            <div className="group-owner-buttons-container">
-              <button
-                onClick={(e) => onClickAdd()}
-                className="groupOwnerButtons"
-              >
-                Add a song
-              </button>
-              <button
-                onClick={(e) => onClickDelete()}
-                className="groupOwnerButtons"
-              >
-                Delete Album
-              </button>
-            </div>
-          )
-        : null}
-      {/* <div> */}
+        <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
+        <div />
+        <ul className={dropDown} ref={ulRef}>
+          {sessionUser
+          ? sessionUser.id === album.userId && (
+              <>
+              <li>
+                <button
+                  onClick={(e) => onClickAdd()}
+                  className="groupOwnerButtons"
+                >
+                  Add a song
+                </button>
+              </li>
+              <div className="small-top-line" />
+              <li>
+                <button
+                  onClick={(e) => onClickDelete()}
+                  className="groupOwnerButtons"
+                >
+                  Delete Album
+                </button>
+              </li>
+              </>
+            )
+          : <li className="inactive">Log in to view options!</li>}
+        </ul>
       </div>
-      {albumSongs.map((song, songIndex) => (
-        <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
-          <PlayButton2 tracks={albumSongs} trackIndex={songIndex} />
-            <div>{song.name}</div>
-            <div>{song.artist}</div>
-            <div>{album.name}</div>
-            {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
-            <div>{song.userLikes} likes</div>
-            <div>
-            {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}
+      <div className="details-section-body album-details">
+        <h3><span>#</span> <span>Title</span> <i className="fa-regular fa-clock"></i></h3>
+        {albumSongs.length ? albumSongs.map((song, songIndex) => (
+          <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
+            <PlayButton2 tracks={albumSongs} trackIndex={songIndex} />
+              <div>{song.name}</div>
+              <div>{song.artist}</div>
+              <div>{album.name}</div>
+              {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
+              <div>{song.userLikes} likes</div>
+              <div>
+              {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}
+            </div>
           </div>
-        </div>
-      ))}
-      {/* </div> */}
+        )) : <p> No songs in album yet!</p>
+        }
+      </div>
     </div>
   );
 }

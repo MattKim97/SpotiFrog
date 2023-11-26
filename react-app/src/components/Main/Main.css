@@ -53,12 +53,12 @@
 
   }
 
-  .SongListContainer{
+  /* .SongListContainer{
 display: grid;
 grid-template-areas: "name artist album  likes duration";
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 grid-gap: 10px;
-  }
+  } */
 
   /* .landingMainContainer{
     display: flex;

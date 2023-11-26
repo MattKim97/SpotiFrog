@@ -63,12 +63,6 @@ export default function SongDetails() {
       }
     }, [dispatch, sidebarLoaded, songId]);
 
-  // useEffect(() => {
-  //   if (sessionUser && song) {
-  //     setLiked(song.liked);
-  //   }
-  // }, [sessionUser, song]);
-
   useEffect(() => {
     if (song && song.album && song.album.albumCover) {
       setCoverImg(song.album.albumCover);
@@ -155,7 +149,7 @@ export default function SongDetails() {
         <ul className={dropDown} ref={ulRef}>
           {sessionUser ?
           <li><AddToPlaylist userPlaylists={userPlaylists} songId={songId}/></li>
-          : <li className="inactive">Sign in for options!"</li>
+          : <li className="inactive">Log in to view options!</li>
           }
           {sessionUser
           ? sessionUser.id === song.userId && (
@@ -184,29 +178,10 @@ export default function SongDetails() {
         </ul>
       </div>
 
-      <div className="details-section-buttons">
-        <h2>Lyrics:</h2>
-        {/* {sessionUser
-        ? sessionUser.id === song.userId && (
-            <div className="group-owner-buttons-container">
-              <button
-                onClick={(e) => onClickUpdate()}
-                className="groupOwnerButtons"
-              >
-                Update Song
-              </button>
-              <button
-                onClick={(e) => onClickDelete()}
-                className="groupOwnerButtons"
-              >
-                Delete Song
-              </button>
-            </div>
-          )
-        : null} */}
+      <div className="details-section-body">
+        <h3>Lyrics:</h3>
+        <p>{lyrics ? lyrics : "no lyrics available"}</p>
       </div>
-
-      <p className="details-section-body">{lyrics ? lyrics : "no lyrics available"}</p>
     </div>
   );
 }
