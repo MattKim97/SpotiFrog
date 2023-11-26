@@ -192,6 +192,10 @@ h2 {
     grid-area: sound;
 }
 
+.background-text {
+    color: var(--backgroundTextColor)
+}
+
 /********************** NAVIGATION ************************* */
 .profile-button {
     position: absolute;
@@ -393,7 +397,7 @@ input[type=file] {
     padding-bottom: 20px;
 }
 
-.albumCover {
+.albumCover, .playlistCover {
     object-fit: cover;
     max-width: 100%;
     background-color: white;
