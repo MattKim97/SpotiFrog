@@ -14,7 +14,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="HomeSearchContainer">
       <button onClick={onClickHome}>Home</button>
       <button onClick={onClickSearch}>Search</button>
 
