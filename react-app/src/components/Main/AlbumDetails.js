@@ -126,7 +126,7 @@ export default function AlbumDetails() {
             <div>{song.artist}</div>
             <div>{album.name}</div>
             {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
-            <div>{song.userLikes}</div>
+            <div>{song.userLikes} likes</div>
             <div>
             {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}
           </div>
