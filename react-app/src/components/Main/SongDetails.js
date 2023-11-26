@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
@@ -13,7 +13,7 @@ export default function SongDetails() {
   const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const history = useHistory();
-const [liked, setLiked] = useState(null);
+  // const [liked, setLiked] = useState(null);
   const [coverImg, setCoverImg] = useState(
     "https://static.thenounproject.com/png/4974686-200.png"
   );
@@ -21,6 +21,8 @@ const [liked, setLiked] = useState(null);
   const song = useSelector((state) => state.songs[songId]);
   const sessionUser = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
   const playlists = useSelector(consumeUserPlaylists(sessionUser?.playlists))
     // .filter(playlist => !playlist.songs.includes(songId))
@@ -48,6 +50,12 @@ const [liked, setLiked] = useState(null);
     history.push(`/songs/${songId}/edit`);
   };
 
+  const openDropdown = () => {
+    if (!showMenu) {
+        setShowMenu(true)
+    }
+  }
+
     useEffect(() => {
       if (sidebarLoaded){
         dispatch(thunkGetSong(songId))
@@ -55,17 +63,35 @@ const [liked, setLiked] = useState(null);
       }
     }, [dispatch, sidebarLoaded, songId]);
 
-  useEffect(() => {
-    if (sessionUser && song) {
-      setLiked(song.liked);
-    }
-  }, [sessionUser, song]);
+  // useEffect(() => {
+  //   if (sessionUser && song) {
+  //     setLiked(song.liked);
+  //   }
+  // }, [sessionUser, song]);
 
   useEffect(() => {
     if (song && song.album && song.album.albumCover) {
       setCoverImg(song.album.albumCover);
     }
   }, [song]);
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      try {
+        if (!ulRef.current.contains(e.target)) {
+            setShowMenu(false)
+        }
+      } catch (e) {
+        setShowMenu(false)
+      }
+    }
+
+    document.addEventListener("click", closeMenu)
+
+    return () => document.removeEventListener("click", closeMenu)
+  }, [showMenu])
 
   if (!song || !sidebarLoaded) return null;
 
@@ -87,7 +113,9 @@ const [liked, setLiked] = useState(null);
   const sec = playtimeLength % 60;
   const min = Math.floor(playtimeLength / 60);
 
-  const userPlaylists = playlists ? playlists.filter(playlist => !playlist.songs.includes(parseInt(songId))) : []
+  const userPlaylists = playlists ? playlists.filter(playlist => !playlist.songs.includes(parseInt(songId))) : [];
+
+  const dropDown = showMenu ? "user-options-dropdown dropdown" : "hidden user-options-dropdown dropdown"
 
   return (
     <div className="details-container">
@@ -121,16 +149,44 @@ const [liked, setLiked] = useState(null);
       <div className="details-section-user-options">
         <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
         {sessionUser && (
-            <>
-            <LikeSong liked={sessionUser.songsLiked} songId={songId} />
-            <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
-            </>
+          <LikeSong liked={sessionUser.songsLiked} songId={songId} />
         )}
+        <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
+        <ul className={dropDown} ref={ulRef}>
+          {sessionUser ?
+          <li><AddToPlaylist userPlaylists={userPlaylists} songId={songId}/></li>
+          : <li className="inactive">Sign in for options!"</li>
+          }
+          {sessionUser
+          ? sessionUser.id === song.userId && (
+            <>
+              <div className="small-top-line" />
+              <li>
+              <button
+                onClick={(e) => onClickUpdate()}
+                className="groupOwnerButtons"
+              >
+                Update Song
+              </button>
+              </li>
+              <div className="small-top-line" />
+              <li>
+              <button
+                onClick={(e) => onClickDelete()}
+                className="groupOwnerButtons"
+              >
+                Delete Song
+              </button>
+              </li>
+            </>
+            )
+          : null}
+        </ul>
       </div>
 
       <div className="details-section-buttons">
         <h2>Lyrics:</h2>
-        {sessionUser
+        {/* {sessionUser
         ? sessionUser.id === song.userId && (
             <div className="group-owner-buttons-container">
               <button
@@ -147,7 +203,7 @@ const [liked, setLiked] = useState(null);
               </button>
             </div>
           )
-        : null}
+        : null} */}
       </div>
 
       <p className="details-section-body">{lyrics ? lyrics : "no lyrics available"}</p>

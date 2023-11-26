@@ -6,6 +6,7 @@ const REMOVE_USER = "session/REMOVE_USER";
 const GOT_USER_PLAYLISTS = "session/GOT_USER_PLAYLISTS";
 const LIKE_SONG = "session/LIKE_SONG";
 const UNLIKE_SONG = "session/UNLIKE_SONG";
+const ADD_USER_PLAYLIST = "session/ADD_USER_PLAYLIST";
 
 const setUser = user => ({
 	type: SET_USER,
@@ -19,6 +20,11 @@ const removeUser = () => ({
 const gotUserPlaylists = playlists => ({
 	type: GOT_USER_PLAYLISTS,
 	playlists
+})
+
+export const addUserPlaylist = (playlistId) => ({
+	type: ADD_USER_PLAYLIST,
+	playlistId,
 })
 
 export const likeSong = songId => ({
@@ -135,10 +141,7 @@ export const thunkUnlikeSong = songId => async dispatch => {
     return answer
 }
 
-const initialState = { user: null,
-					   playlists: {},
-					   albums: {},
-					 };
+const initialState = { user: null };
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case REMOVE_USER:
@@ -158,6 +161,9 @@ function sessionReducer(state = initialState, action) {
 		case UNLIKE_SONG:
 			const songsLiked = [...state.user.songsLiked].filter(songId => songId != action.songId)
 			return {user: {...state.user, songsLiked: songsLiked}}
+		case ADD_USER_PLAYLIST: {
+			return {user: {...state.user, playlists: [...state.user.playlists, parseInt(action.playlistId)]}}
+		}
 		default:
 			return state;
 	}

@@ -13,6 +13,7 @@
     --headerHeight: 65px;
     --mainPaddingY: 20px;
     --mainPaddingX: 25px;
+    --dropdownBorderRadius: 5px;
 
 
     --inputBackground: rgb(247,247,247) ;
@@ -212,6 +213,10 @@ h2 {
     grid-area: sound;
 }
 
+.background-text {
+    color: var(--backgroundTextColor)
+}
+
 /********************** NAVIGATION ************************* */
 .profile-button {
     position: absolute;
@@ -259,6 +264,10 @@ h2 {
     .fa-user-circle {
         background-color: var(--buttonBackgroundAccent);
     }
+}
+
+.small-top-line {
+    border-top: 1px var(--detailsTopSectionColor) solid;
 }
 
 /*********** LOGIN / SIGNUP MODALs **********************/
@@ -386,17 +395,11 @@ input[type=file] {
     padding: 5px;
 }
 
+.aboutContainer {
+    margin: 50px;
+}
+
 /* ******* DETAILS PAGES *************** */
-
-.playlistSelect {
-    border: 1px var(--borderColor) solid;
-    width: fit-content;
-    cursor: pointer;
-}
-
-.playlistSelect>li {
-    border-bottom: 1px black solid;
-}
 
 .details-container {
     background: linear-gradient(var(--detailsTopSectionColor),var(--sectionBackground));
@@ -409,7 +412,7 @@ input[type=file] {
     padding-bottom: 20px;
 }
 
-.albumCover {
+.albumCover, .playlistCover {
     object-fit: cover;
     max-width: 100%;
     background-color: white;
@@ -445,13 +448,13 @@ input[type=file] {
     background-color: var(--sectionBackground);
     padding: var(--mainPaddingX);
     display: grid;
-    grid-template-columns: 65px 65px 90px;
+    grid-template-columns: 65px 65px 65px;
     align-items: center;
     box-sizing: border-box;
     height: 100px;
 }
 
-.fa-heart {
+.fa-heart, .fa-ellipsis {
     align-self: center;
     justify-self: center;
     font-size: 24pt;
@@ -461,16 +464,21 @@ input[type=file] {
     color: var(--accentGreen);
 }
 
-.fa-heart.fa-regular {
+.fa-heart.fa-regular, .fa-ellipsis {
     color: var(--backgroundTextColor);
 }
 
-.fa-heart:hover {
+.fa-heart:hover, .fa-ellipsis:hover {
     font-size: 26pt;
 }
 
-.fa-heart.fa-heart.fa-regular:hover {
+.fa-heart.fa-heart.fa-regular:hover, .fa-ellipsis:hover {
     color: var(--textColor);
+}
+
+.fa-plus {
+    font-size: var(--fontSize);
+    padding-right: 8px;
 }
 
 .details-section-user-options>.fas.fa-play-circle {
@@ -478,9 +486,9 @@ input[type=file] {
     font-size: 40pt;
 }
 
-.add-to-playlist {
+/* .add-to-playlist {
     margin-left: 10px;
-}
+} */
 
 .add-to-playlist, .groupOwnerButtons {
     background-color: var(--backgroundAccent);
@@ -496,12 +504,7 @@ input[type=file] {
     color: var(--backgroundTextColor);
 }
 
-.fa-plus {
-    font-size: var(--subheadingSize);
-    padding-left: 3px;
-}
-
-.add-to-playlist:hover, .groupOwnerButtons:hover {
+.add-to-playlist:hover, .groupOwnerButtons:hover, .playlist-dropdown:hover, li:hover {
     background-color: var(--backgroundAccent);
     color: var(--textColor);
     .fa-plus, span {
@@ -515,30 +518,60 @@ input[type=file] {
     border-bottom-right-radius: 0;
 }
 
-.playlistSelect {
+.dropdown {
     background-color: var(--backgroundAccent);
-    padding: 3px;
-    width: 125px;
-    border-radius: var(--modalBorderRadius);
-    border-top-left-radius: 0;
-    margin-left: 141px;
-    margin-top: -5px;
+    border-radius: var(--dropdownBorderRadius);
     border: none;
     z-index: 1;
 }
 
-.playlistSelect>li {
-    border-radius: var(--modalBorderRadius);
+.dropdown>li {
+    padding: 5px 0;
+}
+
+.user-options-dropdown {
+    padding: 5px;
+    width: 125px;
+    margin-left: 141px;
+}
+
+.user-options-dropdown>li {
+    height: 30px;
+}
+
+.playlist-menu-button {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 125px 125px;
+    column-gap: 5px;
+    width: 100%;
+    align-items: self-start;
+}
+
+
+.playlist-dropdown {
+    width: fit-content;
+    cursor: pointer;
+    padding: 3px;
+    width: 125px;
+}
+
+.playlist-dropdown>li {
+    border-radius: var(--dropdownBorderRadius);
     padding: 7px;
-    border: none;
+    padding-top: 13px;
+    color: var(--backgroundTextColor);
+    height: 100%;
+    vertical-align: center;
 }
 
-.playlistSelect>li:hover {
-    background-color: var(--sectionBackground);
+.playlist-dropdown>li:hover {
     font-weight: bold;
+    color: var(--textColor);
 }
 
-.playlistSelect>.inactive {
+.playlist-dropdown>.inactive {
     pointer-events: none;
 }
 
@@ -550,14 +583,8 @@ input[type=file] {
     margin: var(--mainPaddingY) var(--mainPaddingX);
 }
 
-.group-owner-buttons-container {
-    display: flex;
-    gap: 10px;
-}
-
 .groupOwnerButtons {
-    width: 65px;
-    font-size: small;
+    width: 100%;
 }
 
 .details-section-body {

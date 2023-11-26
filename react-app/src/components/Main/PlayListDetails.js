@@ -64,7 +64,7 @@ export default function PlayListDetails() {
 
   return (
 
-    <div>
+    <div className="details-container">
         {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -81,8 +81,7 @@ export default function PlayListDetails() {
           </div>
         </div>
       )}
-      <div>
-        <div>
+      <div className="details-section-top">
           <img
           className="playlistCover"
             src={
@@ -92,11 +91,15 @@ export default function PlayListDetails() {
             }
             alt={playlist.name}
           />
-        </div>
-        <div>{playlist.name}</div>
-        <div>{playlist.description}</div>
-        <div>{playlist.createdAt}</div>
-        <div>Owned by: {playlist.owner} </div>
+          <div className="details-section-summary">
+            <h3 className="details-section-type">Playlist</h3>
+            <h2>{playlist.name}</h2>
+            <div className="background-text">{playlist.description}</div>
+            <h3>
+              <span className="details-section-artist">{playlist.owner}</span> • {playlist.createdAt}
+              likes, number songs, duration
+            </h3>
+          </div>
       </div>
       {sessionUser
                 ? sessionUser.id === playlist.userId && (

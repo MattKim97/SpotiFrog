@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import { setIsPlaying } from '../../store/audio'
+import { useAudioContext } from '../../context/AudioContext';
 
 
 function AudioPlayerX({playlist, selectionIndex, onRemove}) {
     const [currentTrackIndex, setCurrentTrackIndex] = useState(selectionIndex);
+    const { player, setPlayer } = useAudioContext()
 
     useEffect(() => {
         if (currentTrackIndex >= playlist.length)
