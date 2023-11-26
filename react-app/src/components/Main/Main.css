@@ -53,19 +53,18 @@
 
   }
 
-  /* .SongListContainer{
-    border: 2px black solid;
-    cursor: pointer;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    width: 500px;
-  } */
+  .SongListContainer{
+display: grid;
+grid-template-areas: "name artist album  likes duration";
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+grid-gap: 10px;
+  }
 
   /* .landingMainContainer{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-  } */
+  } */s
 
   .aboutContainer{
     width: 900px;

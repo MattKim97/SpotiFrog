@@ -14,3 +14,11 @@
 .SideBarLinksContainer{
     display: flex;
 }
+
+.HomeSearchContainer{
+    width: 150px;
+}
+
+.sideBarContainer{
+    width: 150px;
+}

@@ -1,7 +1,6 @@
 import React, { createRef, memo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import AudioPlayer /*, { RHAP_UI } */ from 'react-h5-audio-player'
-import 'react-h5-audio-player/lib/styles.css'
+import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
 import { changeTrack, setIsPaused, setIsPlaying } from '../../store/audio'
 import { thunkGetAllSongs } from '../../store/songs'
@@ -111,7 +110,7 @@ if (!playlist || !playlist.length ||
     }
       <AudioPlayer
         autoPlay={isPlaying}
-        autoPlayAfterSrcChange={isPlaying}
+        autoPlayAfterSrcChange={true}
         hasDefaultKeyBindings={false}
         layout='stacked-reverse'
         loop={false}
@@ -139,18 +138,30 @@ if (!playlist || !playlist.length ||
         onWaiting={() => console.log("WAITING")}
         preload='auto'
         ref={audio}
+        showDownloadProgress={false}
         showFilledProgress={true}
         showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
         src={current}
         volume={.5}
+        customAdditionalControls={[]}
+        customVolumeControls={[
+          // RHAP_UI.LOOP,
+          RHAP_UI.VOLUME,
+        ]}
 
-        // unused settings for react-h5-audio-player
+        // UNUSED settings for react-h5-audio-player
         // controls={false}
         // controlsList="nodownload"
-        // customAdditionalControls={[]}
-        // customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
+        // customAdditionalControls={[
+          //   RHAP_UI.LOOP,
+          // ]}
+          // customControlsSection={[
+          //   RHAP_UI.ADDITIONAL_CONTROLS,
+          //   RHAP_UI.MAIN_CONTROLS,
+          //   RHAP_UI.VOLUME_CONTROLS,
+          // ]}
         // customProgressBarSection={
           //   [
             //     RHAP_UI.CURRENT_TIME,
@@ -159,7 +170,10 @@ if (!playlist || !playlist.length ||
             //     RHAP_UI.VOLUME,
             // ]
             // }
-            // customVolumeControls={[]}
+            // customVolumeControls={[
+            //   RHAP_UI.VOLUME,
+            //   RHAP_UI.VOLUME_CONTROLS,
+            // ]}
             // defaultCurrentTime="0:00"
             // defaultDuration="0:00"
             // progressJumpSteps={{ backward: 5000, forward: 5000 }}
