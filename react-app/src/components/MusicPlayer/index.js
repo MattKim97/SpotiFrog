@@ -2,16 +2,18 @@ import React, { createRef, memo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
-import { changeTrack, setIsPaused, setIsPlaying, setPlayer } from '../../store/audio'
+import { changeTrack, setIsPaused, setIsPlaying/*, setPlayer */ } from '../../store/audio'
 import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton2 from '../PlayButton2'
+import { useAudioContext } from '../../context/AudioContext'
 
 const MusicPlayer = memo(function MusicPlayer() {
-  const { playlist, track, isPlaying, current, player } = useSelector(state => state.audio)
+  const { playlist, track, isPlaying, current /*, player */ } = useSelector(state => state.audio)
   const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
   const audio = createRef()
   const [mp3s] = useState({})
+  const { player, setPlayer } = useAudioContext()
   console.log(`Rerendering PLAYER: songs: ${songs.length} playlist: ${playlist.length}`)
 
   console.log(`***** PLAYER AUDIO: ${player} ${audio}`)

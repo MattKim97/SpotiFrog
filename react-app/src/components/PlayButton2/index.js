@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
+import { useAudioContext } from '../../context/AudioContext';
 
 
 function songMp3(playlist,track){
@@ -21,7 +22,8 @@ const PlayButton2 = memo(
 
   const dispatch = useDispatch();
   let isMyTrack = (playlist === tracks && trackIndex === track)
-  const player = window.audio
+  const { player } = useAudioContext();
+  // const player = window.audio
 
   console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} ${trackIndex} isOn: ${isOn} `)
 
