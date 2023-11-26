@@ -100,8 +100,7 @@ ntries (except my password).
 
 ### Demo User						
 						
-* As an unregistered and unauthorized user, I would like an easy to find and clear button on both the `/signup` and `/lo						
-gin` pages to allow me to visit the site as a guest without signing up or logging in.						
+* As an unregistered and unauthorized user, I would like an easy to find and clear button on both the `/signup` and `/login` pages to allow me to visit the site as a guest without signing up or logging in.						
 * When I'm on either the `/signup` or `/login` pages:						
 * I can click on a Demo User button to log me in and allow me access as a normal user.						
 * So that I can test the site's features and functionality without needing to stop and enter credentials.	
