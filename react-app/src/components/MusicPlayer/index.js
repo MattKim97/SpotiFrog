@@ -2,20 +2,22 @@ import React, { createRef, memo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
-import { changeTrack, setIsPaused, setIsPlaying } from '../../store/audio'
+import { changeTrack, setIsPaused, setIsPlaying, setPlayer } from '../../store/audio'
 import { thunkGetAllSongs } from '../../store/songs'
 import PlayButton2 from '../PlayButton2'
 
 const MusicPlayer = memo(function MusicPlayer() {
-  const { playlist, track, isPlaying, current } = useSelector(state => state.audio)
-
+  const { playlist, track, isPlaying, current, player } = useSelector(state => state.audio)
   const songs = Object.values(useSelector(state => state.songs))
   const dispatch = useDispatch()
   const audio = createRef()
   const [mp3s] = useState({})
   console.log(`Rerendering PLAYER: songs: ${songs.length} playlist: ${playlist.length}`)
 
-
+  console.log(`***** PLAYER AUDIO: ${player} ${audio}`)
+  if (!player) setPlayer(audio)
+  if (audio) window.audio = audio  // for debugging
+  console.log(`***** PLAYER AUDIO.CURRENT WINDOW: ${player} ${audio.current} ${window.audio}`)
 // if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
 // songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
 
@@ -30,7 +32,7 @@ console.log("checking songs")
 if (!songs || songs.length < 4) return null
 
 function songMp3(playlist,track){
-  return playlist[track]
+  return playlist[track].mp3
 }
 
 let uniqueSongs
@@ -45,12 +47,12 @@ if (!mp3s["first"]?.length) {
   mp3s["first"] = []
   mp3s["second"] = []
   for (let i = 0; i < 2; i++)
-    mp3s["first"].push(getRandomUniqueSong().mp3)
+    mp3s["first"].push(getRandomUniqueSong())
   for (let i = 0; i < 4; i++)
-    mp3s["second"].push(getRandomUniqueSong().mp3)
-  console.log(songs)
-  console.log(mp3s["first"].map(e => stripAWSURL(e)))
-  console.log(mp3s["second"].map(e => stripAWSURL(e)))
+    mp3s["second"].push(getRandomUniqueSong())
+  // console.log(songs)
+  // console.log(mp3s["first"].map(e => stripAWSURL(e)))
+  // console.log(mp3s["second"].map(e => stripAWSURL(e)))
 }
 // END TEMPORARY CODE
 
@@ -100,11 +102,11 @@ if (!playlist || !playlist.length ||
     <>
       <h1>list #1 (2 songs)</h1>
       <ul>
-        {mp3s["first"].map((url, i) => <li key={i}><PlayButton2 tracks={mp3s["first"]} trackIndex={i} audio={audio} />{stripAWSURL(url)}</li>)}
+        {mp3s["first"].map((song, i) => <li key={i}><PlayButton2 tracks={mp3s["first"]} trackIndex={i} audio={audio} />{stripAWSURL(song.mp3)}</li>)}
       </ul>
       <h1>list #2 (4 songs)</h1>
       <ul>
-        {mp3s["second"].map((url, i) => <li key={i}><PlayButton2 tracks={mp3s["second"]} trackIndex={i} audio={audio} /> {stripAWSURL(url)} </li>)}
+        {mp3s["second"].map((song, i) => <li key={i}><PlayButton2 tracks={mp3s["second"]} trackIndex={i} audio={audio} /> {stripAWSURL(song.mp3)} </li>)}
       </ul>
       </>
     }
