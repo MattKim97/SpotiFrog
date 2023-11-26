@@ -96,7 +96,7 @@ export default function Library() {
      />}
 
 {sessionUser ?
-  <div>
+  <div className='sideBarContainer'>
     {activeTab === 'albums' ?
       <div>
         {userAlbums.length > 0 ? userAlbums.map((album) => (
