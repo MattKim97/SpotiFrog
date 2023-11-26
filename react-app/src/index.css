@@ -488,7 +488,9 @@ input[type=file] {
     justify-self: end;
 }
 
-.details-section-user-options>.fas.fa-play-circle {
+.details-section-user-options>.fas.fa-play-circle,
+.details-section-user-options>.fas.fa-pause-circle
+ {
     color: var(--accentGreen);
     font-size: 40pt;
 }

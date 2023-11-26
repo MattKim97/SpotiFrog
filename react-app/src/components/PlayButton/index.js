@@ -1,17 +1,7 @@
-import React, { /* memo, */ useState } from 'react';
+import React, { /* memo, */ useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
-// import { useAudioContext } from '../../context/AudioContext';
 
-function songMp3(playlist,track){
-  return (playlist && playlist[track])
-    ? playlist[track].mp3
-    : ""
-}
-
-function stripAWSURL(url) {
-  return !url ? "" : url.slice(url.lastIndexOf('/') + 1)
-}
 
 // const PlayButton = memo(
   function PlayButton({ tracks, trackIndex }) {
@@ -19,43 +9,50 @@ function stripAWSURL(url) {
   const { isPlaying, playlist, track, isPaused, player, inner } = useSelector(state => state.audio);
   const [isOn, setIsOn] = useState(false)
   const dispatch = useDispatch();
-  // const [isMyTrack, setIsMyTrack] = useState(false)
-  // setIsMyTrack(playlist === tracks && trackIndex === track)
-  let isMyTrack = (playlist === tracks && trackIndex === track)
-  let icon = `fas fa-${(isMyTrack && isPaused) ? "play" : "pause"}-circle`;
+
+  let isMyTrack
+  let icon
   function resetIsMyTrack() {
     isMyTrack = (playlist === tracks && trackIndex === track)
   }
   function resetIcon() {
-    icon = `fas fa-${(isMyTrack && isPaused) ? "play" : "pause"}-circle`;
-  }
-  // const { player } = useAudioContext();
-  // const player = window.audio
-
-
-  if (isOn && !isMyTrack) {
-    setIsOn(false)
-    console.log(`Setting ${trackIndex} to OFF`)
-    return null
-  } else if (!isOn && isMyTrack) {
-    console.log(`Setting ${trackIndex} ON`)
-    setIsOn(true)
-    console.log(`Beginning PB2: ${stripAWSURL(songMp3(playlist,track))} ${trackIndex} isOn: ${isOn} `)
+    icon = `fas fa-${(isMyTrack && !isPaused) ? "pause" : "play"}-circle`
   }
 
+  function resetOn() {
+    if (isOn && !isMyTrack) {
+      setIsOn(false)
+      // console.log(`Setting ${trackIndex} to OFF`)
+      return null
+    } else if (!isOn && isMyTrack) {
+      // console.log(`Setting ${trackIndex} ON`)
+      setIsOn(true)
+      // console.log(`Beginning PB2: ${stripAWSURL(songMp3(playlist,track))} ${trackIndex} isOn: ${isOn} `)
+    }
+  }
+  function printVars() {
+    // console.log(`PB2(${trackIndex}): track ${track} isOn: ${isOn} isMyTrack: ${isMyTrack} isPlaying: ${isPlaying} isPaused: ${isPaused} icon ${icon}`)
+  }
+  function resetVars() {
+    resetIsMyTrack()
+    resetIcon()
+    resetOn()
+  }
   function nowHovered() {
     setIsHovered(true)
-    resetIsMyTrack()
-    resetIcon()
-    console.log(`isHoevered: ${isHovered} isMyTrack: ${isMyTrack} icone classes: ${icon}} `)
+    printVars()
   }
+
   function nowNotHovered() {
     setIsHovered(false)
-    resetIsMyTrack()
-    resetIcon()
-    console.log(`isHoevered: ${isHovered} isMyTrack: ${isMyTrack} icone classes: ${icon}} `)
-
+    printVars()
   }
+
+  useEffect(() => {
+    resetVars()
+  }, [playlist, track, isPaused])
+
+  resetVars()
 
   const handleClick = event => {
     event.stopPropagation();
@@ -65,19 +62,19 @@ function stripAWSURL(url) {
       console.log(`Setting ${trackIndex} to on`)
     }
     if (!isMyTrack) { /* start playing new track */
-      console.log(" dispatching changePlaylist ")
+      // console.log(" dispatching changePlaylist ")
       dispatch(changePlaylist(tracks, trackIndex))
-      console.log("returning null")
+      // console.log("returning null")
       return null;
   } else {
       if (isPaused) {
-        console.log(" resuming paused track ")
+        // console.log(" resuming paused track ")
         if (inner) inner.play()
         else if (window.inner) window.inner.play()
         else if (player?.current) player.current.audio.current.play()
         if (inner || window.inner || player?.current) dispatch(setIsPlaying(true)) /* handles paused */
       } else { /* not paused, but reclicked; should pause */
-        console.log(" pausing track ")
+        // console.log(" pausing track ")
         if (inner) inner.pause()
         else if (window.inner) window.inner.pause()
         else if (player?.current) player.current.audio.current.pause()
@@ -88,6 +85,8 @@ function stripAWSURL(url) {
 
   return (
     <div
+      // onMouseEnter={() => setIsHovered(true)}
+      // onMouseLeave={() => setIsHovered(false)}
       onMouseEnter={nowHovered}
       onMouseLeave={nowNotHovered}
       onClick={handleClick}

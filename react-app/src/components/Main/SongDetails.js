@@ -141,6 +141,8 @@ export default function SongDetails() {
       </div>
 
       <div className="details-section-user-options">
+      {/* <PlaylistButton tracks={[]} /> */}
+
         <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
         {sessionUser && (
           <LikeSong liked={sessionUser.songsLiked} songId={songId} />

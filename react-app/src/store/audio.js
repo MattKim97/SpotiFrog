@@ -54,7 +54,7 @@ const initialState = {
 }
 function audioReducer(state = initialState, action) {
     // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
-    console.log(`AUDIO REDUCER: action: type${action.type} action${action}`)
+    // console.log(`AUDIO REDUCER: action: type${action.type} action${action}`)
     switch (action.type) {
         case CHANGE_PLAYLIST:
             if (state.playlist !== action.playlist)
@@ -73,7 +73,9 @@ function audioReducer(state = initialState, action) {
             return {
                 ...state,
                 track: action.track,
-                current: state.playlist[action.track].mp3
+                current: state.playlist[action.track].mp3,
+                isPlaying: true,
+                isPaused: false
             }
         case SET_IS_PLAYING:
             if (state.isPlaying === action.isPlaying) return state

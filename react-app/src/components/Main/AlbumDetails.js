@@ -6,6 +6,7 @@ import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import PlayButton from "../PlayButton";
+import PlaylistButton from "../PlaylistButton";
 import "./Main.css";
 
 export default function AlbumDetails() {
@@ -128,7 +129,8 @@ export default function AlbumDetails() {
         </div>
       </div>
       <div className="details-section-user-options">
-        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
+        <PlaylistButton tracks={albumSongs} />
+
         <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
         <div />
         <ul className={dropDown} ref={ulRef}>

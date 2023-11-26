@@ -28,14 +28,14 @@ const MusicPlayer = memo(function MusicPlayer() {
 
   function handleClickNext() {
     const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
-    console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
+    // console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
     if (!playlist || !playlist.length) return dispatch(changeTrack(0))
     dispatch(changeTrack(nextTrackIndex))
     setIsPlaying(true)
   }
   const handleClickPrevious = () => {
     const prevTrackIndex = (track ? track : playlist.length) - 1 // back to end
-    console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
+    // console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
     if (!playlist || !playlist.length) return dispatch(changeTrack(0))
     dispatch(changeTrack(prevTrackIndex))
     setIsPlaying(true)
@@ -52,8 +52,12 @@ function handleMetaData(event) {
   // const { duration, album, artist, title } = event.target
 }
 function handlePause() {
-  console.log(`PAUSE: ${track} ${songMp3(playlist, track)}`)
+  // console.log(`PAUSE: ${track} ${songMp3(playlist, track)}`)
   dispatch(setIsPaused(true))
+}
+function handlePlay() {
+  // console.log(`PLAY: ${track} ${songMp3(playlist, track)}`)
+  dispatch(setIsPlaying(true))
 }
 
 // if (!playlist || !playlist.length ||
@@ -74,6 +78,8 @@ function handlePause() {
         onEnded={handleEnded}
         onLoadedMetaData={(event) => handleMetaData(event)}
         onPause={handlePause}
+        onPlay={handlePlay}
+        onPlaying={handlePlay}
         preload='auto'
         ref={audio}
         showDownloadProgress={false}
@@ -120,9 +126,7 @@ function handlePause() {
             // onError={() => console.log("ERROR")}
             // onLoadStart={() => console.log("LOAD START")}
             // onLoadedData={() => console.log("LOADED DATA")}
-            // onPlay={() => console.log("PLAY")}
             // onPlayError={() => console.log("PLAY ERROR")}
-            // onPlaying={() => console.log("PLAYING")}
             // onProgress={() => console.log("PROGRESS")}
             // onSeeked={() => console.log("SEEKED")}
             // onSeeking={() => console.log("SEEKING")}
