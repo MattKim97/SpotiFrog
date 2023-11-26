@@ -79,9 +79,13 @@ export default function SongDetails() {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
+      try {
         if (!ulRef.current.contains(e.target)) {
             setShowMenu(false)
         }
+      } catch (e) {
+        setShowMenu(false)
+      }
     }
 
     document.addEventListener("click", closeMenu)
@@ -157,19 +161,23 @@ export default function SongDetails() {
           ? sessionUser.id === song.userId && (
             <>
               <div className="small-top-line" />
+              <li>
               <button
                 onClick={(e) => onClickUpdate()}
                 className="groupOwnerButtons"
               >
                 Update Song
               </button>
+              </li>
               <div className="small-top-line" />
+              <li>
               <button
                 onClick={(e) => onClickDelete()}
                 className="groupOwnerButtons"
               >
                 Delete Song
               </button>
+              </li>
             </>
             )
           : null}
