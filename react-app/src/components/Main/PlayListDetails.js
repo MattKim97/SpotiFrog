@@ -129,7 +129,7 @@ export default function PlayListDetails() {
             <h2>{playlist.name}</h2>
             <div className="background-text">{playlist.description}</div>
             <h3>
-              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length==1 ? "song":"songs"} • {playlistHr} hr {playlistMin} min {playlistSec} sec
+              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length==1 ? "song":"songs"}, {playlistHr} hr {playlistMin} min {playlistSec} sec
             </h3>
           </div>
       </div>
