@@ -5,6 +5,7 @@ import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import PlayButton2 from "../PlayButton2";
 import "./Main.css";
 
 export default function AlbumDetails() {
@@ -120,8 +121,9 @@ export default function AlbumDetails() {
         : null}
       {/* <div> */}
       </div>
-      {albumSongs.map((song) => (
+      {albumSongs.map((song, songIndex) => (
         <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
+          <PlayButton2 tracks={albumSongs} trackIndex={songIndex} />
             <div>{song.name}</div>
             <div>{song.artist}</div>
             <div>{album.name}</div>

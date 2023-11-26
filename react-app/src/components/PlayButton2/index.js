@@ -1,10 +1,13 @@
 import React, { memo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
+import { useAudioContext } from '../../context/AudioContext';
 
 
 function songMp3(playlist,track){
-  return playlist[track]
+  return (playlist && playlist[track])
+    ? playlist[track].mp3
+    : ""
 }
 
 function stripAWSURL(url) {
@@ -12,17 +15,18 @@ function stripAWSURL(url) {
 }
 
 const PlayButton2 = memo(
-  function PlayButton2({ tracks, trackIndex, audio }) {
+  function PlayButton2({ tracks, trackIndex }) {
   const [isHovered, setIsHovered] = useState(false);
   const { isPlaying, playlist, track, isPaused } = useSelector(state => state.audio);
   const [isOn, setIsOn] = useState(false)
 
   const dispatch = useDispatch();
   let isMyTrack = (playlist === tracks && trackIndex === track)
+  const { player } = useAudioContext();
+  // const player = window.audio
 
   console.log(`Beginning PB2: ${isPlaying?"Y":"N"} ${isMyTrack?"mine":formatTrackInfoClick()} ${trackIndex} isOn: ${isOn} `)
-  // if (!trackIndex)
-  //   console.log(typeof audio.current.state==='object'?Object.keys(audio.current.state):"no audio state")
+
 
   if (isOn && !isMyTrack) {
     setIsOn(false)
@@ -34,7 +38,8 @@ const PlayButton2 = memo(
     return `playlist: ${playlist===tracks?'same':stripAWSURL(songMp3(playlist,track))} track: ${track===trackIndex?"same":trackIndex}`
   }
 
-  const handleClick = () => {
+  const handleClick = event => {
+    event.stopPropagation();
     const rKey = "changePlaylist"
     console.log(`PB2 CLICK: ${isPlaying?"playing ":""} ${isMyTrack?"mine"+trackIndex:""} ${isOn?"on":"off"} ${isPaused?"paused":""}`)
     if (!isOn) {
@@ -49,11 +54,11 @@ const PlayButton2 = memo(
   } else {
       if (isPaused) {
         console.log(" resuming paused track ")
-        audio.current.audio.current.play()
+        player.current.audio.current.play()
         dispatch(setIsPlaying(true)) /* handles paused */
       } else { /* not paused, but reclicked; should pause */
         console.log(" pausing track ")
-        audio.current.audio.current.pause()
+        player.current.audio.current.pause()
         dispatch(setIsPaused(true)) /* handles playing */
       }
     }
