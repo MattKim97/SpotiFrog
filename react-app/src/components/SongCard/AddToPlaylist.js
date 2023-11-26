@@ -38,11 +38,11 @@ export default function AddToPlaylist({userPlaylists, songId}) {
         return () => document.removeEventListener("click", closeMenu)
     }, [showMenu])
 
-    const dropDown = showMenu ? "playlistSelect" : "hidden playlistSelect"
+    const dropDown = showMenu ? "playlistSelect dropdown" : "hidden playlistSelect dropdown";
     const buttonClass = showMenu ? "add-to-playlist no-bottom-radius" : "add-to-playlist"
 
     return (
-        <>
+        <div className='playlist-menu-button'>
             <button onClick={openMenu} className={buttonClass}>
                 <i className="fa-solid fa-plus"/>
                 <span>Add to Playlist</span>
@@ -59,6 +59,6 @@ export default function AddToPlaylist({userPlaylists, songId}) {
                 : <li className="inactive">Loading Playlists</li>
                 }
             </ul>
-        </>
+        </div>
     )
 }
