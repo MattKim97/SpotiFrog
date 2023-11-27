@@ -756,10 +756,6 @@ input[type=file] {
     color: black
 }
 
-.fa-solid{
-    color: black;
-}
-
 /********************** SIDEBAR ********************/
 .albumside{
     display: flex;
@@ -1180,6 +1176,7 @@ input[type=file] {
     resize: none;
     width:400px;
     height: 100px;
+
 }
 
 .formsSubmit{
