@@ -8,6 +8,7 @@ const DELETED_ALBUM = "albums/DELETED_ALBUM";
 // const ADD_TO_ALBUM = "albums/ADD_TO_ALBUM";
 // const REMOVE_FROM_ALBUM = "albums/REMOVE_FROM_ALBUM";
 const GET_USER_ALBUMS = "playlists/GET_USER_ALBUMS";
+import { CREATED_ALBUM, CREATED_SONG, DELETED_ALBUM, DELETED_PLAYLIST, DELETED_SONG } from "./common";
 
 export const gotAllAlbums = albums => ({
     type: GOT_ALL_ALBUMS,
@@ -97,10 +98,10 @@ export const thunkCreateAlbum = formData => async dispatch => {
 //     return answer
 // }
 
-export const thunkDeleteAlbum = id => async dispatch => {
+export const thunkDeleteAlbum = (id, songIds) => async dispatch => {
     const url = `/api/albums/${id}`
     const answer = await fetchData(url, { method: 'DELETE' });
-    if (!answer.errors) dispatch(deletedAlbum(id))
+    if (!answer.errors) dispatch(deletedAlbum(id, songIds))
     return answer
 }
 
@@ -142,6 +143,20 @@ const albumReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState[action.id];
       return newState;
+    case CREATED_SONG: {
+      return action.albumId
+        ? {...state,
+          [action.albumId]:
+          {...state[action.albumId],
+            songs: [...state[action.albumId].songs, action.id]}} : state
+    }
+    case DELETED_SONG: {
+      return action.albumId
+        ? {...state,
+          [action.albumId]:
+          {...state[action.albumId],
+            songs: state[action.albumId].songs.filter(songId => songId != action.id)}} : state
+    }
     default:
       return state;
   }

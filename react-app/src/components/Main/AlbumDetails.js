@@ -69,7 +69,7 @@ export default function AlbumDetails() {
   }, [showMenu])
 
   const handleDeleteKeep = async () => {
-    const response = await dispatch((thunkDeleteAlbum(albumId)));
+    const response = await dispatch((thunkDeleteAlbum(albumId, album?.songs)));
     if (response) {
       history.push(`/albums`);
     }

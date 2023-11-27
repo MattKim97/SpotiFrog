@@ -37,7 +37,7 @@ export default function SongDetails() {
   };
 
   const handleDeleteKeep = async () => {
-    const response = await dispatch(thunkDeleteSong(songId));
+    const response = await dispatch(thunkDeleteSong(songId, song.playlistIds, song.albumId));
     if (response) {
       history.push(`/songs`);
     }
