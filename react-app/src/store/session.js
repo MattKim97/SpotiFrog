@@ -1,3 +1,4 @@
+import { CREATED_SONG, DELETED_SONG, CREATED_ALBUM, DELETED_ALBUM } from "./common";
 import { fetchData } from "./csrf"
 
 // constants
@@ -173,6 +174,25 @@ function sessionReducer(state = initialState, action) {
 		case REMOVE_USER_PLAYLIST: {
 			const playlists = state.user.playlists.filter(playlist => playlist.id != action.playlistId)
 			return {user: {...state.user, playlists}}
+		}
+		case CREATED_SONG: {
+			return {user: {...state.user,
+			[songs]: [...state.user.songs, action.song.id]}}
+		}
+		case DELETED_SONG: {
+			return {
+			  user: {...state.user,
+				songsLiked: state.user.songsLiked.filter(songId => songId != action.id)},
+				[songs]: state.user.songs.filter(songId => songId != action.id)}
+		}
+		case CREATED_ALBUM:
+			return {user: {...state.user,
+			[albums]: [...state.user.albums, action.album.id]}
+		}
+		case DELETED_ALBUM:
+			return {
+			  user: {...state.user,
+				[albums]: state.user.albums.filter(albumId => albumId != action.id)}
 		}
 		default:
 			return state;
