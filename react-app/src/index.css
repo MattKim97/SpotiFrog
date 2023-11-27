@@ -1150,3 +1150,38 @@ input[type=file] {
 
 
 /* END REACT-H5-AUDIO-PLAYER STYLES */
+
+
+/********************** FORMS ********************/
+
+.formsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formsStyle{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 400px;
+    height: 500px;
+    background-color: var(--spotifyIconBackground);
+}
+
+.playlistDescription{
+    margin-top: 10px;
+    resize: none;
+    width:400px;
+    height: 100px;
+}
+
+.formsSubmit{
+    background-color: var(--spotifyGreen);
+}
+
+.inputFileForm{
+    background-color: var(--spotifyIconBackground);
+}

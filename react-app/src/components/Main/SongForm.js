@@ -81,7 +81,9 @@ export default function SongForm() {
   if (!albums || albums.length === 0) return null;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="formsContainer">
+    <form  className="formsStyle" onSubmit={handleSubmit}>
+      <h2>Create a Song!</h2>
       <label>
         Song Name:
         <input
@@ -128,9 +130,10 @@ export default function SongForm() {
       <br />
 
       <label>
-        Lyrics:
+        Lyrics(optional):
         <textarea
           name="lyrics"
+          className="playlistDescription"
           value={formData.lyrics}
           onChange={handleInputChange}
         />
@@ -138,7 +141,8 @@ export default function SongForm() {
 
       <br />
 
-      <button type="submit">Submit</button>
+      <button className="formsSubmit" type="submit">Submit</button>
     </form>
+    </div>
   );
 }
