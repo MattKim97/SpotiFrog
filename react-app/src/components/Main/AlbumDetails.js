@@ -93,7 +93,7 @@ export default function AlbumDetails() {
 
   const releaseYear = new Date(album.releaseDate).getFullYear();
   const albumLength = albumSongs.length;
-  const albumDuration = albumSongs.reduce((sum,song) => sum+song.playtimeLength, 0)
+  const albumDuration = albumSongs.reduce((sum,song) => sum+(song?.playtimeLength||0), 0)
   const albumHr = Math.floor(albumDuration/3600);
   const albumMin = Math.floor((albumDuration%3600)/60);
   const albumSec = albumDuration%60;
@@ -167,7 +167,7 @@ export default function AlbumDetails() {
       </div>
       <div className="details-section-body album-details">
         <h3><span>#</span> <span>Title</span> <i className="fa-regular fa-clock"></i></h3>
-        {albumSongs.length ? albumSongs.map((song, songIndex) => (
+        {albumSongs.length && albumDuration ? albumSongs.map((song, songIndex) => (
           <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <PlayButton tracks={albumSongIds} trackIndex={songIndex} />
               <div>{song.name}</div>
