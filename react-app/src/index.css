@@ -445,7 +445,7 @@ input[type=file] {
 
 .modal-content {
   position: absolute;
-  background-color: whitesmoke;
+  background-color: var(--backgroundAccent);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -456,14 +456,23 @@ input[type=file] {
   text-align: center;
 }
 
+.modal-content > h1 {
+ color: var(--textColor);
+}
+
+.modal-content > p {
+    color: var(--textColor);
+    margin-bottom: 5px;
+   }
+
 .modalButtons {
   display: flex;
   flex-direction: column;
 }
 
 .deleteButton {
-  background: red;
-  color: white;
+  background: var(--accentGreen);
+  color: var(--buttonTextColor);
   margin-right: 10px;
   border-radius: 5px;
   width: 300px;
@@ -474,8 +483,8 @@ input[type=file] {
 }
 
 .keepButton {
-  background: darkgray;
-  color: white;
+  background: var(--spotifyDarkGrey);
+  color: var(--buttonTextColor);
   border-radius: 5px;
   width: 300px;
   height: 50px;
@@ -710,8 +719,20 @@ input[type=file] {
     margin: 5px auto;
     width: 95%;
     display: grid;
-    grid-template-areas: "name artist album  likes duration";
-    grid-template-columns: repeat(5,1fr);
+    grid-template-areas: "tracknumber name artist album  likes duration";
+    grid-template-columns: repeat(6,1fr);
+    grid-gap: 10px;
+    align-items: center;
+}
+
+.SongListContainerPlaylist {
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 5px auto;
+    width: 95%;
+    display: grid;
+    grid-template-areas: "tracknumber name artist album  likes duration";
+    grid-template-columns: repeat(7,1fr);
     grid-gap: 10px;
     align-items: center;
 }
@@ -721,6 +742,18 @@ input[type=file] {
     div {
         color: var(--textColor);
     }
+}
+
+.RemoveSongContainer{
+    color: black;
+}
+
+.fa-minus{
+    color: black
+}
+
+.fa-solid{
+    color: black;
 }
 
 /********************** SIDEBAR ********************/
