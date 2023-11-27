@@ -16,13 +16,6 @@
     justify-content: space-around;
 }
 
-.songside{
-    margin-bottom: 5px;
-    width: 175px;
-    background-color: grey;
-    border-radius: 5px;
-}
-
 .songmain{
     display: flex;
     margin-bottom: 10px;
@@ -31,6 +24,13 @@
     width: 300px;
     justify-content: center;
     height: 50px;
+}
+
+.songside{
+    margin-bottom: 5px;
+    width: 175px;
+    background-color: grey;
+    border-radius: 5px;
 }
 
 .songssidestyle{
@@ -44,7 +44,6 @@
 .songssidestyle>h3 {
     font-size: small;
     width: 100%;
-    /* text-align: center; */
     align-self: center;
 }
 
