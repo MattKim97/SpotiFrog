@@ -2,12 +2,11 @@ import { fetchData } from "./csrf"
 
 const GOT_ALL_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
 const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
-const CREATED_PLAYLIST = "playlists/CREATED_PLAYLIST";
 const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
-const DELETED_PLAYLIST = "playlists/DELETED_PLAYLIST";
 const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
 const ADD_TO_PLAYLIST = "playlists/ADD_TO_PLAYLIST";
 const DELETE_FROM_PLAYLIST = "playlists/DELETE_FROM_PLAYLIST";
+import { CREATED_PLAYLIST, DELETED_PLAYLIST, DELETED_SONG } from "./common";
 
 export const addToPlaylist = playlist => ({
     type: ADD_TO_PLAYLIST,
@@ -164,6 +163,14 @@ const playlistReducer = (state = initialState, action) => {
     }
     case DELETE_FROM_PLAYLIST: {
         return {...state, [action.playlist.id]: action.playlist}
+    }
+    case DELETED_SONG: {
+        const newState = {...state}
+        if (!action.playlistIds || !action.playlistIds.length) return state;
+        action.playlistIds.forEach(playlistId => {
+            newState[playlistId].songs = newState[playlistId].songs.filter(songId => songId != action.id)
+        })
+        return newState
     }
     default:
       return state;

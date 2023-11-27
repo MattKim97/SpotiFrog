@@ -176,303 +176,41 @@ https://spotifrog2.onrender.com/
 
 All back-end routes begin with "/api". All Models returned are transformed into dictionaries (the equivalent of JS POJO).
 
-* User
-
-User routes begin with "/api/users"
-    ** "/api/users/" GET
-        * returns a list of all users
-    ** "/api/users/<int:id>" GET
-        * returns the user that matches the id
-    ** "/api/users/<int:id>/albums' GET
-        * returns all albums of a given user
-    ** "/api/users/<int:id>/playlists' GET
-        * returns all playlists of a given user
-    ** "/api/users/<int:id>/songs" GET
-        * returns all songs of a given user
-
-* Songs
-
-Song routes begin with "/api/songs"
-    ** "/api/songs/" GET
-        returns all songs
-
-
-@song_routes.route('/')
-def get_all_songs():
-    """
-    Query for all songs and returns them in a list of song dictionaries
-    """
-    songs = Song.query.all()
-    return {"songs": [song.to_dict() for song in songs]}
-
-@song_routes.route('/<int:id>')
-def get_song(id):
-    """
-    Query for a song by id and returns that song in a dictionary
-    """
-    song = Song.query.get(id)
-    return song.to_dict(scope="detailed")
-
-
-@song_routes.route('/new', methods=['POST'])
-@login_required
-def create_song():
-    """
-    Creates a new song and returns the new song in a dictionary
-    """
-
-    form = SongForm()
-
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    mp3_data = request.files['mp3'].read()
-
-
-    if form.validate_on_submit():
-        mp3 = form.mp3.data
-        mp3.filename = get_unique_filename(mp3.filename)
-        upload = upload_file_to_s3(mp3)
-
-        if "url" not in upload:
-            return upload, 401
-
-        if not form.albumId.data or form.albumId.data == "0":
-            new_song = {
-            "userId": current_user.id,
-            "albumId": None,
-            "name": form.name.data,
-            "mp3": upload["url"],
-            "lyrics": form.lyrics.data,
-        }
-        else:
-            new_song = {
-                "userId": current_user.id,
-                "albumId": form.albumId.data,
-                "name": form.name.data,
-                "mp3": upload["url"],
-                "lyrics": form.lyrics.data,
-            }
-        new_song["playtimeLength"] = analyzePlayTime(mp3_data)
-        if new_song["albumId"]:
-            album = Album.query.get(new_song["albumId"])
-            new_song["albumTrackNumber"] = len(album.songs) + 1
-
-        song = Song(**new_song)
-        db.session.add(song)
-        db.session.commit()
-        return song.to_dict(), 201
-    elif form.errors:
-        return error_messages(form.errors), 401
-    else:
-        return error_message("unknown", "An unknown Error has occurred"), 500
-
-@song_routes.route('/<int:id>', methods=['PUT'])
-@login_required
-def update_song(id):
-
-    """
-    Updates a song and returns the updated song in a dictionary
-    """
-
-    song = Song.query.get(id)
-
-    if song.userId != current_user.id:
-        return error_message("user","Unauthorized"), 403
-
-    form = UpdateSongForm()
-    album_ids = [album.id for album in current_user.albums]
-
-
-    if form.albumId.data is not None and form.albumId.data not in album_ids:
-        return error_message("album", "Invalid Album"), 401
-
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    if form.validate_on_submit():
-        song.name = form.name.data
-        song.albumId = form.albumId.data
-        song.lyrics = form.lyrics.data
-        db.session.commit()
-        return song.to_dict(), 201
-    elif form.errors:
-        return error_messages(form.errors), 401
-    else:
-        return error_message("unknown", "An unknown Error has occurred"), 500
-
-@song_routes.route('/<int:id>', methods=['DELETE'])
-@login_required
-def delete_song(id):
-    """
-    Deletes a song and returns the id of the deleted song
-    """
-    song = Song.query.get(id)
-
-    if song.userId != current_user.id:
-        return error_message("user","Unauthorized"), 403
-
-    file_to_delete = remove_file_from_s3(song.mp3)
-
-    if file_to_delete is True:
-        db.session.delete(song)
-        db.session.commit()
-        return {"message": "Song successfully deleted"}
-    else:
-        return error_message("file","File deletion error"), 401
-
-
-@song_routes.route('/<int:songId>/likes', methods=["POST"])
-@login_required
-def like_song(songId):
-    """
-    Likes a song, creating relationship between user and song
-    """
-    song = Song.query.get(songId) # TODO could just get from current_user.songs
-
-    if song is None:
-        return error_message("song", "Song not found"), 404
-    elif song in current_user.songsLiked:
-        return error_message("like", "Cannot like a song that is already liked"), 401
-    else:
-        current_user.songsLiked.append(song)
-        db.session.commit()
-        return {"message": "Song successfully liked"}, 201
-
-
-@song_routes.route('/<int:songId>/likes', methods=["DELETE"])
-@login_required
-def unlike_song(songId):
-    """
-    Unlikes a song, removing relationship between user and song
-    """
-    song = Song.query.get(songId) # TODO could just get from current_user.songs
-
-    if song is None:
-        return error_message("song", "Song not found"), 404
-    elif song in current_user.songsLiked:
-        current_user.songsLiked.remove(song)
-        db.session.commit()
-        return {"message": "Song successfully unliked"}, 200
-    else:
-        return error_message("like","Cannot unlike this song"), 401
-
-
-
-* Playlists
-
-@playlist_routes.route('/')
-def get_all_playlist():
-    playlists = Playlist.query.all()
-    return {"playlists": [playlist.to_dict(scope="songs_details") for playlist in playlists]}
-
-@playlist_routes.route('/<int:id>')
-def get_playlist(id):
-    playlist = Playlist.query.get(id)
-    return playlist.to_dict(scope="songs_details")
-
-@playlist_routes.route('/new', methods=["POST"])
-@login_required
-def create_playlist():
-
-    """
-    Creates a new playlist and returns the new playlist in a dictionary
-    """
-
-    form = PlayListForm()
-
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    if form.validate_on_submit():
-
-        new_playlist = {
-            "userId": current_user.id,
-            "name": form.name.data,
-            "description": form.description.data,
-        }
-
-        if form.playlistCover.data:
-
-            image = form.playlistCover.data
-            image.filename = get_unique_filename(image.filename)
-            upload = upload_file_to_s3(image)
-
-            if "url" not in upload:
-                return upload, 401
-
-            new_playlist["playlistCover"] = upload["url"]
-
-        playlist = Playlist(**new_playlist)
-        db.session.add(playlist)
-        db.session.commit()
-        return playlist.to_dict(), 201
-    elif form.errors:
-        return error_messages(form.errors), 401
-    else:
-        return error_message("unknown","Unknown error occurred"),500
-
-
-"""NOT FULLY IMPLEMENTED ROUTE"""
-@playlist_routes.route('/<int:id>', methods=["PUT"])
-@login_required
-def update_playlist(id):
-    """
-    Updates a playlist and returns the updated playlist in a dictionary
-    """
-    playlist = Playlist.query.get(id) # TODO just get from current_user
-
-    form = PlayListForm()
-
-    if playlist.userId != current_user.id:
-        return error_message("user", "Authorization Error"), 403
-
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-
-        if form.playlistCover.data is not None:
-            image = form.playlistCover.data
-            image.filename = get_unique_filename(image.filename)
-            upload = upload_file_to_s3(image)
-
-            if "url" not in upload:
-                return upload, 401
-
-            remove_file_from_s3(playlist.playlistCover)
-            playlist.playlistCover = upload["url"]
-
-        playlist.name = form.name.data
-        playlist.description = form.description.data
-        db.session.commit()
-        return playlist.to_dict(), 201
-    elif form.errors:
-        return error_messages(form.errors), 401
-    else:
-        return error_message("unknown","Unknown error occurred"),500
-
-@playlist_routes.route('/<int:playlistId>/songs/<int:songId>', methods=["PUT", "PATCH"]) # change PATCH to DELETE?
-@login_required
-def add_song(playlistId, songId):
-    """
-    Adds or removes a song to an playlist and returns the updated playlist in a dictionary
-    """
-
-    song = Song.query.get(songId) # these two db hits can also just be gotten from current_user
-    playlist = Playlist.query.get(playlistId)
-
-    if song:
-        if request.method =="PUT":
-            if playlist in song.playlist:
-                return error_message("song","Cannot add song to playlist again"), 401
-            song.playlist.append(playlist)
-        else:
-            if playlist in song.playlist:
-                song.playlist.remove(playlist)
-            else:
-                return error_message("song", "Song does not exist in playlist"), 403
-        db.session.add(song)
-        db.session.commit()
-        return playlist.to_dict(scope="songs_details"), 200
-    else:
-        return error_message("song", "Invalid songId"), 403
-
+- User - User routes begin with "/api/users"
+    - "/api/users/" GET
+        - returns a list of all users
+    - "/api/users/<int:id>" GET
+        - returns the user that matches the id
+    - "/api/users/<int:id>/albums' GET
+        - returns all albums of a given user
+    - "/api/users/<int:id>/playlists' GET
+        - returns all playlists of a given user
+    - "/api/users/<int:id>/songs" GET
+        - returns all songs of a given user
+
+- Songs - Song routes begin with "/api/songs"
+    - "/api/songs/" GET
+        - returns all songs
+    - "/api/songs/<int:id>'
+        - GET returns song with the given id
+        - PUT updates and returns the given song
+        - DELETE deletes the song and returns its id
+    - "/api/songs/new' POST
+        - creates and returns new song
+    - "/api/songs/<int:songId>/likes'
+        - POST creates a like between the user and the given song
+        - DELETE removes the "like" between a user and the given song
+
+* Playlists - Playlist routes begin with "/api/playlists"
+    - "/api/playlists/" GET
+        - returns all playlists
+    - "/api/playlists/<int:id>'
+        - returns the specified playlist
+    - '/api/playlists/new' POST
+        - creates and returns a playlist
+    - "/api/playlists/<int:id>' PUT
+        - PUT updates and returns the specified playlist
+        - DELETE deletes a playlist and returns the id
 
 @playlist_routes.route('/<int:playlistId>/', methods=["DELETE"])
 @login_required
