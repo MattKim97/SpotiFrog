@@ -177,22 +177,22 @@ function sessionReducer(state = initialState, action) {
 		}
 		case CREATED_SONG: {
 			return {user: {...state.user,
-			[songs]: [...state.user.songs, action.song.id]}}
+			['songs']: [...state.user.songs, action.song.id]}}
 		}
 		case DELETED_SONG: {
 			return {
 			  user: {...state.user,
 				songsLiked: state.user.songsLiked.filter(songId => songId != action.id)},
-				[songs]: state.user.songs.filter(songId => songId != action.id)}
+				['songs']: state.user.songs.filter(songId => songId != action.id)}
 		}
 		case CREATED_ALBUM:
 			return {user: {...state.user,
-			[albums]: [...state.user.albums, action.album.id]}
+			['albums']: [...state.user.albums, action.album.id]}
 		}
 		case DELETED_ALBUM:
 			return {
 			  user: {...state.user,
-				[albums]: state.user.albums.filter(albumId => albumId != action.id)}
+				['albums']: state.user.albums.filter(albumId => albumId != action.id)}
 		}
 		default:
 			return state;

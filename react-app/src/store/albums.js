@@ -1,14 +1,12 @@
 import { fetchData } from "./csrf"
+import { CREATED_ALBUM, CREATED_SONG, DELETED_ALBUM, DELETED_SONG } from "./common";
 
 const GOT_ALL_ALBUMS = "albums/GOT_ALL_ALBUMS";
 const GOT_ALBUM = "albums/GOT_ALBUM";
-const CREATED_ALBUM = "albums/CREATED_ALBUM";
 // const UPDATED_ALBUM = "albums/UPDATED_ALBUM";
-const DELETED_ALBUM = "albums/DELETED_ALBUM";
 // const ADD_TO_ALBUM = "albums/ADD_TO_ALBUM";
 // const REMOVE_FROM_ALBUM = "albums/REMOVE_FROM_ALBUM";
 const GET_USER_ALBUMS = "playlists/GET_USER_ALBUMS";
-import { CREATED_ALBUM, CREATED_SONG, DELETED_ALBUM, DELETED_PLAYLIST, DELETED_SONG } from "./common";
 
 export const gotAllAlbums = albums => ({
     type: GOT_ALL_ALBUMS,

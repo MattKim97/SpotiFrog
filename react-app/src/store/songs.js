@@ -1,3 +1,4 @@
+import { CREATED_SONG, DELETED_SONG, DELETED_ALBUM } from "./common";
 import { fetchData } from "./csrf"
 
 const GOT_ALL_SONGS = "songs/GOT_ALL_SONGS";
@@ -5,7 +6,6 @@ const GOT_SONG = "songs/GOT_SONG";
 const UPDATED_SONG = "songs/UPDATED_SONG";
 const LIKE_SONG = "songs/LIKE_SONG";
 const UNLIKE_SONG = "songs/UNLIKE_SONG";
-import { CREATED_SONG, DELETED_SONG, DELETED_ALBUM } from "./common";
 
 
 export const gotAllSongs = songs => ({
@@ -161,7 +161,7 @@ const songReducer = (state = initialState, action) => {
           if (!action.songIds || !action.songIds.length) return state;
           const newState = { ...state };
           action.songIds.forEach(songId => {
-            if (newState[songId][actionId.id] === action.albumId) {
+            if (newState[songId]?.albumId === action.id) {
               newState[songId] =
                 {...newState[songId],
                   albumTrackNumber: null,
