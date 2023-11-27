@@ -94,6 +94,7 @@ export default function Library() {
         </div>
        :  <OpenModalButton
        buttonText="Log In to view your Library"
+       buttonClass="LibraryModal"
        modalComponent={<LoginFormModal />}
      />}
 
