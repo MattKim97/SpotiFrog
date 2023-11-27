@@ -204,14 +204,14 @@ All back-end routes begin with "/api". All Models returned are transformed into 
 * Playlists - Playlist routes begin with "/api/playlists"
     - "/api/playlists/" GET
         - returns all playlists
-    - "/api/playlists/<int:id>'
+    - "/api/playlists/<int:plaid>'
         - returns the specified playlist
     - '/api/playlists/new' POST
         - creates and returns a playlist
     - "/api/playlists/<int:id>' PUT
         - PUT updates and returns the specified playlist
         - DELETE deletes a playlist and returns the id
-
+    -
 @playlist_routes.route('/<int:playlistId>/', methods=["DELETE"])
 @login_required
 def delete_playlist(playlistId):
