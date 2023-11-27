@@ -922,6 +922,10 @@ input[type=file] {
     width: 100%;
     padding: 6px;
     border: var(--detailsTopSectionColor) solid 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
 }
 
 .Active{

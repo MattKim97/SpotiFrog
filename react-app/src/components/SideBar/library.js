@@ -87,9 +87,9 @@ export default function Library() {
       <div className='library-text'><i className="fa-solid fa-book"></i>Your Library</div>
       {sessionUser ?
         <div className='SideBarLinksContainer'>
-          <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
-          <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
-          <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}>Songs</div>
+          <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}><i class="fa-solid fa-radio"></i> Albums</div>
+          <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}><i class="fa-solid fa-headphones"></i> Playlists</div>
+          <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}><i class="fa-solid fa-music"></i> Songs</div>
 
         </div>
        :  <OpenModalButton
