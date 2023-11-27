@@ -886,17 +886,6 @@ input[type=file] {
     object-fit: cover;
 }
 
-
-.AlbumCardContainerside{
-    display: flex;
-    border: 2px black solid;
-    cursor: pointer;
-    width: 150px;
-    background-color: grey;
-    margin-bottom: 5px;
-
-}
-
 .playlistside{
     display: flex;
     margin-top: 10px;
@@ -913,14 +902,54 @@ input[type=file] {
     object-fit: cover;
 }
 
-.PlaylistCardContainerside{
+.AlbumCardContainerside{
     display: flex;
-    border: 2px black solid;
     cursor: pointer;
     width: 150px;
-    background-color: grey;
+    height: 150px;
+    background-color: var(--backgroundAccent);
     margin-bottom: 5px;
+}
 
+.PlaylistCardContainerside{
+    display: flex;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 5px;
+    background-color: var(--backgroundAccent);
+}
+
+.SideBarLinksContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5px;
+}
+
+.SideBarLinks{
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: var(--detailsTopSectionColor);
+    border-radius: 15px;
+    width: 100%;
+    padding: 5px;
+    border: var(--detailsTopSectionColor) solid 2px;
+}
+
+.Active{
+    background-color: var(--backgroundAccent);
+    font-weight: bold;
+}
+
+.sideBarContainer {
+    margin-top: 7px;
+}
+
+.sidebar-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */

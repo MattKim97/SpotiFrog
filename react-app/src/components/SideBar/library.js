@@ -102,7 +102,7 @@ export default function Library() {
 {sessionUser ?
   <div className='sideBarContainer'>
     {activeTab === 'albums' ?
-      <div>
+      <div className='sidebar-card-container'>
         {userAlbums.length > 0 ? userAlbums.map((album) => (
           <div key={album.id}>
             <AlbumCard format="side" album={album} />
@@ -112,7 +112,7 @@ export default function Library() {
         <button type='button' onClick={onClickAlbum}>See All Albums</button>
       </div>
       : activeTab === 'playlists' ?
-        <div>
+        <div className='sidebar-card-container'>
           {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist} />
@@ -122,7 +122,7 @@ export default function Library() {
           <button type='button' onClick={onClickPlaylist}>See All Playlists</button>
         </div>
         : activeTab === 'songs' ?
-          <div>
+          <div className='sidebar-card-container'>
             {userSongs.length > 0 ? userSongs.map((song) => (
               <div key={song.id}>
                 <SongCard format={"side"} song={song}/>
