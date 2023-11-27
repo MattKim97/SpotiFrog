@@ -895,7 +895,7 @@ input[type=file] {
 
 .PlaylistCardContainerside, .AlbumCardContainerside{
     margin-bottom: 5px;
-    width: 175px;
+    width: 200px;
     border-radius: 5px;
     display: flex;
     cursor: pointer;
