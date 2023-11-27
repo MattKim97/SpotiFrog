@@ -1,22 +1,27 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changePlaylist, setIsPlaying, setIsPaused } from  '../../store/audio'
+import { changePlaylist, changeIds, setIsPlaying, setIsPaused } from  '../../store/audio'
 
 function PlaylistButton({ tracks }) {
-  const { isPlaying, playlist, isPaused, player, inner } = useSelector(state => state.audio);
+  const { isPlaying, playlist, ids, isPaused, player, inner } = useSelector(state => state.audio);
   const dispatch = useDispatch();
 
   let isMyPlaylist
   let icon
+
+
+  function isById() {
+    return tracks && tracks.length && typeof tracks[0] === "number"
+  }
   function resetIsMyPlaylist() {
-    isMyPlaylist = playlist === tracks
+    isMyPlaylist = (isById() ? ids : playlist) === tracks
   }
   function resetIcon() {
     icon = `fas fa-${(isMyPlaylist && !isPaused) ? "pause" : "play"}-circle`
   }
 
   function printVars() {
-    console.log(`PLB(isMyPlaylist: ${isMyPlaylist} isPlaying: ${isPlaying} isPaused: ${isPaused} icon ${icon}`)
+    console.log(`PLB(isMyPlaylist: ${isMyPlaylist?"T" : "F"} isPlaying: ${isPlaying} isPaused: ${isPaused} icon ${icon}`)
   }
   function resetVars() {
     resetIsMyPlaylist()
@@ -35,8 +40,14 @@ function PlaylistButton({ tracks }) {
     console.log(`PLB CLICK: `); printVars()
 
     if (!isMyPlaylist) { /* start playing tracks */
-      dispatch(changePlaylist(tracks, 0))
-      return null;
+    console.log(" dispatching changePlaylist/ids ")
+      if (tracks && tracks.length) {
+        if (typeof tracks[0] === "object")
+          dispatch(changePlaylist(tracks, 0))
+        else
+          dispatch(changeIds(tracks, 0))
+      }
+     return null;
   } else {
       if (isPaused) {
         // console.log(" resuming paused track ")

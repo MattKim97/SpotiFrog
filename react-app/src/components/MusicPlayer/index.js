@@ -3,46 +3,44 @@ import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
 import { setPlayer, changeTrack, setIsPaused, setIsPlaying, setInner } from '../../store/audio'
-// import { useAudioContext } from '../../context/AudioContext'
-
-
-function songMp3(playlist,track){
-  return playlist[track].mp3
-}
-
+import { songName } from '../../utils/player'
 
 const MusicPlayer = memo(function MusicPlayer() {
-  const { playlist, track, isPlaying, current, player } = useSelector(state => state.audio)
-  const songs = Object.values(useSelector(state => state.songs))
+  const { playlist, ids, track, isPlaying, url, player, isById, song } = useSelector(state => state.audio)
   const dispatch = useDispatch()
   const audio = useRef()
-  // const { player, setPlayer } = useAudioContext()
-  console.log(`Rerendering PLAYER: songs: ${songs.length} playlist: ${playlist.length}`)
+  console.log(`Rerendering PLAYER: playlist: ${playlist?.length} ids: ${ids?.length} index: ${track} ${songName(song)}`)
 
   if (!player) dispatch(setPlayer(audio))
   if (audio) window.audio = audio
   if (audio.current?.audio?.current) {
-    setInner(audio.current)
+    setInner(audio.current.audio.current)
     window.inner = audio.current.audio.current
   }
 
+  function playlistLength(){
+    return isById !== null && isById && ids ? ids.length : (playlist ? playlist?.length : 0)
+  }
+
   function handleClickNext() {
-    const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
+    const length = playlistLength()
+    const nextTrackIndex = length < 2 ? 0 : (track + 1) % length // Loop back to beginning
     // console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
-    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
+    // if (!playlist || !length) return dispatch(changeTrack(0))
     dispatch(changeTrack(nextTrackIndex))
     setIsPlaying(true)
   }
   const handleClickPrevious = () => {
-    const prevTrackIndex = (track ? track : playlist.length) - 1 // back to end
+    const length = playlistLength()
+    const prevTrackIndex = length < 2 ? 0 : (track ? track : length) - 1 // back to end
     // console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
-    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
+    // if (!playlist || !length) return dispatch(changeTrack(0))
     dispatch(changeTrack(prevTrackIndex))
     setIsPlaying(true)
   }
 
 function handleEnded() {
-  console.log(`ENDED: ${track} ${songMp3(playlist, track)}`)
+  console.log(`ENDED: ${track} ${songName(song)}`)
   handleClickNext()
 }
 
@@ -52,11 +50,11 @@ function handleMetaData(event) {
   // const { duration, album, artist, title } = event.target
 }
 function handlePause() {
-  // console.log(`PAUSE: ${track} ${songMp3(playlist, track)}`)
+  console.log(`PAUSE: ${track} ${songName(song)}`)
   dispatch(setIsPaused(true))
 }
 function handlePlay() {
-  // console.log(`PLAY: ${track} ${songMp3(playlist, track)}`)
+  console.log(`PLAY: ${track} ${songName(song)}`)
   dispatch(setIsPlaying(true))
 }
 
@@ -87,7 +85,7 @@ function handlePlay() {
         showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
-        src={current}
+        src={url}
         volume={.5}
         customAdditionalControls={[]}
         customVolumeControls={[

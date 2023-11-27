@@ -7,7 +7,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AddToPlaylist from '../SongCard/AddToPlaylist'
 import { useContentLoaded } from "../../context/ContentLoaded";
 import { consumeUserPlaylists } from "../../store/playlists";
-
+// import PlayButton from "../PlayButton";
+import PlaylistButton from "../PlaylistButton";
 
 export default function SongDetails() {
   const {sidebarLoaded} = useContentLoaded()
@@ -141,9 +142,7 @@ export default function SongDetails() {
       </div>
 
       <div className="details-section-user-options">
-      {/* <PlaylistButton tracks={[]} /> */}
-
-        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
+        <PlaylistButton tracks={[]} /> {/* TODO */}
         {sessionUser && (
           <LikeSong liked={sessionUser.songsLiked} songId={songId} />
         )}
