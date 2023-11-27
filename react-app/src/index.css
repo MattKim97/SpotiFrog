@@ -248,12 +248,16 @@ h2 {
   width: 100px;
 }
 
-.profile-dropdown * {
+.profile-dropdown>* {
     background-color: var(--buttonBackgroundColor);
     color: var(--buttonTextColor);
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.profile-dropdown>li {
+    pointer-events: none;
 }
 
 .logout-button {
