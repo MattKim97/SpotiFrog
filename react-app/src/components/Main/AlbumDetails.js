@@ -11,6 +11,7 @@ import "./Main.css";
 
 export default function AlbumDetails() {
   const { albumId } = useParams();
+  const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
   const dispatch = useDispatch();
   const albums = Object.values(useSelector((state) => state.albums));
   const sessionUser = useSelector((state) => state.session.user);
@@ -84,6 +85,7 @@ export default function AlbumDetails() {
 
   if(!album) return null
   if(!albumSongs) return null
+  if(!albumSongIds) return null
 
   const releaseYear = new Date(album.releaseDate).getFullYear();
   const albumLength = albumSongs.length;
@@ -129,7 +131,7 @@ export default function AlbumDetails() {
         </div>
       </div>
       <div className="details-section-user-options">
-        <PlaylistButton tracks={albumSongs} />
+        <PlaylistButton tracks={albumSongIds} />
 
         <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
         <div />
@@ -163,7 +165,7 @@ export default function AlbumDetails() {
         <h3><span>#</span> <span>Title</span> <i className="fa-regular fa-clock"></i></h3>
         {albumSongs.length ? albumSongs.map((song, songIndex) => (
           <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
-            <PlayButton tracks={albumSongs} trackIndex={songIndex} />
+            <PlayButton tracks={albumSongIds} trackIndex={songIndex} />
               <div>{song.name}</div>
               <div>{song.artist}</div>
               <div>{album.name}</div>
