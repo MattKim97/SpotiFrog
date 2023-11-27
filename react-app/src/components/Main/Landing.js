@@ -21,7 +21,7 @@ export default function Landing() {
 
   function randominator(arr) {
     const result = [];
-    const copy = arr.slice();
+    const copy = arr.slice(0,5);
 
     while (result.length < 4) {
       let index = Math.floor(Math.random() * copy.length);
