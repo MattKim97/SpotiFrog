@@ -7,6 +7,7 @@ const GOT_USER_PLAYLISTS = "session/GOT_USER_PLAYLISTS";
 const LIKE_SONG = "session/LIKE_SONG";
 const UNLIKE_SONG = "session/UNLIKE_SONG";
 const ADD_USER_PLAYLIST = "session/ADD_USER_PLAYLIST";
+const REMOVE_USER_PLAYLIST = "session/REMOVE_USER_PLAYLIST";
 
 const setUser = user => ({
 	type: SET_USER,
@@ -25,6 +26,11 @@ const gotUserPlaylists = playlists => ({
 export const addUserPlaylist = (playlistId) => ({
 	type: ADD_USER_PLAYLIST,
 	playlistId,
+})
+
+export const removeUserPlaylist = playlistId => ({
+	type: REMOVE_USER_PLAYLIST,
+	playlistId
 })
 
 export const likeSong = songId => ({
@@ -163,6 +169,10 @@ function sessionReducer(state = initialState, action) {
 			return {user: {...state.user, songsLiked: songsLiked}}
 		case ADD_USER_PLAYLIST: {
 			return {user: {...state.user, playlists: [...state.user.playlists, parseInt(action.playlistId)]}}
+		}
+		case REMOVE_USER_PLAYLIST: {
+			const playlists = state.user.playlists.filter(playlist => playlist.id != action.playlistId)
+			return {user: {...state.user, playlists}}
 		}
 		default:
 			return state;

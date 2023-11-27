@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetPlaylist} from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
+import {removeUserPlaylist} from "../../store/session"
 import { useContentLoaded } from "../../context/ContentLoaded";
 import RemoveSongFromPlaylist from "./RemoveSongFromPlaylist";
 import PlayButton from "../PlayButton";
@@ -52,6 +53,7 @@ export default function PlayListDetails() {
 
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeletePlaylist(playlistId)));
+    await dispatch(removeUserPlaylist(playlistId))
     if (response) {
       history.push("/playlists");
     }
@@ -166,28 +168,10 @@ export default function PlayListDetails() {
           : <li className="inactive">Log in to view options!</li>}
         </ul>
       </div>
-      {/* {sessionUser
-                ? sessionUser.id === playlist.userId && (
-                    <div className="groupOwnerButtonsContainer">
-                      <button
-                        onClick={(e) => onClickDelete()}
-                        className="groupOwnerButtons"
-                      >
-                        Delete Playlist
-                      </button>
-                      <button
-                        onClick={(e) => onClickEdit()}
-                        className="groupOwnerButtons"
-                      >
-                        Edit a playlist
-                      </button>
-                    </div>
-                  )
-                : null} */}
       <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
                         <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />
-<div>{song.name}</div>
+            <div>{song.name}</div>
             <div>{song.artist}</div>
 
             {sessionUser && sessionUser.id === playlist.userId &&
