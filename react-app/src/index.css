@@ -162,7 +162,7 @@ input,textarea {
     border-radius: var(--inputBorderRadius);
 }
 
-label {
+label:not(.normal-label) {
     font-weight: bold ;
 }
 
@@ -1100,6 +1100,7 @@ input[type=file] {
 /********************** FORMS ********************/
 
 .formsContainer{
+    padding: var(--mainPaddingY) var(--mainPaddingX);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1128,6 +1129,18 @@ input[type=file] {
     background-color: var(--spotifyGreen);
 }
 
+.formsSubmit:hover {
+    background-color: var(--spotifyGreen);
+}
+
 .inputFileForm{
     background-color: var(--spotifyIconBackground);
 }
+
+.formsStyle>div>h3 {
+    font-weight: bold;
+}
+
+/* .normal-label {
+    border: red 1px solid;
+} */

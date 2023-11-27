@@ -31,9 +31,9 @@ export default function AddRemoveSongForm() {
         if (sessionUser){
             const songs = Object.values(allSongs)
 
-            setAlbumSongs(songs.filter(song => song.albumId===albumId))
+            setAlbumSongs(songs.filter(song => song.albumId==albumId))
 
-            setUserSingles(songs.filter(song => song.userId===sessionUser.id && !song.albumId))
+            setUserSingles(songs.filter(song => song.userId==sessionUser.id && !song.albumId))
         }
     }, [allSongs, sessionUser, albumId])
 
@@ -91,14 +91,17 @@ export default function AddRemoveSongForm() {
     if (!allSongs) return <>Loading update page</>
 
     return (
-        <form action="" onSubmit={handleSubmit}>
+        <div className='formsContainer'>
+        <form action="" onSubmit={handleSubmit} className='formsStyle'>
+            <h2>Update the songs in your Album!</h2>
             <div>
-                <h3>Select songs to remove from album</h3>
+                <h3>Select songs to remove from album:</h3>
+                <div className='small-top-line'/>
                 {albumSongs.map(song => {
                     return (
                     <div key={song.id}>
                     {errors[song.id] && <div>{errors[song.id]}</div>}
-                    <label htmlFor={song.id}>
+                    <label htmlFor={song.id} className="normal-label">
                         {song.name}
                         <input
                             id={song.id}
@@ -114,10 +117,11 @@ export default function AddRemoveSongForm() {
             </div>
 
             <div>
-                <h3>Select songs to add to album</h3>
+                <h3>Select songs to add to album:</h3>
+                <div className='small-top-line'/>
                 {userSingles.map(song => {
                     return (
-                    <label key={song.id} htmlFor={song.id}>
+                    <label key={song.id} htmlFor={song.id}className="normal-label">
                         {song.name}
                         <input
                             id={song.id}
@@ -129,7 +133,8 @@ export default function AddRemoveSongForm() {
                 })}
             </div>
 
-            <button>UPDATE ALBUM SONGS</button>
+            <button className="formsSubmit" type="submit">Update Songs in Album</button>
         </form>
+        </div>
     )
 }

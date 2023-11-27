@@ -148,7 +148,7 @@ export default function AlbumDetails() {
                   onClick={(e) => onClickAdd()}
                   className="groupOwnerButtons"
                 >
-                  Add a song
+                  Change Songs
                 </button>
               </li>
               <div className="small-top-line" />
