@@ -136,7 +136,7 @@ export default function SongDetails() {
           <h3 className="details-section-type">Song</h3>
           <h2>{name}</h2>
           <h3>
-          <span className="details-section-artist">{artist}</span> • <Link to={`/albums/${albumId}`}>{albumName}</Link> • {year} • {min}:{sec} • {userLikes} Likes
+          <span className="details-section-artist">{artist}</span> • <Link to={`/albums/${albumId}`}>{albumName}</Link> • <span className="details-section-artist">{artist}</span> • <span className="albumYearToolTip" title={new Date(uploadedAt).toLocaleDateString(undefined, {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}>{year}</span> • {min}:{sec} • {userLikes} Likes
           </h3>
         </div>
       </div>

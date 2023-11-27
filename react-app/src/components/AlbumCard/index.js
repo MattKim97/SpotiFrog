@@ -12,7 +12,7 @@ export default function AlbumCard({format, album}) {
                 <img src={imageUrl} alt="Album"/>
                 <div>
                     <h3>{album.name}</h3>
-                    <h4>{year} • {album.artist}</h4>
+                    <h4><span className="albumYearToolTip" title={new Date(album.releaseDate).toLocaleDateString(undefined, {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}>{year}</span> • {album.artist}</h4>
                 </div>
             </div>
         </Link>

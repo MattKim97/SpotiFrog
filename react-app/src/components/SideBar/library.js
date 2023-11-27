@@ -95,6 +95,8 @@ export default function Library() {
        :  <OpenModalButton
        buttonText="Log In to view your Library"
        modalComponent={<LoginFormModal />}
+       customClassName="custom-modal-button"
+       className="custom-modal-button"
      />}
 
 {sessionUser ?
