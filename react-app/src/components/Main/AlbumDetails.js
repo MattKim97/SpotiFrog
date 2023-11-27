@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+
 import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
-import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useContentLoaded } from "../../context/ContentLoaded";
 import PlayButton from "../PlayButton";
 import PlaylistButton from "../PlaylistButton";
 
 export default function AlbumDetails() {
+  const {sidebarLoaded} = useContentLoaded()
   const { albumId } = useParams();
   const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
   const dispatch = useDispatch();
@@ -70,20 +71,18 @@ export default function AlbumDetails() {
       history.push(`/albums`);
     }
   };
+
   useEffect(() => {
-    dispatch(thunkGetAlbum(albumId));
-    dispatch(thunkGetAllSongs());
-  }, [dispatch, albumId]);
+    if (sidebarLoaded) {
+      dispatch(thunkGetAllSongs()).then(() => dispatch(thunkGetAlbum(albumId)));
+    }
+  }, [dispatch, albumId, sidebarLoaded]);
 
   if (!albums) return null;
   if (!allSongs) return null;
 
   const album = albums.find((album) => album.id === Number(albumId));
   const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
-  console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
-  console.log("🚀 ~ file: AlbumDetails.js:85 ~ AlbumDetails ~ albumSongs:", albumSongs)
-  console.log("🚀 ~ file: AlbumDetails.js:85 ~ AlbumDetails ~ albumSongIds:", albumSongIds)
-
 
   if(!album) return null
   if(!albumSongs) return null
