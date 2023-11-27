@@ -1,9 +1,21 @@
 .songsmaincontainer{
-    background-color: grey;
     width: 900px;
-    border: 2px black solid;
-
+    /* border: 2px black solid; */
 }
+
+.songsmainstyle{
+width: 900px;
+box-sizing: border-box;
+cursor: pointer;
+margin: 5px auto;
+display: grid;
+grid-template-areas: "name date album";
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 10px;
+align-items: center;
+justify-content: space-around;
+}
+
 
 .songmain{
     display: flex;
@@ -12,4 +24,5 @@
     margin-right: 10px;
     width: 300px;
     justify-content: center;
+    height: 50px;
 }

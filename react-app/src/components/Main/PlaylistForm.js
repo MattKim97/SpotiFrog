@@ -54,7 +54,10 @@ export default function PlaylistForm() {
 
 
     return (
-      <form onSubmit={handleSubmit}>
+      <div className='formsContainer'>
+    
+      <form  className="formsStyle" onSubmit={handleSubmit}>
+      <h2>Create a Playlist!</h2>
         <label>
           Playlist Name:
           <input
@@ -69,7 +72,7 @@ export default function PlaylistForm() {
         <br />
 
         <label>
-          Playlist Cover:
+          Playlist Cover(optional):
           <input type="file" name="playlistCover" onChange={handleInputChange} />
           {errors.playlistCover && <div style={{color:"red"}} >{errors.playlistCover}</div>}
         </label>
@@ -81,6 +84,7 @@ export default function PlaylistForm() {
           <textarea
           type='text'
             name="description"
+            className='playlistDescription'
             value={formData.description}
             onChange={handleInputChange}
           />
@@ -89,7 +93,8 @@ export default function PlaylistForm() {
 
         <br />
 
-        <button type="submit">Submit</button>
+        <button className='formsSubmit' type="submit">Submit</button>
       </form>
+      </div>
     );
 }

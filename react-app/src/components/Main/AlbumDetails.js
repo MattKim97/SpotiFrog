@@ -1,20 +1,24 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+
 import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
-import { thunkGetAllSongs } from "../../store/songs";
-import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { thunkGetAllSongs, selectSongsByIds } from "../../store/songs";
+import { useContentLoaded } from "../../context/ContentLoaded";
 import PlayButton from "../PlayButton";
 import PlaylistButton from "../PlaylistButton";
 
 export default function AlbumDetails() {
-  const { albumId } = useParams();
-  const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
   const dispatch = useDispatch();
-  const albums = Object.values(useSelector((state) => state.albums));
+  const {sidebarLoaded} = useContentLoaded()
+  const { albumId } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
-  const allSongs = Object.values(useSelector((state) => state.songs));
+
+  const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
+  const album = useSelector((state) => state.albums[albumId]);
+  // const allSongs = Object.values(useSelector((state) => state.songs));
+  const albumSongs = useSelector(selectSongsByIds(album?.songs))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -70,17 +74,18 @@ export default function AlbumDetails() {
       history.push(`/albums`);
     }
   };
+
   useEffect(() => {
-    dispatch(thunkGetAlbum(albumId));
-    dispatch(thunkGetAllSongs());
-  }, [dispatch, albumId]);
+    if (sidebarLoaded) {
+      dispatch(thunkGetAllSongs()).then(() => dispatch(thunkGetAlbum(albumId)));
+    }
+  }, [dispatch, albumId, sidebarLoaded]);
 
-  if (!albums) return null;
-  if (!allSongs) return null;
+  // if (!album) return null;
+  // if (!allSongs) return null;
 
-  const album = albums.find((album) => album.id === Number(albumId));
-  const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
-  console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
+  // const album = albums.find((album) => album.id === Number(albumId));
+  // const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
 
   if(!album) return null
   if(!albumSongs) return null
@@ -126,7 +131,7 @@ export default function AlbumDetails() {
         <div className="details-section-summary">
           <h3 className="details-section-type">{albumLength==1 ? "Single": "Album"}</h3>
           <h2>{album.name}</h2>
-          <h3><span className="details-section-artist">{album.artist}</span> • {releaseYear} • {albumLength} {albumLength==1 ? "song": "songs"}, {albumHr} hr {albumMin} min {albumSec} sec</h3>
+          <h3><span className="details-section-artist">{album.artist}</span> • <span className="albumYearToolTip" title={new Date(album.releaseDate).toLocaleDateString(undefined, {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}>{releaseYear}</span> • {albumLength} {albumLength==1 ? "song": "songs"}, {albumHr} hr {albumMin} min {albumSec} sec</h3>
         </div>
       </div>
       <div className="details-section-user-options">

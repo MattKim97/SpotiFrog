@@ -10,10 +10,12 @@ export default function Search() {
     }
 
     return (
+        <div className='SearchMainContainer'>
         <div className='SearchContainer'>
-            <button onClick={() => search("playlists")}>Playlists</button>
-            <button onClick={() => search("albums")}>Albums</button>
-            <button onClick={() => search("songs")}>Songs</button>
+            <button className="searchButtons" onClick={() => search("playlists")}>Playlists</button>
+            <button className="searchButtons" onClick={() => search("albums")}>Albums</button>
+            <button className="searchButtons" onClick={() => search("songs")}>Songs</button>
+        </div>
         </div>
     );
 }
