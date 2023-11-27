@@ -5,7 +5,6 @@ import { thunkGetAllAlbums } from "../../store/albums";
 import { thunkGetAllPlaylists } from "../../store/playlists";
 import AlbumCard from "../AlbumCard";
 import PlaylistCard from "../PlaylistCard";
-import "./Main.css";
 
 export default function Landing() {
   const dispatch = useDispatch();

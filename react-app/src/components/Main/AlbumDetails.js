@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import PlayButton from "../PlayButton";
 import PlaylistButton from "../PlaylistButton";
-import "./Main.css";
 
 export default function AlbumDetails() {
   const { albumId } = useParams();
@@ -135,7 +134,7 @@ export default function AlbumDetails() {
         <div />
         <ul className={dropDown} ref={ulRef}>
           {sessionUser
-          ? sessionUser.id === album.userId && (
+          ? sessionUser.id === album.userId ? (
               <>
               <li>
                 <button
@@ -155,7 +154,7 @@ export default function AlbumDetails() {
                 </button>
               </li>
               </>
-            )
+            ) : <li className="inactive">No actions available</li>
           : <li className="inactive">Log in to view options!</li>}
         </ul>
       </div>

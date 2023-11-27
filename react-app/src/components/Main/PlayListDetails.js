@@ -139,7 +139,7 @@ export default function PlayListDetails() {
         <div />
         <ul className={dropDown} ref={ulRef}>
           {sessionUser
-          ? sessionUser.id === playlist.userId && (
+          ? sessionUser.id === playlist.userId ? (
               <>
               <li>
                 <button
@@ -158,28 +158,10 @@ export default function PlayListDetails() {
                 </button>
               </li>
               </>
-            )
+            ) : <li className="inactive">No actions available</li>
           : <li className="inactive">Log in to view options!</li>}
         </ul>
       </div>
-      {/* {sessionUser
-                ? sessionUser.id === playlist.userId && (
-                    <div className="groupOwnerButtonsContainer">
-                      <button
-                        onClick={(e) => onClickDelete()}
-                        className="groupOwnerButtons"
-                      >
-                        Delete Playlist
-                      </button>
-                      <button
-                        onClick={(e) => onClickEdit()}
-                        className="groupOwnerButtons"
-                      >
-                        Edit a playlist
-                      </button>
-                    </div>
-                  )
-                : null} */}
       <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song) => (
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
             <div>{song.name}</div>
