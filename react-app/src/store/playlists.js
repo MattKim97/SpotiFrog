@@ -1,4 +1,5 @@
 import { fetchData } from "./csrf"
+import { CREATED_PLAYLIST, DELETED_PLAYLIST, DELETED_SONG } from "./common";
 
 const GOT_ALL_PLAYLISTS = "playlists/GOT_ALL_PLAYLISTS";
 const GOT_PLAYLIST = "playlists/GOT_PLAYLIST";
@@ -6,7 +7,6 @@ const UPDATED_PLAYLIST = "playlists/UPDATED_PLAYLIST";
 const GET_USER_PLAYLIST = "playlists/GET_USER_PLAYLIST";
 const ADD_TO_PLAYLIST = "playlists/ADD_TO_PLAYLIST";
 const DELETE_FROM_PLAYLIST = "playlists/DELETE_FROM_PLAYLIST";
-import { CREATED_PLAYLIST, DELETED_PLAYLIST, DELETED_SONG } from "./common";
 
 export const addToPlaylist = playlist => ({
     type: ADD_TO_PLAYLIST,
@@ -168,7 +168,7 @@ const playlistReducer = (state = initialState, action) => {
         const newState = {...state}
         if (!action.playlistIds || !action.playlistIds.length) return state;
         action.playlistIds.forEach(playlistId => {
-            newState[playlistId].songs = newState[playlistId].songs.filter(songId => songId != action.id)
+            newState[playlistId].songs = newState[playlistId].songs.filter(songId => songId !== action.id)
         })
         return newState
     }

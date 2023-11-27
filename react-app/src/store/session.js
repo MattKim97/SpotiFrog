@@ -166,33 +166,33 @@ function sessionReducer(state = initialState, action) {
 			return {user: {...state.user, songsLiked}}
 		}
 		case UNLIKE_SONG:
-			const songsLiked = [...state.user.songsLiked].filter(songId => songId != action.songId)
+			const songsLiked = [...state.user.songsLiked].filter(songId => songId !== action.songId)
 			return {user: {...state.user, songsLiked: songsLiked}}
 		case ADD_USER_PLAYLIST: {
 			return {user: {...state.user, playlists: [...state.user.playlists, parseInt(action.playlistId)]}}
 		}
 		case REMOVE_USER_PLAYLIST: {
-			const playlists = state.user.playlists.filter(playlist => playlist.id != action.playlistId)
+			const playlists = state.user.playlists.filter(playlist => playlist.id !== action.playlistId)
 			return {user: {...state.user, playlists}}
 		}
 		case CREATED_SONG: {
 			return {user: {...state.user,
-			[songs]: [...state.user.songs, action.song.id]}}
+			'songs': [...state.user.songs, action.song.id]}}
 		}
 		case DELETED_SONG: {
 			return {
 			  user: {...state.user,
-				songsLiked: state.user.songsLiked.filter(songId => songId != action.id)},
-				[songs]: state.user.songs.filter(songId => songId != action.id)}
+				songsLiked: state.user.songsLiked.filter(songId => songId !== action.id)},
+				'songs': state.user.songs.filter(songId => songId !== action.id)}
 		}
 		case CREATED_ALBUM:
 			return {user: {...state.user,
-			[albums]: [...state.user.albums, action.album.id]}
+			'albums': [...state.user.albums, action.album.id]}
 		}
 		case DELETED_ALBUM:
 			return {
 			  user: {...state.user,
-				[albums]: state.user.albums.filter(albumId => albumId != action.id)}
+				'albums': state.user.albums.filter(albumId => albumId !== action.id)}
 		}
 		default:
 			return state;
