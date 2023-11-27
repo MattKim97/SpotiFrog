@@ -197,7 +197,6 @@ h2 {
     grid-template-columns: 1fr 4fr ;
     grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
-    max-width: 1024px; /* for player *//* talk to Bill before changing*/
     height: 100vh;
     min-height: 100%;  /* for player *//* talk to Bill before changing*/
     position: relative;  /* for player *//* talk to Bill before changing*/
