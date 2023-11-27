@@ -36,10 +36,7 @@ class Playlist(db.Model):
             "playlistCover": self.playlistCover,
             "description": self.description,
             "createdAt": self.createdAt,
-            "owner": self.user.username
+            "owner": self.user.username,
+            "songs": [song.id for song in self.songs]
         }
-        if scope == "songs_details":
-            # d["songs"] = [song.to_dict() for song in self.songs]
-            d["songs"] = [song.id for song in self.songs]
-
         return d

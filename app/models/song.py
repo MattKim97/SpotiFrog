@@ -71,10 +71,8 @@ class Song(db.Model):
             "lyrics": self.lyrics,
             "userLikes" : len(self.userLikes),
             "artist": self.user.username,
-
             "playlistIds": self.playlist_ids()
         }
-
         if scope == "detailed":
             if self.album:
                 d["album"] = self.album.to_dict()

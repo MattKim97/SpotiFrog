@@ -30,9 +30,8 @@ class Album(db.Model):
                     "albumCover": self.albumCover,
                     "userId": self.userId,
                     "artist": self.user.username,
-                    "releaseDate": self.releaseDate
+                    "releaseDate": self.releaseDate,
+                    "songs": [song.id for song in self.songs]
                 }
-        if scope == "songs_details":
-            d["songs"] = [song.id for song in self.songs]
 
         return d
