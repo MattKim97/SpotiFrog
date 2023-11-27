@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { thunkGetAllAlbums, thunkGetUserAlbums } from '../../store/albums'
+import { thunkGetUserAlbums } from '../../store/albums'
 // import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
