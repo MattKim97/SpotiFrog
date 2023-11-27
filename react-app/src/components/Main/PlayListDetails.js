@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { thunkDeletePlaylist, thunkGetPlaylist} from "../../store/playlists";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
+import {removeUserPlaylist} from "../../store/session"
 import { useContentLoaded } from "../../context/ContentLoaded";
 import RemoveSongFromPlaylist from "./RemoveSongFromPlaylist";
 import PlayButton from "../PlayButton";
@@ -52,6 +53,7 @@ export default function PlayListDetails() {
 
   const handleDeleteKeep = async () => {
     const response = await dispatch((thunkDeletePlaylist(playlistId)));
+    await dispatch(removeUserPlaylist(playlistId))
     if (response) {
       history.push("/playlists");
     }

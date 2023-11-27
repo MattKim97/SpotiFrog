@@ -67,7 +67,7 @@ export default function Library() {
       if (sessionUser) {
         dispatch(thunkGetAllAlbums())
         dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
-        dispatch(thunkGetAllSongs)
+        dispatch(thunkGetAllSongs())
       }
       else if (userLoaded) {
         // if there is no user logged in
@@ -75,9 +75,16 @@ export default function Library() {
       }
   }, [dispatch, sessionUser, userLoaded, setSidebarLoaded])
 
-  if (!albums || albums.length === 0) return null
-  if (!playlists || playlists.length === 0) return null
-  if (!songs || songs.length === 0) return null
+  console.log("******LIBRARY CIRCUIT TEST********")
+  console.log("******ALBUMS********", !albums, albums.length === 0)
+  console.log("******PLAYLISTS********", !playlists,playlists.length === 0)
+  console.log("******SONGS********",!songs,songs.length === 0)
+
+  if (sessionUser && ([albums.length, playlists.length, songs.length].includes(0))) return null;
+
+  // if (!albums || albums.length === 0) return null
+  // if (!playlists || playlists.length === 0) return null
+  // if (!songs || songs.length === 0) return null
 
   return (
     <div >

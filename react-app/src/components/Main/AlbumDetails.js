@@ -81,6 +81,9 @@ export default function AlbumDetails() {
   const album = albums.find((album) => album.id === Number(albumId));
   const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
   console.log("🚀 ~ file: AlbumDetails.js:18 ~ AlbumDetails ~ album:", album)
+  console.log("🚀 ~ file: AlbumDetails.js:85 ~ AlbumDetails ~ albumSongs:", albumSongs)
+  console.log("🚀 ~ file: AlbumDetails.js:85 ~ AlbumDetails ~ albumSongIds:", albumSongIds)
+
 
   if(!album) return null
   if(!albumSongs) return null
