@@ -6,12 +6,15 @@ import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min
 import { selectSongsByIds, thunkGetAllSongs } from "../../store/songs";
 import { useContentLoaded } from "../../context/ContentLoaded";
 import RemoveSongFromPlaylist from "./RemoveSongFromPlaylist";
+import PlayButton from "../PlayButton";
+import PlaylistButton from "../PlaylistButton";
 
 export default function PlayListDetails() {
   const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const { playlistId } = useParams();
   const playlist = useSelector(state => state.playlists[playlistId])
+  const playlistSongIds = useSelector(state => state.playlists[playlistId]?.songs)
   const sessionUser = useSelector((state) => state.session.user);
   const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
@@ -87,8 +90,9 @@ export default function PlayListDetails() {
 
   if (!playlist) return null;
   if (!playlistSongs) return null;
+  if (!playlistSongIds) return null;
 
-  const playlistDuration = playlistSongs.reduce((sum,song) => sum+song.playtimeLength, 0)
+  const playlistDuration = playlistSongs.reduce((sum,song) => song?sum+song.playtimeLength:sum, 0)
   const playlistHr = Math.floor(playlistDuration/3600);
   const playlistMin = Math.floor((playlistDuration%3600)/60);
   const playlistSec = playlistDuration%60;
@@ -134,7 +138,7 @@ export default function PlayListDetails() {
           </div>
       </div>
       <div className="details-section-user-options">
-        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
+        <PlaylistButton tracks={playlistSongIds} />
         <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
         <div />
         <ul className={dropDown} ref={ulRef}>
@@ -180,9 +184,10 @@ export default function PlayListDetails() {
                     </div>
                   )
                 : null} */}
-      <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song) => (
+      <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
-            <div>{song.name}</div>
+                        <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />
+<div>{song.name}</div>
             <div>{song.artist}</div>
 
             {sessionUser && sessionUser.id === playlist.userId &&

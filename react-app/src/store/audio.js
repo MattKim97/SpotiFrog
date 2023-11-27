@@ -1,28 +1,48 @@
 const CHANGE_PLAYLIST = 'audio/CHANGE_PLAYLIST'
+const CHANGE_IDS = 'audio/CHANGE_IDS'
 const CHANGE_TRACK = 'audio/CHANGE_TRACK'
 const SET_IS_PLAYING = 'audio/SET_IS_PLAYING'
-const CHANGE_SONGS = 'audio/CHANGE_SONGS'
 const SET_IS_PAUSED = 'audio/SET_IS_PAUSED'
-// const CURRENT_SELECTION = 'audio/CURRENT_SELECTION'
 const SET_PLAYER = 'audio/SET_PLAYER'
 const SET_INNER = 'audio/SET_INNER'
 
-export const changePlaylist = (playlist, track) => ({
+export const changePlaylist = (songs, track) => ({
     type: CHANGE_PLAYLIST,
-    playlist,
-    track
+    songs,
+    track,
+    song: songs[track]
 })
 
-export const changeSongs = songs => ({
-    type: CHANGE_PLAYLIST,
-    songs
+/* if you omit song, lookup will be done */
+const internalChangeIds = (ids, track, song) => ({
+    type: CHANGE_IDS,
+    ids,
+    track,
+    song
 })
+export const changeIds = (ids, track, song) => (dispatch, getState) => {
+    if (!song) {
+        const state = getState()
+        song = state.songs[ids[track]]
+    }
+    dispatch(internalChangeIds(ids, track, song))
+}
 
-export const changeTrack = track => ({
-    type: CHANGE_TRACK,
-    track
-})
+const internalChangeTrack = (track, song) => ({
+        type: CHANGE_TRACK,
+        track,
+        song
+    })
 
+export const changeTrack = (track, song) => (dispatch, getState) => {
+    if (!song) {
+        const state = getState()
+        song = state.audio.isById
+            ? state.songs[state.audio.ids[track]]
+            : state.audio.songs[track]
+    }
+    dispatch(internalChangeTrack(track, song))
+}
 export const setIsPaused = isPaused => ({
     type: SET_IS_PAUSED,
     isPaused
@@ -44,27 +64,56 @@ export const setInner = inner => ({
 })
 
 const initialState = {
-    playlist: [],  // playlist is an array of songs
+    songs: [],  // songs is an array of songs
+    ids: [],
     track: 0,
     isPlaying: false,
-    songs: [],
-    current: '',
+    isPaused: false,
+    isById: null,    // true if ids, false if songs
+    song: null,
+    url: '',
     player: null,
     inner: null
 }
 function audioReducer(state = initialState, action) {
-    // console.log(`AUDIO REDUCER: playlist${state.playlist} track${state.track} ${state.isPlaying}`)
-    // console.log(`AUDIO REDUCER: action: type${action.type} action${action}`)
+    console.log(`AUDIO REDUCER: songs${state.songs} track${state.track} ${state.isPlaying}`)
+    console.log(`AUDIO REDUCER: action: type${action.type} action${action}`)
     switch (action.type) {
-        case CHANGE_PLAYLIST:
-            if (state.playlist !== action.playlist)
+        case CHANGE_IDS:
+            if (state.ids !== action.ids)
                 return {
                     ...state,
-                    playlist: action.playlist,
+                    songs: [],
+                    ids: action.ids,
                     track: action.track,
                     isPlaying: true,
                     isPaused: false,
-                    current: action.playlist[action.track].mp3
+                    isById: true,
+                    song: action.song,
+                    url: action.song.mp3
+                }
+                else if (state.track !== action.track)
+                return {
+                    ...state,
+                    track: action.track,
+                    url: action.song.mp3,
+                    isPlaying: true,
+                    isPaused: false,
+                    song: action.song
+                }
+                else return state
+        case CHANGE_PLAYLIST:
+            if (state.songs !== action.songs)
+                return {
+                    ...state,
+                    songs: action.songs,
+                    ids: [],
+                    track: action.track,
+                    isPlaying: true,
+                    isPaused: false,
+                    isById: false,
+                    song: action.song,
+                    url: action.song.mp3
                 }
             else if (state.track === action.track) return state
 	// eslint-disable-next-line no-fallthrough
@@ -73,9 +122,10 @@ function audioReducer(state = initialState, action) {
             return {
                 ...state,
                 track: action.track,
-                current: state.playlist[action.track].mp3,
                 isPlaying: true,
-                isPaused: false
+                isPaused: false,
+                song: action.song,
+                url: action.song.mp3
             }
         case SET_IS_PLAYING:
             if (state.isPlaying === action.isPlaying) return state
@@ -101,11 +151,7 @@ function audioReducer(state = initialState, action) {
             if (!action.inner || state.inner === action.inner) return state
             return { ...state, inner: action.inner }
         }
-        case CHANGE_SONGS:
-            return state.songs === action.songs
-                ? state
-                : { ...state, songs: action.songs }
-        default:
+         default:
             return state
     }
 }
