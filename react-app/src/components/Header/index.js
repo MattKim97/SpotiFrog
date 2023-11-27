@@ -17,7 +17,7 @@ export default function Index() {
   useEffect(() => {
     dispatch(authenticate()).then(() => {
       setIsLoaded(true);
-      setUserLoaded(true)
+      setUserLoaded(true);
     });
   }, [dispatch, setUserLoaded]);
 

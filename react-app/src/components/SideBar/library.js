@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { thunkGetAllAlbums } from '../../store/albums'
+import { thunkGetAllAlbums, thunkGetUserAlbums } from '../../store/albums'
 // import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
@@ -65,8 +65,9 @@ export default function Library() {
 
   useEffect(() => {
       if (sessionUser) {
-        dispatch(thunkGetAllAlbums())
-        dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
+        dispatch(thunkGetUserAlbums(sessionUser.id))
+        .then(()=>dispatch(thunkGetUserPlaylist(sessionUser.id)))
+        .then(() => setSidebarLoaded(true))
         dispatch(thunkGetAllSongs())
       }
       else if (userLoaded) {
@@ -74,11 +75,6 @@ export default function Library() {
         setSidebarLoaded(true);
       }
   }, [dispatch, sessionUser, userLoaded, setSidebarLoaded])
-
-  console.log("******LIBRARY CIRCUIT TEST********")
-  console.log("******ALBUMS********", !albums, albums.length === 0)
-  console.log("******PLAYLISTS********", !playlists,playlists.length === 0)
-  console.log("******SONGS********",!songs,songs.length === 0)
 
   if (sessionUser && ([albums.length, playlists.length, songs.length].includes(0))) return null;
 

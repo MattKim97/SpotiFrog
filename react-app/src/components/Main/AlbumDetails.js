@@ -3,19 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 
 import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
-import { thunkGetAllSongs } from "../../store/songs";
+import { thunkGetAllSongs, selectSongsByIds } from "../../store/songs";
 import { useContentLoaded } from "../../context/ContentLoaded";
 import PlayButton from "../PlayButton";
 import PlaylistButton from "../PlaylistButton";
 
 export default function AlbumDetails() {
+  const dispatch = useDispatch();
   const {sidebarLoaded} = useContentLoaded()
   const { albumId } = useParams();
-  const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
-  const dispatch = useDispatch();
-  const albums = Object.values(useSelector((state) => state.albums));
   const sessionUser = useSelector((state) => state.session.user);
-  const allSongs = Object.values(useSelector((state) => state.songs));
+
+  const albumSongIds = useSelector(state => state.albums[albumId]?.songs);
+  const album = useSelector((state) => state.albums[albumId]);
+  // const allSongs = Object.values(useSelector((state) => state.songs));
+  const albumSongs = useSelector(selectSongsByIds(album?.songs))
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -78,11 +81,11 @@ export default function AlbumDetails() {
     }
   }, [dispatch, albumId, sidebarLoaded]);
 
-  if (!albums) return null;
-  if (!allSongs) return null;
+  // if (!album) return null;
+  // if (!allSongs) return null;
 
-  const album = albums.find((album) => album.id === Number(albumId));
-  const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
+  // const album = albums.find((album) => album.id === Number(albumId));
+  // const albumSongs = allSongs.filter(song => song.albumId === Number(albumId))
 
   if(!album) return null
   if(!albumSongs) return null
