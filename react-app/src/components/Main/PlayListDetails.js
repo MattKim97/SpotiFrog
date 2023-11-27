@@ -166,28 +166,10 @@ export default function PlayListDetails() {
           : <li className="inactive">Log in to view options!</li>}
         </ul>
       </div>
-      {/* {sessionUser
-                ? sessionUser.id === playlist.userId && (
-                    <div className="groupOwnerButtonsContainer">
-                      <button
-                        onClick={(e) => onClickDelete()}
-                        className="groupOwnerButtons"
-                      >
-                        Delete Playlist
-                      </button>
-                      <button
-                        onClick={(e) => onClickEdit()}
-                        className="groupOwnerButtons"
-                      >
-                        Edit a playlist
-                      </button>
-                    </div>
-                  )
-                : null} */}
       <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
             <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
                         <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />
-<div>{song.name}</div>
+            <div>{song.name}</div>
             <div>{song.artist}</div>
 
             {sessionUser && sessionUser.id === playlist.userId &&

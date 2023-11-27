@@ -16,13 +16,13 @@ import LoginFormModal from '../LoginFormModal'
 
 
 export default function Library() {
-    const {userLoaded, setSidebarLoaded} = useContentLoaded()
-    const history = useHistory()
-    const sessionUser = useSelector(state => state.session.user)
-    const dispatch = useDispatch()
-    const albums = Object.values(useSelector(state => state.albums))
-    const playlists = Object.values(useSelector(state => state.playlists))
-    const songs = Object.values(useSelector(state => state.songs))
+  const {userLoaded, setSidebarLoaded} = useContentLoaded()
+  const history = useHistory()
+  const sessionUser = useSelector(state => state.session.user)
+  const dispatch = useDispatch()
+  const albums = Object.values(useSelector(state => state.albums))
+  const playlists = Object.values(useSelector(state => state.playlists))
+  const songs = Object.values(useSelector(state => state.songs))
 
   const onClickSong = () => {
     history.push('/songs/new')
@@ -48,37 +48,36 @@ export default function Library() {
     history.push('/songs')
   }
 
+  let userAlbums = []
+  let userPlaylists = []
+  let userSongs = []
 
+  if (sessionUser){
+    userAlbums = albums.filter(album => album.userId === sessionUser.id)
+    userPlaylists = playlists.filter(playlist => playlist.userId === sessionUser.id)
+    userSongs = songs.filter(song => song.userId === sessionUser.id)
+  }
 
-    let userAlbums = []
-    let userPlaylists = []
-    let userSongs = []
-    if (sessionUser){
-      userAlbums = albums.filter(album => album.userId === sessionUser.id)
-      userPlaylists = playlists.filter(playlist => playlist.userId === sessionUser.id)
-      userSongs = songs.filter(song => song.userId === sessionUser.id)
-    }
+  const [activeTab, setActiveTab] = useState('albums')
+  const handleTabClick = (tab) => {
+      setActiveTab(tab)
+  }
 
-    const [activeTab, setActiveTab] = useState('albums')
-    const handleTabClick = (tab) => {
-        setActiveTab(tab)
-    }
+  useEffect(() => {
+      if (sessionUser) {
+        dispatch(thunkGetAllAlbums())
+        dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
+        dispatch(thunkGetAllSongs)
+      }
+      else if (userLoaded) {
+        // if there is no user logged in
+        setSidebarLoaded(true);
+      }
+  }, [dispatch, sessionUser, userLoaded, setSidebarLoaded])
 
-    useEffect(() => {
-        if (sessionUser) {
-          dispatch(thunkGetAllAlbums())
-          dispatch(thunkGetUserPlaylist(sessionUser.id)).then(() => setSidebarLoaded(true))
-          dispatch(thunkGetAllSongs)
-        }
-        else if (userLoaded) {
-          // if there is no user logged in
-          setSidebarLoaded(true);
-        }
-    }, [dispatch, sessionUser, userLoaded, setSidebarLoaded])
-
-    if (!albums || albums.length === 0) return null
-    if (!playlists || playlists.length === 0) return null
-    if (!songs || songs.length === 0) return null
+  if (!albums || albums.length === 0) return null
+  if (!playlists || playlists.length === 0) return null
+  if (!songs || songs.length === 0) return null
 
   return (
     <div >
