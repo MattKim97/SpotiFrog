@@ -131,7 +131,7 @@ export default function AlbumDetails() {
         <div className="details-section-summary">
           <h3 className="details-section-type">{albumLength==1 ? "Single": "Album"}</h3>
           <h2>{album.name}</h2>
-          <h3><span className="details-section-artist">{album.artist}</span> • {releaseYear} • {albumLength} {albumLength==1 ? "song": "songs"}, {albumHr} hr {albumMin} min {albumSec} sec</h3>
+          <h3><span className="details-section-artist">{album.artist}</span> • <span className="albumYearToolTip" title={new Date(album.releaseDate).toLocaleDateString(undefined, {weekday: 'long',year: 'numeric',month: 'long',day: 'numeric'})}>{releaseYear}</span> • {albumLength} {albumLength==1 ? "song": "songs"}, {albumHr} hr {albumMin} min {albumSec} sec</h3>
         </div>
       </div>
       <div className="details-section-user-options">

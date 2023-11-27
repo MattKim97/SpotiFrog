@@ -44,9 +44,9 @@
     --spotifyGreen: rgb(29,185,84);
     --rhap_backgroundColor: var(--backgroundColor);
     --rhap_indicatorColor: white;
-    --rhap_progressBarBackground: slategray;
-    --rhap_progressColor: white;
-    --rhap_progressHoverColor: var(--spotifyGreen);
+    --rhap_progressBarBackground: #4D4D4D;
+    --rhap_barColor: white;
+    --rhap_barHoverColor: var(--spotifyGreen);
     --rhap_controlColor: var(--spotifyQuiescentIcon);
     --rhap_controlBackgroundColor: var(--spotifyIconBackground);
     --rhap_timeColor: var(--spotifyTextSubdued);
@@ -55,6 +55,8 @@
     --rhap_skipControlFontSize: 2rem;
     --rhap_playPauseSize: 2.5rem;
     --rhap_playPauseHoverSize: 2.6rem;
+    --musicPlayerHeight: 5.3rem;
+    --musicAndFooterHeight: 6.5rem;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -112,7 +114,14 @@ table {
 	border-spacing: 0 ;
 }
 /* end of Eric Meyer's reset */
-
+html {
+    height: 100vh;/* Overrides 100% height in modern HTML5 browsers and uses the viewport's height. Only works in modern HTML5 browsers */
+}
+body {
+    height: auto; /* Allows content to grow beyond the page without overflow */
+    min-height: 100vh;/* Starts web page with 100% height. Uses the viewport's height. Only works in modern HTML5 browsers */
+    overflow-y: scroll;/* Optional: Adds an empty scrollbar to the right margin in case content grows vertically, creating a scrollbar.  Allows for better width calculations, as the browser pre-calculates width before scrollbar appears, avoiding page content shifting.*/
+}
 /* add progress cursor during db access */
 body.waiting * {
     cursor: progress !important ;
@@ -183,12 +192,17 @@ h2 {
     grid-template-areas:
                         /* "header header header" */
                          "sidebar main main"
-                         "sound sound sound"
+                        /* "sound sound sound" */
                          "footer footer footer" ;
     grid-template-columns: 1fr 4fr ;
-    grid-template-rows: 3fr 1fr 1fr;
+    grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
+    max-width: 1024px; /* for player *//* talk to Bill before changing*/
+    height: 100vh;
+    min-height: 100%;  /* for player *//* talk to Bill before changing*/
+    position: relative;  /* for player *//* talk to Bill before changing*/
     margin-top: var(--headerHeight);
+    padding-bottom: var(--musicAndFooterHeight);
 }
 
 .HeaderContainer{
@@ -208,10 +222,17 @@ h2 {
 }
 .FooterContainer{
     grid-area: footer;
+    padding-bottom: var(--musicAndFooterHeight);
 }
 
 .SoundBarContainer{
-    grid-area: sound;
+    /* grid-area: sound; */
+    height: var(--musicPlayerHeight);
+    position: fixed;/* for player *//* talk to Bill before changing*/
+    width: 100vw;   /* for player *//* talk to Bill before changing*/
+    max-width: 1024px; /* for player *//* talk to Bill before changing*/
+    /* left: 0; */
+    bottom: 0; /* for player *//* talk to Bill before changing*/
 }
 
 .background-text {
@@ -615,10 +636,6 @@ input[type=file] {
     font-size: 40pt;
 }
 
-/* .add-to-playlist {
-    margin-left: 10px;
-} */
-
 .add-to-playlist, .groupOwnerButtons {
     background-color: var(--backgroundAccent);
     display: flex;
@@ -850,266 +867,7 @@ input[type=file] {
 
 }
 
-/* BEGIN REACT-H5-AUDIO-PLAYER STYLES */
-.rhap_container {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-    font-family: inherit;
-    width: 100%;
-    padding: 10px 15px;
-    background-color: #fff;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
-  }
-  .rhap_container:focus:not(:focus-visible) {
-    outline: 0;
-  }
-  .rhap_container svg {
-    vertical-align: initial;
-  }
-
-  .rhap_header {
-    margin-bottom: 10px;
-  }
-
-  .rhap_footer {
-    margin-top: 5px;
-  }
-
-  .rhap_main {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-  }
-
-  .rhap_stacked .rhap_controls-section {
-    margin-top: 8px;
-  }
-
-  .rhap_horizontal {
-    flex-direction: row;
-  }
-  .rhap_horizontal .rhap_controls-section {
-    margin-left: 8px;
-  }
-
-  .rhap_horizontal-reverse {
-    flex-direction: row-reverse;
-  }
-  .rhap_horizontal-reverse .rhap_controls-section {
-    margin-right: 8px;
-  }
-
-  .rhap_stacked-reverse {
-    flex-direction: column-reverse;
-  }
-  .rhap_stacked-reverse .rhap_controls-section {
-    margin-bottom: 8px;
-  }
-
-  .rhap_progress-section {
-    display: flex;
-    flex: 3 1 auto;
-    align-items: center;
-  }
-
-  .rhap_progress-container {
-    display: flex;
-    align-items: center;
-    height: 20px;
-    flex: 1 0 auto;
-    align-self: center;
-    margin: 0 calc(10px + 1%);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .rhap_progress-container:focus:not(:focus-visible) {
-    outline: 0;
-  }
-
-  .rhap_time {
-    color: #333;
-    font-size: 16px;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .rhap_progress-bar {
-    box-sizing: border-box;
-    position: relative;
-    z-index: 0;
-    width: 100%;
-    height: 5px;
-    background-color: #dddddd;
-    border-radius: 2px;
-  }
-
-  .rhap_progress-filled {
-    height: 100%;
-    position: absolute;
-    z-index: 2;
-    background-color: #868686;
-    border-radius: 2px;
-  }
-
-  .rhap_progress-bar-show-download {
-    background-color: rgba(221, 221, 221, 0.5);
-  }
-
-  .rhap_download-progress {
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-    background-color: #dddddd;
-    border-radius: 2px;
-  }
-
-  .rhap_progress-indicator {
-    box-sizing: border-box;
-    position: absolute;
-    z-index: 3;
-    width: 20px;
-    height: 20px;
-    margin-left: -10px;
-    top: -8px;
-    background: #868686;
-    border-radius: 50px;
-    box-shadow: rgba(134, 134, 134, 0.5) 0 0 5px;
-  }
-
-  .rhap_controls-section {
-    display: flex;
-    flex: 1 1 auto;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .rhap_additional-controls {
-    display: flex;
-    flex: 1 0 auto;
-    align-items: center;
-  }
-
-  .rhap_repeat-button {
-    font-size: 26px;
-    width: 26px;
-    height: 26px;
-    color: #868686;
-    margin-right: 6px;
-  }
-
-  .rhap_main-controls {
-    flex: 0 1 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .rhap_main-controls-button {
-    margin: 0 3px;
-    color: #868686;
-    font-size: 35px;
-    width: 35px;
-    height: 35px;
-  }
-
-  .rhap_play-pause-button {
-    font-size: 40px;
-    width: 40px;
-    height: 40px;
-  }
-
-  .rhap_volume-controls {
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  .rhap_volume-button {
-    flex: 0 0 26px;
-    font-size: 26px;
-    width: 26px;
-    height: 26px;
-    color: #868686;
-    margin-right: 6px;
-  }
-
-  .rhap_volume-container {
-    display: flex;
-    align-items: center;
-    flex: 0 1 100px;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .rhap_volume-bar-area {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 14px;
-    cursor: pointer;
-  }
-  .rhap_volume-bar-area:focus:not(:focus-visible) {
-    outline: 0;
-  }
-
-  .rhap_volume-bar {
-    box-sizing: border-box;
-    position: relative;
-    width: 100%;
-    height: 4px;
-    background: #dddddd;
-    border-radius: 2px;
-  }
-
-  .rhap_volume-indicator {
-    box-sizing: border-box;
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    margin-left: -6px;
-    left: 0;
-    top: -4px;
-    background: #868686;
-    opacity: 0.9;
-    border-radius: 50px;
-    box-shadow: rgba(134, 134, 134, 0.5) 0 0 3px;
-    cursor: pointer;
-  }
-  .rhap_volume-indicator:hover {
-    opacity: 0.9;
-  }
-
-  .rhap_volume-filled {
-    height: 100%;
-    position: absolute;
-    z-index: 2;
-    background-color: #868686;
-    border-radius: 2px;
-  }
-
-  /* Utils */
-  .rhap_button-clear {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .rhap_button-clear:hover {
-    opacity: 0.9;
-    transition-duration: 0.2s;
-  }
-  .rhap_button-clear:active {
-    opacity: 0.95;
-  }
-  .rhap_button-clear:focus:not(:focus-visible) {
-    outline: 0;
-  }
-/******* MINE *********/
+/* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */
 .rhap_button-clear:hover, .rhap_button-clear:active,
 .rhap_volume-indicator, .rhap_volume-indicator:hover {
     opacity: 1.0 !important;
@@ -1120,16 +878,16 @@ input[type=file] {
 }
 .rhap_container {
     background: var(--rhap_backgroundColor);
+    height: 100%;
+    padding-bottom:0;
 }
 .rhap_volume-bar, .rhap_progress-bar {
     background-color: var(--rhap_progressBarBackground);
 }
-.rhap_progress-bar {
-    height: 3px;
+.rhap_progress-bar, .rhap_volume-bar {
+    height: 4px;
 }
-.rhap_volume-bar {
-    height: 5px;
-}
+/* make the indicators the same like on Spotify */
 .rhap_progress-indicator, .rhap_volume-indicator {
     visibility: hidden; /* both */
     z-index: 3; /* volume indicator */
@@ -1145,11 +903,11 @@ input[type=file] {
     background-color: var(--rhap_indicatorColor);
 }
 .rhap_progress-filled, .rhap_volume-filled {
-    background-color: var(--rhap_progressColor);
+    background-color: var(--rhap_barColor);
 }
 .rhap_progress-container:hover .rhap_progress-filled,
 .rhap_volume-container:hover .rhap_volume-filled {
-    background-color: var(--rhap_progressHoverColor);
+    background-color: var(--rhap_barHoverColor);
 }
 .rhap_progress-section {
     max-width: 37vw;
@@ -1160,8 +918,7 @@ input[type=file] {
     color: var(--rhap_timeColor);
     font-size: var(--rhap_timeSize);
 }
-.rhap_volume-button,
-.rhap_repeat-button
+.rhap_volume-button, .rhap_repeat-button
 {
     color: var(--rhap_controlColor);
     font-size: var(--rhap_controlFontSize);
@@ -1171,24 +928,45 @@ input[type=file] {
     color: var(--rhap_controlColor);
     font-size: var(--rhap_skipControlFontSize);
 }
-
-.rhap_button-clear:hover {
+.rhap_button-clear:hover,
+.rhap_button-clear svg:hover
+{
     color: white;
-    background-color: var(--spotifyIconBackground);
+    background-color: var(--rhap_controlBackgroundColor);
 }
-
 .rhap_play-pause-button
 {
     color: white;
-    background-color: var(--spotifyIconBackground);
+    background-color: var(--rhap_controlBackgroundColor);
     font-size: var(--rhap_playPauseSize);
 }
-.rhap_play-pause-button:hover
+.rhap_play-pause-button:hover,
+.rhap_play-pause-button svg:hover
 {
     font-size: var(--rhap_playPauseHoverSize);
 }
-
-
+.rhap_main-controls-button {
+    margin: 0 6px;
+}
+.rhap_volume-controls {
+    justify-content: space-between;
+    max-width: 422px;
+}
+.rhap_volume-container {
+    min-width: 122px;
+    margin-right: 28px;
+}
+.rhap_repeat-button {
+    margin-top: 2px;
+    margin-left: 4px;
+}
+.rhap_stacked-reverse .rhap_controls-section {
+    margin-bottom: 3px;
+}
+.rhap_button-clear {
+    padding-top: 4px;
+    padding-bottom: 0;
+}
 /* END REACT-H5-AUDIO-PLAYER STYLES */
 
 
