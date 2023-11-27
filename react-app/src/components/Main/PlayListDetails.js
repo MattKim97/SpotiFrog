@@ -133,7 +133,7 @@ export default function PlayListDetails() {
             <h2>{playlist.name}</h2>
             <div className="background-text">{playlist.description}</div>
             <h3>
-              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length==1 ? "song":"songs"} • {playlistHr} hr {playlistMin} min {playlistSec} sec
+              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length==1 ? "song":"songs"}, {playlistHr} hr {playlistMin} min {playlistSec} sec
             </h3>
           </div>
       </div>
@@ -143,7 +143,7 @@ export default function PlayListDetails() {
         <div />
         <ul className={dropDown} ref={ulRef}>
           {sessionUser
-          ? sessionUser.id === playlist.userId && (
+          ? sessionUser.id === playlist.userId ? (
               <>
               <li>
                 <button
@@ -162,7 +162,7 @@ export default function PlayListDetails() {
                 </button>
               </li>
               </>
-            )
+            ) : <li className="inactive">No actions available</li>
           : <li className="inactive">Log in to view options!</li>}
         </ul>
       </div>
