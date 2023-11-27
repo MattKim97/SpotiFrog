@@ -5,3 +5,7 @@
 .LogoContainer{
     cursor: pointer;
 }
+
+.fa-frog{
+    color: var(--spotifyGreen);
+}

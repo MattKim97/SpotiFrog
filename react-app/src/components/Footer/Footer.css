@@ -2,10 +2,16 @@
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
-    justify-content: center
+    justify-content: center;
+}
+
+.FooterText{
+    margin-right: 3px;
 }
 
 .FooterLinkStyle{
     text-decoration: none;
     color: green;
+    margin-right: 3px;
+
 }
