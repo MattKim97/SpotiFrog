@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
 import { thunkCreatePlaylist } from '../../store/playlists';
+import {addUserPlaylist} from '../../store/session'
 
 export default function PlaylistForm() {
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function PlaylistForm() {
       const response = await dispatch(thunkCreatePlaylist(formDataToSend));
 
       if (!response.errors) {
+        await dispatch(addUserPlaylist(response.id))
         history.push(`/playlists/${response.id}`);
       } else {
         setErrors((prevErrors) => ({ ...prevErrors, ...response.errors }));

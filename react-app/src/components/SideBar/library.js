@@ -10,6 +10,10 @@ import { useContentLoaded } from '../../context/ContentLoaded'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { thunkGetAllSongs } from '../../store/songs'
 import SongCard from '../SongCard'
+import OpenModalButton from '../OpenModalButton'
+import LoginFormModal from '../LoginFormModal'
+
+
 
 export default function Library() {
     const {userLoaded, setSidebarLoaded} = useContentLoaded()
@@ -86,10 +90,13 @@ export default function Library() {
           <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}>Songs</div>
 
         </div>
-       : <a href='/login'>Log in to view your library</a>}
+       :  <OpenModalButton
+       buttonText="Log In to view your Library"
+       modalComponent={<LoginFormModal />}
+     />}
 
 {sessionUser ?
-  <div>
+  <div className='sideBarContainer'>
     {activeTab === 'albums' ?
       <div>
         {userAlbums.length > 0 ? userAlbums.map((album) => (

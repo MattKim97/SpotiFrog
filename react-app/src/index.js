@@ -4,10 +4,12 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { ModalProvider, Modal } from "./context/Modal";
+import AudioProvider from "./context/AudioContext";
 import configureStore from "./store";
 import * as sessionActions from "./store/session";
 import App from "./App";
-
+/* import outside things BEFORE index.css to override */
+import 'react-h5-audio-player/lib/styles.css'
 import "./index.css";
 
 const store = configureStore();
@@ -22,14 +24,16 @@ if (process.env.NODE_ENV !== "production") {
 // HTML elements on top of the all the other HTML elements:
 function Root() {
 	return (
-		<ModalProvider>
-			<Provider store={store}>
-				<BrowserRouter>
-					<App />
-					<Modal />
-				</BrowserRouter>
-			</Provider>
-		</ModalProvider>
+		<AudioProvider>
+			<ModalProvider>
+				<Provider store={store}>
+					<BrowserRouter>
+						<App />
+						<Modal />
+					</BrowserRouter>
+				</Provider>
+			</ModalProvider>
+		</AudioProvider>
 	);
 }
 

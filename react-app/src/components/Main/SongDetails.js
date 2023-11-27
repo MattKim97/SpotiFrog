@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { thunkDeleteSong, thunkGetSong } from "../../store/songs";
 import LikeSong from "../SongCard/LikeSong";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import AddToPlaylist from '../SongCard/AddToPlaylist'
 import { useContentLoaded } from "../../context/ContentLoaded";
 import { consumeUserPlaylists } from "../../store/playlists";
-
+// import PlayButton from "../PlayButton";
+import PlaylistButton from "../PlaylistButton";
 
 export default function SongDetails() {
   const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const history = useHistory();
-const [liked, setLiked] = useState(null);
+  // const [liked, setLiked] = useState(null);
   const [coverImg, setCoverImg] = useState(
     "https://static.thenounproject.com/png/4974686-200.png"
   );
@@ -21,6 +22,8 @@ const [liked, setLiked] = useState(null);
   const song = useSelector((state) => state.songs[songId]);
   const sessionUser = useSelector((state) => state.session.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
   const playlists = useSelector(consumeUserPlaylists(sessionUser?.playlists))
     // .filter(playlist => !playlist.songs.includes(songId))
@@ -48,6 +51,12 @@ const [liked, setLiked] = useState(null);
     history.push(`/songs/${songId}/edit`);
   };
 
+  const openDropdown = () => {
+    if (!showMenu) {
+        setShowMenu(true)
+    }
+  }
+
     useEffect(() => {
       if (sidebarLoaded){
         dispatch(thunkGetSong(songId))
@@ -56,16 +65,28 @@ const [liked, setLiked] = useState(null);
     }, [dispatch, sidebarLoaded, songId]);
 
   useEffect(() => {
-    if (sessionUser && song) {
-      setLiked(song.liked);
-    }
-  }, [sessionUser, song]);
-
-  useEffect(() => {
     if (song && song.album && song.album.albumCover) {
       setCoverImg(song.album.albumCover);
     }
   }, [song]);
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      try {
+        if (!ulRef.current.contains(e.target)) {
+            setShowMenu(false)
+        }
+      } catch (e) {
+        setShowMenu(false)
+      }
+    }
+
+    document.addEventListener("click", closeMenu)
+
+    return () => document.removeEventListener("click", closeMenu)
+  }, [showMenu])
 
   if (!song || !sidebarLoaded) return null;
 
@@ -79,6 +100,7 @@ const [liked, setLiked] = useState(null);
     lyrics,
     userLikes,
     artist,
+    albumId,
   } = song;
 
   const year = new Date(uploadedAt).getFullYear();
@@ -86,10 +108,12 @@ const [liked, setLiked] = useState(null);
   const sec = playtimeLength % 60;
   const min = Math.floor(playtimeLength / 60);
 
-  const userPlaylists = playlists.filter(playlist => !playlist.songs.includes(parseInt(songId)))
+  const userPlaylists = playlists ? playlists.filter(playlist => !playlist.songs.includes(parseInt(songId))) : [];
+
+  const dropDown = showMenu ? "user-options-dropdown dropdown" : "hidden user-options-dropdown dropdown"
 
   return (
-    <div>
+    <div className="details-container">
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
@@ -106,40 +130,59 @@ const [liked, setLiked] = useState(null);
           </div>
         </div>
       )}
-      <img className="albumCover" src={coverImg} alt="Album Cover"/>
-      <h2>{name}</h2>
-      <h3>{artist}</h3>
-      <h3>
-        {albumName} • {year} • {min}:{sec} • {userLikes} Likes
-      </h3>
+      <div className="details-section-top">
+        <img className="albumCover" src={coverImg} alt="Album Cover"/>
+        <div className="details-section-summary">
+          <h3 className="details-section-type">Song</h3>
+          <h2>{name}</h2>
+          <h3>
+          <span className="details-section-artist">{artist}</span> • <Link to={`/albums/${albumId}`}>{albumName}</Link> • {year} • {min}:{sec} • {userLikes} Likes
+          </h3>
+        </div>
+      </div>
 
-            {sessionUser && (
-                <>
-                <LikeSong liked={sessionUser.songsLiked} songId={songId} />
-                <AddToPlaylist userPlaylists={userPlaylists} songId={songId}/>
-                </>
-            )}
-
-      <h2>Lyrics:</h2>
-      {sessionUser
-        ? sessionUser.id === song.userId && (
-            <div>
+      <div className="details-section-user-options">
+        <PlaylistButton tracks={[]} /> {/* TODO */}
+        {sessionUser && (
+          <LikeSong liked={sessionUser.songsLiked} songId={songId} />
+        )}
+        <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
+        <ul className={dropDown} ref={ulRef}>
+          {sessionUser ?
+          <li><AddToPlaylist userPlaylists={userPlaylists} songId={songId}/></li>
+          : <li className="inactive">Log in to view options!</li>
+          }
+          {sessionUser
+          ? sessionUser.id === song.userId && (
+            <>
+              <div className="small-top-line" />
+              <li>
               <button
                 onClick={(e) => onClickUpdate()}
                 className="groupOwnerButtons"
               >
                 Update Song
               </button>
+              </li>
+              <div className="small-top-line" />
+              <li>
               <button
                 onClick={(e) => onClickDelete()}
                 className="groupOwnerButtons"
               >
                 Delete Song
               </button>
-            </div>
-          )
-        : null}
-      <p>{lyrics ? lyrics : "no lyrics available"}</p>
+              </li>
+            </>
+            )
+          : null}
+        </ul>
+      </div>
+
+      <div className="details-section-body">
+        <h3>Lyrics:</h3>
+        <p>{lyrics ? lyrics : "no lyrics available"}</p>
+      </div>
     </div>
   );
 }

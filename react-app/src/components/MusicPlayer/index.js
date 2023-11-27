@@ -1,176 +1,136 @@
-import React, { createRef, memo, useState } from 'react'
+import React, { useRef, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import AudioPlayer /*, { RHAP_UI } */ from 'react-h5-audio-player'
-import 'react-h5-audio-player/lib/styles.css'
+import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
-import { changeTrack, setIsPaused, setIsPlaying } from '../../store/audio'
-import { thunkGetAllSongs } from '../../store/songs'
-import PlayButton2 from '../PlayButton2'
-
-// BEGIN TEMPORARY CODE
-// var test1 = [
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3',
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
-// ]
-// var test2 = [
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-// 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-// ]
-// END TEMPORARY CODE
+import { setPlayer, changeTrack, setIsPaused, setIsPlaying, setInner } from '../../store/audio'
+import { songName } from '../../utils/player'
 
 const MusicPlayer = memo(function MusicPlayer() {
-  const { playlist, track, isPlaying } = useSelector(state => state.audio)
-
-  const songs = Object.values(useSelector(state => state.songs))
+  const { playlist, ids, track, isPlaying, url, player, isById, song } = useSelector(state => state.audio)
   const dispatch = useDispatch()
-  const audio = createRef()
-  const [mp3s] = useState({})
-  console.log(`Rerendering PLAYER: songs: ${songs.length} playlist: ${playlist.length}`)
+  const audio = useRef()
+  console.log(`Rerendering PLAYER: playlist: ${playlist?.length} ids: ${ids?.length} index: ${track} ${songName(song)}`)
 
+  if (!player) dispatch(setPlayer(audio))
+  if (audio) window.audio = audio
+  if (audio.current?.audio?.current) {
+    setInner(audio.current.audio.current)
+    window.inner = audio.current.audio.current
+  }
 
-// if (songs && songs.length) console.log(`songs ${Object.keys(songs[0])}`)
-// songs albumId,albumName,albumTrackNumber,artist,id,liked,lyrics,mp3,name,playtimeLength,uploadedAt,userId,userLikes
-
-//   useEffect(() => {
-//     if (!playlist || !playlist.length)
-//       dispatch(changePlaylist(test1, 0))
-//     else if (!track || track < 0 || track >= playlist.length)
-//       dispatch(changeTrack(0)) // Reset track to 0 if out of bounds
-// }, [playlist, track]);
-
-// BEGIN TEMPORARY CODE
-// just fills in random songs; remove when info passed
-const rKey = "allSongs"
-const [ref] = useState({[rKey]: null});
-if (!Array.isArray(songs) || !songs.length) {
-    if (!ref[rKey]) ref[rKey] = dispatch(thunkGetAllSongs())
-    return null;
-} else if (ref[rKey]) delete ref[rKey]
-
-console.log("checking songs")
-if (!songs || songs.length < 4) return null
-
-let uniqueSongs
-function getRandomUniqueSong() {
-  if (!uniqueSongs || !uniqueSongs.length)
-      uniqueSongs = [...songs]
-  const index = getRandomInt(0, uniqueSongs.length-1);
-  return uniqueSongs.splice(index, 1)[0]
-}
-
-if (!mp3s["first"]?.length) {
-  mp3s["first"] = []
-  mp3s["second"] = []
-  for (let i = 0; i < 2; i++)
-    mp3s["first"].push(getRandomUniqueSong().mp3)
-  for (let i = 0; i < 4; i++)
-    mp3s["second"].push(getRandomUniqueSong().mp3)
-  console.log(songs)
-  console.log(mp3s["first"].map(e => e.slice(e.length - 20)))
-  console.log(mp3s["second"].map(e => e.slice(e.length - 20)))
-}
-// END TEMPORARY CODE
+  function playlistLength(){
+    return isById !== null && isById && ids ? ids.length : (playlist ? playlist?.length : 0)
+  }
 
   function handleClickNext() {
-    const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
-    console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
-    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
-    // const nextTrackIndex = (track + 1) % playlist.length // Loop back to beginning
+    const length = playlistLength()
+    const nextTrackIndex = length < 2 ? 0 : (track + 1) % length // Loop back to beginning
+    // console.log(`CLICK NEXT: ${track} ${nextTrackIndex}`)
+    // if (!playlist || !length) return dispatch(changeTrack(0))
     dispatch(changeTrack(nextTrackIndex))
     setIsPlaying(true)
   }
   const handleClickPrevious = () => {
-    const prevTrackIndex = (track ? track : playlist.length) - 1 // back to end
-    console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
-
-    if (!playlist || !playlist.length) return dispatch(changeTrack(0))
-    // const prevTrackIndex = (track ? track : playlist.length) - 1 // back to end
+    const length = playlistLength()
+    const prevTrackIndex = length < 2 ? 0 : (track ? track : length) - 1 // back to end
+    // console.log(`CLICK PREV: ${track} ${prevTrackIndex}`)
+    // if (!playlist || !length) return dispatch(changeTrack(0))
     dispatch(changeTrack(prevTrackIndex))
     setIsPlaying(true)
   }
 
 function handleEnded() {
-  console.log(`ENDED: ${track} ${playlist[track]}`)
+  console.log(`ENDED: ${track} ${songName(song)}`)
   handleClickNext()
 }
+
+/* only duration seems set for MP3s */
+function handleMetaData(event) {
+  if (!event) return
+  // const { duration, album, artist, title } = event.target
+}
 function handlePause() {
-  console.log(`PAUSE: ${track} ${playlist[track]}`)
+  console.log(`PAUSE: ${track} ${songName(song)}`)
   dispatch(setIsPaused(true))
 }
-
-if (!playlist || !playlist.length ||
-      track < 0 || track >= playlist.length) {
-        setIsPlaying(false)
+function handlePlay() {
+  console.log(`PLAY: ${track} ${songName(song)}`)
+  dispatch(setIsPlaying(true))
 }
 
+// if (!playlist || !playlist.length ||
+//       track < 0 || track >= playlist.length) {
+//         setIsPlaying(false)
+// }
+
   return (
-    <>
-    <h1>MusicPlayer</h1>
-    {mp3s["first"]?.length &&
-    <>
-      <h1>list #1 (2 songs)</h1>
-      <ul>
-        {mp3s["first"].map((url, i) => <li key={i}><PlayButton2 tracks={mp3s["first"]} trackIndex={i} audio={audio} />{stripAWSURL(url)}</li>)}
-      </ul>
-      <h1>list #2 (4 songs)</h1>
-      <ul>
-        {mp3s["second"].map((url, i) => <li key={i}><PlayButton2 tracks={mp3s["second"]} trackIndex={i} audio={audio} /> {stripAWSURL(url)} </li>)}
-      </ul>
-      </>
-    }
       <AudioPlayer
         autoPlay={isPlaying}
-        autoPlayAfterSrcChange={isPlaying}
+        autoPlayAfterSrcChange={true}
         hasDefaultKeyBindings={false}
         layout='stacked-reverse'
         loop={false}
         muted={false}
-        onAbort={() => console.log("ABORT")}
-        onCanPlay={() => console.log("CAN PLAY")}
-        onCanPlayThrough={() => console.log("CAN PLAY THROUGH")}
         onClickNext={handleClickNext}
         onClickPrevious={handleClickPrevious}
-        onEmptied={() => console.log("EMPTIED")}
         onEnded={handleEnded}
-        onError={() => console.log("ERROR")}
-        onLoadStart={() => console.log("LOAD START")}
-        onLoadedData={() => console.log("LOADED DATA")}
-        onLoadedMetaData={() => console.log("LOADED META DATA")}
+        onLoadedMetaData={(event) => handleMetaData(event)}
         onPause={handlePause}
-        onPlay={() => console.log("PLAY")}
-        onPlayError={() => console.log("PLAY ERROR")}
-        onPlaying={() => console.log("PLAYING")}
-        onProgress={() => console.log("PROGRESS")}
-        onSeeked={() => console.log("SEEKED")}
-        onSeeking={() => console.log("SEEKING")}
-        onSuspend={() => console.log("SUSPEND")}
-        onVolumeChanged={() => console.log("VOLUME CHANGED")}
-        onWaiting={() => console.log("WAITING")}
+        onPlay={handlePlay}
+        onPlaying={handlePlay}
         preload='auto'
         ref={audio}
+        showDownloadProgress={false}
         showFilledProgress={true}
         showFilledVolume={true}
         showJumpControls={false}
         showSkipControls={true}
-        src={playlist[track]}
+        src={url}
         volume={.5}
+        customAdditionalControls={[]}
+        customVolumeControls={[
+          RHAP_UI.LOOP,
+          RHAP_UI.VOLUME,
+        ]}
 
-        // unused settings for react-h5-audio-player
+        // UNUSED settings for react-h5-audio-player
         // controls={false}
         // controlsList="nodownload"
-        // customAdditionalControls={[]}
-        // customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
-        // customProgressBarSection={
-          //   [
+        // customAdditionalControls={[
+          //   RHAP_UI.LOOP,
+          // ]}
+          // customControlsSection={[
+            //   RHAP_UI.ADDITIONAL_CONTROLS,
+            //   RHAP_UI.MAIN_CONTROLS,
+            //   RHAP_UI.VOLUME_CONTROLS,
+            // ]}
+            // customProgressBarSection={
+            //   [
             //     RHAP_UI.CURRENT_TIME,
             //     RHAP_UI.DURATION,
             //     RHAP_UI.PROGRESS_BAR,
             //     RHAP_UI.VOLUME,
-            // ]
-            // }
-            // customVolumeControls={[]}
+            // ]}
+            // customVolumeControls={[
+              //   RHAP_UI.VOLUME,
+              //   RHAP_UI.VOLUME_CONTROLS,
+            // ]}
             // defaultCurrentTime="0:00"
             // defaultDuration="0:00"
+            // onAbort={() => console.log("ABORT")}
+            // onCanPlay={() => console.log("CAN PLAY")}
+            // onCanPlayThrough={() => console.log("CAN PLAY THROUGH")}
+            // onEmptied={() => console.log("EMPTIED")}
+            // onError={() => console.log("ERROR")}
+            // onLoadStart={() => console.log("LOAD START")}
+            // onLoadedData={() => console.log("LOADED DATA")}
+            // onPlayError={() => console.log("PLAY ERROR")}
+            // onProgress={() => console.log("PROGRESS")}
+            // onSeeked={() => console.log("SEEKED")}
+            // onSeeking={() => console.log("SEEKING")}
+            // onSuspend={() => console.log("SUSPEND")}
+            // onVolumeChanged={() => console.log("VOLUME CHANGED")}
+            // onWaiting={() => console.log("WAITING")}
             // progressJumpSteps={{ backward: 5000, forward: 5000 }}
             // showDownloadProgress={true}
 
@@ -202,33 +162,8 @@ if (!playlist || !playlist.length ||
 // }
 
 
-      />
-    </>
+    />
   );
 })
 
-// BEGIN TEMPORARY CODE
-// Returns a random integer between min (inclusive) and
-// max (inclusive). Neither max nor min have to be an int.
-function stripAWSURL(url) {
-  return url.slice(url.lastIndexOf('/') + 1)
-}
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// function choice(arr) {
-//   return arr[getRandomInt(0, arr.length - 1)]
-// }
-
-// function choices(arr, num) {
-//   const result = []
-//   for (let i = 0; i < num; i++) {
-//     result.push(choice(arr))
-//   }
-//   return result
-// }
-// END TEMPORARY CODE
 export default MusicPlayer;

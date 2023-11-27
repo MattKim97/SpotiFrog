@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
-import "./SignupForm.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -43,7 +42,7 @@ function SignupFormModal() {
 			<form onSubmit={handleSubmit} encType="multipart/form-data">
 				<ul>
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+						<li className="error" key={idx}>{error}</li>
 					))}
 				</ul>
 				<label>

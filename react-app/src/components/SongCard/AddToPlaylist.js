@@ -28,7 +28,11 @@ export default function AddToPlaylist({userPlaylists, songId}) {
         if (!showMenu) return;
 
         const closeMenu = (e) => {
-            if (!ulRef.current.contains(e.target)) {
+            try {
+                if (!ulRef.current.contains(e.target)) {
+                    setShowMenu(false)
+                }
+            } catch (e) {
                 setShowMenu(false)
             }
         }
@@ -38,26 +42,30 @@ export default function AddToPlaylist({userPlaylists, songId}) {
         return () => document.removeEventListener("click", closeMenu)
     }, [showMenu])
 
-    const dropDown = showMenu ? "playlistSelect" : "hidden playlistSelect"
+    const dropDown = showMenu ? "playlist-dropdown dropdown" : "hidden playlist-dropdown dropdown";
+    // const buttonClass = showMenu ? "add-to-playlist no-bottom-radius" : "add-to-playlist"
 
     return (
-        <>
-            <button onClick={openMenu}>
+        <div className='playlist-menu-button'>
+            <button onClick={openMenu} className="add-to-playlist">
                 <i className="fa-solid fa-plus"/>
                 <span>Add to Playlist</span>
             </button>
             <ul className={dropDown} ref={ulRef}>
                 {sidebarLoaded ?
                 userPlaylists.length ?
-                userPlaylists.map(playlist => (
+                userPlaylists.map((playlist, index) => (
+                    <>
+                    {index ? <div className="small-top-line"/> : null}
                     <li key={playlist.id} onClick={() => addSong(playlist.id)}>
-                        Add to Playlist "{playlist.name}"
+                        {playlist.name}
                     </li>
+                    </>
                 ))
-                : <li>No Playlists Available</li>
-                : <li>Loading Playlists</li>
+                : <li className="inactive">No Playlists Available</li>
+                : <li className="inactive">Loading Playlists</li>
                 }
             </ul>
-        </>
+        </div>
     )
 }
