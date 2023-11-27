@@ -197,6 +197,7 @@ h2 {
     grid-template-columns: 1fr 4fr ;
     grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
+    max-width: 1024px;
     margin-top: var(--headerHeight);
     padding-bottom: var(--musicAndFooterHeight);
 }
@@ -428,11 +429,7 @@ input[type=file] {
     cursor: pointer;
     border-radius: var(--cardBorderRadius);
     background-color: var(--sectionBackground);
-<<<<<<< HEAD
-    height: 100%;
-=======
     height: 240px;
->>>>>>> dev
     display: flex;
     width: 240px;
     justify-content: center;
