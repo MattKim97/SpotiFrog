@@ -5,7 +5,8 @@ import { thunkDeleteAlbum, thunkGetAlbum } from "../../store/albums";
 import { thunkGetAllSongs } from "../../store/songs";
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import PlayButton2 from "../PlayButton2";
+import PlayButton from "../PlayButton";
+import PlaylistButton from "../PlaylistButton";
 import "./Main.css";
 
 export default function AlbumDetails() {
@@ -128,7 +129,8 @@ export default function AlbumDetails() {
         </div>
       </div>
       <div className="details-section-user-options">
-        <i className="fas fa-play-circle" onClick={()=>alert("feature to be implemented!")}></i>
+        <PlaylistButton tracks={albumSongs} />
+
         <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
         <div />
         <ul className={dropDown} ref={ulRef}>
@@ -161,7 +163,7 @@ export default function AlbumDetails() {
         <h3><span>#</span> <span>Title</span> <i className="fa-regular fa-clock"></i></h3>
         {albumSongs.length ? albumSongs.map((song, songIndex) => (
           <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
-            <PlayButton2 tracks={albumSongs} trackIndex={songIndex} />
+            <PlayButton tracks={albumSongs} trackIndex={songIndex} />
               <div>{song.name}</div>
               <div>{song.artist}</div>
               <div>{album.name}</div>
