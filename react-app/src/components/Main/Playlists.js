@@ -16,7 +16,7 @@ export default function Playlists() {
   if (!playlists || playlists.length === 0) return null
 
   return (
-    <div>
+    <div className='ContainerMainStyle'>
       <div className='PlayListContainerMain'>
             {playlists.map((playlist)=> (
             <div key={playlist.id}>
