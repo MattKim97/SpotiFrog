@@ -33,7 +33,7 @@ def user_albums(id):
     """
     if current_user.id != id:
         return error_message("user","Unauthorized"), 403
-    albums = [album.to_dict() for album in current_user.albums]
+    albums = [album.to_dict(scope="songs_details") for album in current_user.albums]
     return {
         "albums": albums,
     }
