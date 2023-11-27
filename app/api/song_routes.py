@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app.forms import SongForm, UpdateSongForm, upload_file_to_s3, analyzePlayTime, get_unique_filename, remove_file_from_s3, error_message, error_messages
 from app.models import db, Song, Album
 
+
 song_routes = Blueprint('songs', __name__)
 
 @song_routes.route('/')
@@ -33,13 +34,17 @@ def create_song():
 
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    mp3_data = request.files['mp3'].read()
+    mp3_file = request.files['mp3']
 
 
     if form.validate_on_submit():
-        mp3 = form.mp3.data
-        mp3.filename = get_unique_filename(mp3.filename)
-        upload = upload_file_to_s3(mp3)
+        mp3_file.filename = get_unique_filename(mp3_file.filename)
+
+        mp3_data = mp3_file.read()
+
+        mp3_file.seek(0)
+        
+        upload = upload_file_to_s3(mp3_file)
 
         if "url" not in upload:
             return upload, 401

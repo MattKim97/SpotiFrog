@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { thunkGetAllAlbums, thunkGetUserAlbums } from '../../store/albums'
+import { thunkGetUserAlbums } from '../../store/albums'
 // import { thunkGetUserPlaylist } from '../../store/session'
 import AlbumCard from '../AlbumCard'
 import PlaylistCard from '../PlaylistCard'
@@ -83,25 +83,26 @@ export default function Library() {
   // if (!songs || songs.length === 0) return null
 
   return (
-    <div >
-      <div>Your Library</div>
+    <div className='sidebar-library'>
+      <div className='library-text'><i className="fa-solid fa-book"></i>Your Library</div>
       {sessionUser ?
         <div className='SideBarLinksContainer'>
-          <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
-          <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}>Playlists</div>
-          <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}>Songs</div>
+          <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}><i className="fa-solid fa-radio"></i> Albums</div>
+          <div className={activeTab === "playlists" ? "Active SideBarLinks": "SideBarLinks" } onClick={()=> handleTabClick("playlists")}><i className="fa-solid fa-headphones"></i> Playlists</div>
+          <div className={activeTab === "songs" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("songs")}><i className="fa-solid fa-music"></i> Songs</div>
 
         </div>
        :  <OpenModalButton
        buttonText="Log In to view your Library"
-       buttonClass="LibraryModal"
        modalComponent={<LoginFormModal />}
+       customClassName="custom-modal-button"
+       className="custom-modal-button"
      />}
 
 {sessionUser ?
   <div className='sideBarContainer'>
     {activeTab === 'albums' ?
-      <div>
+      <div className='sidebar-card-container'>
         {userAlbums.length > 0 ? userAlbums.map((album) => (
           <div key={album.id}>
             <AlbumCard format="side" album={album} />
@@ -111,7 +112,7 @@ export default function Library() {
         <button type='button' onClick={onClickAlbum}>See All Albums</button>
       </div>
       : activeTab === 'playlists' ?
-        <div>
+        <div className='sidebar-card-container'>
           {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
             <div key={playlist.id}>
               <PlaylistCard format="side" playlist={playlist} />
@@ -121,7 +122,7 @@ export default function Library() {
           <button type='button' onClick={onClickPlaylist}>See All Playlists</button>
         </div>
         : activeTab === 'songs' ?
-          <div>
+          <div className='sidebar-card-container'>
             {userSongs.length > 0 ? userSongs.map((song) => (
               <div key={song.id}>
                 <SongCard format={"side"} song={song}/>

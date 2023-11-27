@@ -4,7 +4,7 @@ import Library from './library'
 import "./SideBar.css"
 export default function SideBar() {
   return (
-    <div>
+    <div className="sidebar-container">
       <Home/>
       <Library/>
     </div>

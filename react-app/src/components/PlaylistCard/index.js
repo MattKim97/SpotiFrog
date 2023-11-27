@@ -8,9 +8,7 @@ export default function PlaylistCard({format, playlist}) {
         <div className={`PlaylistCardContainer${format}`}>
         <Link to={`/playlists/${playlist.id}`}>
             <div className={`playlist${format}`}>
-                <div>
-                    <img src={imageUrl} alt="Playlist"/>
-                </div>
+                <img src={imageUrl} alt="Playlist"/>
                 <h3>{playlist.name}</h3>
                 {format === "main" ? <h4>{playlist.description}</h4> : null}
             </div>

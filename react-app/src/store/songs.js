@@ -1,10 +1,9 @@
+import { CREATED_SONG, DELETED_SONG, DELETED_ALBUM } from "./common";
 import { fetchData } from "./csrf"
 
 const GOT_ALL_SONGS = "songs/GOT_ALL_SONGS";
 const GOT_SONG = "songs/GOT_SONG";
-const CREATED_SONG = "songs/CREATED_SONG";
 const UPDATED_SONG = "songs/UPDATED_SONG";
-const DELETED_SONG = "songs/DELETED_SONG";
 const LIKE_SONG = "songs/LIKE_SONG";
 const UNLIKE_SONG = "songs/UNLIKE_SONG";
 
@@ -93,10 +92,10 @@ export const thunkUpdateSong = (data, id) => async dispatch => {
     return answer
 }
 
-export const thunkDeleteSong = id => async dispatch => {
+export const thunkDeleteSong = (id, playlistIds=[], albumId) => async dispatch => {
     const url = `/api/songs/${id}`
     const answer = await fetchData(url, {method: 'DELETE'})
-    if (!answer.errors) dispatch(deletedSong(id))
+    if (!answer.errors) dispatch(deletedSong(id, playlistIds, albumId))
     return answer
 }
 
@@ -144,10 +143,11 @@ const songReducer = (state = initialState, action) => {
     case GOT_SONG:
       return {...state, [action.song.id]: action.song };
     case CREATED_SONG:
-    case UPDATED_SONG:
-      return { ...state, [action.song.id]: action.song };
+      return {...state, [action.song.id]: action.song };
+      case UPDATED_SONG:
+      return {...state, [action.song.id]: action.song };
     case DELETED_SONG: {
-      const newState = { ...state };
+      const newState = {...state };
       delete newState[action.id];
       return newState;
     }
@@ -158,6 +158,19 @@ const songReducer = (state = initialState, action) => {
     case UNLIKE_SONG:
       const prevLikes = state[action.id].userLikes
       return {...state, [action.id]: {...state[action.id], userLikes: prevLikes - 1}}
+      case DELETED_ALBUM: {
+          if (!action.songIds || !action.songIds.length) return state;
+          const newState = { ...state };
+          action.songIds.forEach(songId => {
+            if (newState[songId]?.albumId === action.id) {
+              newState[songId] =
+                {...newState[songId],
+                  albumTrackNumber: null,
+                  albumId: null}
+          }})
+          return newState;
+        }
+
     default:
       return state;
   }

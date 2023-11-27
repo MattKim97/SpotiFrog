@@ -11,7 +11,7 @@ export default function About() {
 
   return (
     <div className='about-link'>
-      <NavLink to="/about">About</NavLink>
+      <NavLink to="/about"><i className="fa-solid fa-frog"></i> About</NavLink>
     </div>
   )
 }

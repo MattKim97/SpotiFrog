@@ -69,7 +69,7 @@ export default function AlbumDetails() {
   }, [showMenu])
 
   const handleDeleteKeep = async () => {
-    const response = await dispatch((thunkDeleteAlbum(albumId)));
+    const response = await dispatch((thunkDeleteAlbum(albumId, album?.songs)));
     if (response) {
       history.push(`/albums`);
     }
@@ -93,7 +93,7 @@ export default function AlbumDetails() {
 
   const releaseYear = new Date(album.releaseDate).getFullYear();
   const albumLength = albumSongs.length;
-  const albumDuration = albumSongs.reduce((sum,song) => sum+song.playtimeLength, 0)
+  const albumDuration = albumSongs.reduce((sum,song) => sum+(song?.playtimeLength||0), 0)
   const albumHr = Math.floor(albumDuration/3600);
   const albumMin = Math.floor((albumDuration%3600)/60);
   const albumSec = albumDuration%60;
@@ -148,7 +148,7 @@ export default function AlbumDetails() {
                   onClick={(e) => onClickAdd()}
                   className="groupOwnerButtons"
                 >
-                  Add a song
+                  Change Songs
                 </button>
               </li>
               <div className="small-top-line" />
@@ -166,15 +166,22 @@ export default function AlbumDetails() {
         </ul>
       </div>
       <div className="details-section-body album-details">
-        <h3><span>#</span> <span>Title</span> <i className="fa-regular fa-clock"></i></h3>
-        {albumSongs.length ? albumSongs.map((song, songIndex) => (
+        <div className="album-details-song-list-titles">
+          <h3>#</h3>
+          <h3>Title</h3>
+          <h3>Artist</h3>
+          <h3>Album</h3>
+          <h3>Likes</h3>
+          <h3><i style={{color:"var(--spotifyGreen)"}} className="fa-regular fa-clock"></i></h3>
+        </div>
+        {albumSongs.length && albumDuration ? albumSongs.map((song, songIndex) => (
           <div key={song.id} className="SongListContainer" onClick={()=> onClickSong(song.id) }>
             <PlayButton tracks={albumSongIds} trackIndex={songIndex} />
               <div>{song.name}</div>
               <div>{song.artist}</div>
               <div>{album.name}</div>
               {/* <LikeSong songId={song.id} liked={sessionUser.songsLiked}/> */}
-              <div>{song.userLikes} likes</div>
+              <div>{song.userLikes}</div>
               <div>
               {Math.floor(song.playtimeLength / 60)}:{song.playtimeLength % 60}
             </div>

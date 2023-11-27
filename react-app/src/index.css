@@ -162,7 +162,7 @@ input,textarea {
     border-radius: var(--inputBorderRadius);
 }
 
-label {
+label:not(.normal-label) {
     font-weight: bold ;
 }
 
@@ -197,7 +197,6 @@ h2 {
     grid-template-columns: 1fr 4fr ;
     grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
-    max-width: 1024px; /* for player *//* talk to Bill before changing*/
     height: 100vh;
     min-height: 100%;  /* for player *//* talk to Bill before changing*/
     position: relative;  /* for player *//* talk to Bill before changing*/
@@ -246,9 +245,18 @@ h2 {
     top: 10px;
     border: var(--borderColor) 1px solid;
     border-radius: var(--buttonBorderRadius);
-    padding: 5px;
+    padding: 0;
     background-color: var(--buttonBackgroundColor);
     width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.userProfileImage{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .fa-user-circle {
@@ -323,6 +331,9 @@ input {
 
 input[type=file] {
     background-color: var(--backgroundColor);
+}
+.custom-modal-button{
+    width: 150px;
 }
 
 /************************* HEADER ********************************/
@@ -747,6 +758,7 @@ input[type=file] {
     justify-items: center;
 }
 
+
 .SongsContainerMain {
     width: 900px;
     display: flex;
@@ -755,6 +767,42 @@ input[type=file] {
     justify-content: center;
     gap: 10px ;
 }
+
+.album-details-song-list-titles{
+    display: grid;
+    grid-template-areas: "tracknumber name artist album  likes duration";
+    grid-template-columns: repeat(6,1fr);
+    grid-gap: 10px;
+    align-items: center;
+    margin: 5px auto;
+    width: 95%;
+    border-bottom: var(--detailsTopSectionColor) solid 1px;
+    margin-bottom: 5px;
+}
+
+.album-details-song-list-titles > h3{
+    color: var(--spotifyGreen);
+}
+
+.playlist-details-song-list-titles{
+    display: grid;
+    grid-template-areas: "tracknumber name artist album remove likes duration";
+    grid-template-columns: repeat(7,1fr);
+    grid-gap: 10px;
+    align-items: center;
+    margin: 5px auto;
+    width: 95%;
+    border-bottom: var(--detailsTopSectionColor) solid 1px;
+    margin-bottom: 5px;
+}
+
+.playlist-details-song-list-titles > h3{
+    color: var(--spotifyGreen);
+}
+
+/* .album-details-song-list-titles > div{
+    color: var(--spotifyGreen);
+} */
 
 .SongListContainer {
     box-sizing: border-box;
@@ -782,8 +830,8 @@ input[type=file] {
 
 .songContainerTitles{
     display: grid;
-    grid-template-areas: "name date album";
-    grid-template-columns: repeat(3,1fr);
+    grid-template-areas: "image name date album";
+    grid-template-columns: 60px 1fr 1fr 1fr;
     width: 900px;
     margin-top: 10px    ;
 }
@@ -814,57 +862,136 @@ input[type=file] {
 }
 
 /********************** SIDEBAR ********************/
-.albumside{
+.sidebar-container {
+    display: grid;
+    padding: 0 var(--mainPaddingX);
+}
+
+.HomeSearchContainer {
+    width: 100%;
+}
+
+.HomeSearchContainer>button {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--backgroundColor)
+}
+
+.HomeSearchContainer>button, .fa-solid.fa-house, .fa-solid.fa-eye {
+    color: var(--backgroundTextColor);
+    text-align: left;
+    font-size: var(--fontSize);
+}
+
+.fa-solid.fa-house, .fa-solid.fa-eye {
+    margin-right: 15px;
+}
+
+.HomeSearchContainer>button:hover {
+    color: var(--textColor);
+    .fa-solid {
+        color: var(--textColor);
+    }
+}
+
+.sidebar-library {
+    padding: 7px;
+}
+
+.fa-solid.fa-book, .library-text {
+    color: var(--backgroundTextColor);
+    margin-right: 15px;
+    margin-bottom: 7px;
+}
+
+.custom-modal-button, .sidebar-card-container>button {
+    background-color: var(--backgroundAccent);
+    width: 100%;
+    color: var(--backgroundTextColor);
+    padding: 10px;
+}
+
+.custom-modal-button:hover, .sidebar-card-container>button:hover {
+    background-color: var(--backgroundAccent);
+    color: var(--textColor);
+}
+
+.playlistside, .albumside{
+    width: 175px;
+    border-radius: 5px;
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 150px;
+}
+
+.playlistside>*:not(img), .albumside>div, .albumside>div>* {
+    padding: 2px;
+    font-size: small;
+    width: 100%;
+    align-self: center;
+}
+
+.playlistside img, .albumside img{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: var(--textColor);
+}
+
+.PlaylistCardContainerside, .AlbumCardContainerside{
+    margin-bottom: 5px;
+    width: 200px;
+    border-radius: 5px;
+    display: flex;
+    cursor: pointer;
+    /* background-color: var(--backgroundAccent); */
+    background-color: grey;
+}
+
+.PlaylistCardContainerside:hover, .AlbumCardContainerside:hover {
+    /* background-color: var(--detailsTopSectionColor); */
+    background-color: var(--spotifyGreen);
+}
+
+.SideBarLinksContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5px;
+}
+
+.SideBarLinks{
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: var(--detailsTopSectionColor);
+    border-radius: 15px;
+    width: 100%;
+    padding: 6px;
+    border: var(--detailsTopSectionColor) solid 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+.Active{
+    background-color: var(--backgroundAccent);
+    font-weight: bold;
+}
+
+.sideBarContainer {
+    margin-top: 7px;
+}
+
+.sidebar-card-container {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 10px;
+    justify-content: center;
 }
 
-.albumside img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-
-.AlbumCardContainerside{
-    display: flex;
-    border: 2px black solid;
-    cursor: pointer;
-    width: 150px;
-    background-color: grey;
-    margin-bottom: 5px;
-
-}
-
-.playlistside{
-    display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 150px;
-    flex-direction: column;
-    align-items: center;
-    font-size: 10px;
-
-}
-.playlistside div img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.PlaylistCardContainerside{
-    display: flex;
-    border: 2px black solid;
-    cursor: pointer;
-    width: 150px;
-    background-color: grey;
-    margin-bottom: 5px;
-
+.sidebar-card-container>button {
+    margin: 3px;
 }
 
 /* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */
@@ -973,6 +1100,7 @@ input[type=file] {
 /********************** FORMS ********************/
 
 .formsContainer{
+    padding: var(--mainPaddingY) var(--mainPaddingX);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1001,6 +1129,18 @@ input[type=file] {
     background-color: var(--spotifyGreen);
 }
 
+.formsSubmit:hover {
+    background-color: var(--spotifyGreen);
+}
+
 .inputFileForm{
     background-color: var(--spotifyIconBackground);
 }
+
+.formsStyle>div>h3 {
+    font-weight: bold;
+}
+
+/* .normal-label {
+    border: red 1px solid;
+} */

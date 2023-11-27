@@ -20,15 +20,9 @@ export default function Landing() {
     return null;
 
   function randominator(arr) {
-    const result = [];
-    const copy = arr.slice(0,5);
+    const copy = arr.slice(0,4);
 
-    while (result.length < 4) {
-      let index = Math.floor(Math.random() * copy.length);
-      result.push(copy[index]);
-      copy.splice(index, 1);
-    }
-    return result;
+    return copy;
   }
 
   const randomAlbums = randominator(albums);
@@ -38,7 +32,7 @@ export default function Landing() {
     <div className="landing-container">
       <div className="landing-main-header">
         <h2>Discover a New Froggy Album today!</h2>
-        <a href="/albums">See all albums</a>
+        <a href="/albums"><i className="fa-solid fa-radio"></i> See all albums </a>
       </div>
       <div className="landingMainContainer">
         {randomAlbums.map((album) => (
@@ -49,7 +43,7 @@ export default function Landing() {
       </div>
       <div className="landing-main-header">
         <h2>Discover our carefully curated croaktastic playlists!</h2>
-        <a href="/playlists">See all playlists</a>
+        <a href="/playlists"><i className="fa-solid fa-headphones"></i> See all playlists</a>
       </div>
       <div className="landingMainContainer">
         {randomPlaylists.map((playlist) => (
