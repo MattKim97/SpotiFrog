@@ -15,7 +15,7 @@ export default function Albums() {
     if (!albums || albums.length === 0) return null
 
   return (
-    <div>
+    <div className='ContainerMainStyle'>
       <div className='AlbumsContainerMain'>
             {albums.map((album)=> (
             <div key={album.id}>
