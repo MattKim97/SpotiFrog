@@ -11,12 +11,13 @@ import PlayButton from "../PlayButton";
 import PlaylistButton from "../PlaylistButton";
 
 export default function PlayListDetails() {
-  const {sidebarLoaded} = useContentLoaded()
   const dispatch = useDispatch();
+  const {sidebarLoaded} = useContentLoaded()
   const { playlistId } = useParams();
+  const sessionUser = useSelector((state) => state.session.user);
+
   const playlist = useSelector(state => state.playlists[playlistId])
   const playlistSongIds = useSelector(state => state.playlists[playlistId]?.songs)
-  const sessionUser = useSelector((state) => state.session.user);
   const playlistSongs = useSelector(selectSongsByIds(playlist?.songs))
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -169,7 +170,7 @@ export default function PlayListDetails() {
         </ul>
       </div>
       <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
-            <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
+            <div className="SongListContainerPlaylist" onClick={()=> onClickSong(song.id) } key={song.id}>
                         <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />
             <div>{song.name}</div>
             <div>{song.artist}</div>

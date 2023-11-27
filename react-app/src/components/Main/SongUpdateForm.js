@@ -66,9 +66,12 @@ export default function UpdateSongForm() {
   if (!albums || albums.length === 0) return null;
 
   return (
-        <form onSubmit={handleSubmit}>
+    <div className="formsContainer">
+
+        <form className="formsStyle" onSubmit={handleSubmit}>
+        <h2>Update Your Song!</h2>
         <label>
-            Name:
+            Song Name:
             <input
             type="text"
             name="name"
@@ -100,9 +103,10 @@ export default function UpdateSongForm() {
         <br />
 
         <label>
-            Lyrics:
+            Lyrics(optional):
             <textarea
             name="lyrics"
+            className="playlistDescription"
             value={formData.lyrics}
             onChange={handleInputChange}
             />
@@ -110,7 +114,8 @@ export default function UpdateSongForm() {
 
         <br />
 
-        <button type="submit">Submit</button>
+        <button  className="formsSubmit" type="submit">Submit</button>
         </form>
+    </div>
   );
 }

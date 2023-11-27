@@ -40,7 +40,7 @@ export default function RemoveSongFromPlaylist({songId, playlistId}) {
         )}
         <button onClick={openModal}>
             <i className="fa-solid fa-minus"/>
-            <span>Remove Song</span>
+            <span className='RemoveSongContainer'>Remove Song</span>
         </button>
         </>
     )

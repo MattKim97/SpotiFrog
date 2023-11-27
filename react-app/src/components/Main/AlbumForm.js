@@ -62,7 +62,10 @@ const handleSubmit = async (e) => {
 
 
 return (
-  <form onSubmit={handleSubmit}>
+  <div className='formsContainer'>
+
+  <form  className="formsStyle" onSubmit={handleSubmit}>
+  <h2>Create a Album!</h2>
     <label>
       Album Name:
       <input
@@ -77,8 +80,8 @@ return (
     <br />
 
     <label>
-      Album Cover:
-      <input type="file" name="albumCover" onChange={handleInputChange} />
+      Album Cover(optional):
+      <input className="inputFileForm" type="file" name="albumCover" onChange={handleInputChange} />
       {errors.albumCover && <div style={{color:"red"}} >{errors.albumCover}</div>}
     </label>
 
@@ -97,7 +100,8 @@ return (
 
     <br />
 
-    <button type="submit">Submit</button>
+    <button className="formsSubmit" type="submit">Submit</button>
   </form>
+  </div>
 );
         }
