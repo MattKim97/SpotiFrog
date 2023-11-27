@@ -142,7 +142,7 @@ export default function SongDetails() {
       </div>
 
       <div className="details-section-user-options">
-        <PlaylistButton tracks={[]} /> {/* TODO */}
+
         {sessionUser && (
           <LikeSong liked={sessionUser.songsLiked} songId={songId} />
         )}
