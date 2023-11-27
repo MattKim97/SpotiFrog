@@ -83,8 +83,8 @@ export default function Library() {
   // if (!songs || songs.length === 0) return null
 
   return (
-    <div >
-      <div>Your Library</div>
+    <div className='sidebar-library'>
+      <div className='library-text'><i className="fa-solid fa-book"></i>Your Library</div>
       {sessionUser ?
         <div className='SideBarLinksContainer'>
           <div className={activeTab === "albums" ? "Active SideBarLinks": "SideBarLinks"} onClick={()=> handleTabClick("albums")}>Albums</div>
