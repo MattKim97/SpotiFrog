@@ -870,7 +870,7 @@ input[type=file] {
     color: var(--textColor);
 }
 
-.albumside{
+.playlistside, .albumside{
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -880,47 +880,63 @@ input[type=file] {
     font-size: 10px;
 }
 
-.albumside img{
+.playlistside>*:not(img), .albumside>div>* {
+    padding: 2px;
+}
+
+.playlistside img, .albumside img{
+    background-color: var(--textColor);
     width: 100px;
     height: 100px;
     object-fit: cover;
+    margin-bottom: 5px;
+    border-radius: 5px;
 }
 
-
-.AlbumCardContainerside{
+.PlaylistCardContainerside, .AlbumCardContainerside{
     display: flex;
-    border: 2px black solid;
     cursor: pointer;
     width: 150px;
-    background-color: grey;
+    height: 150px;
     margin-bottom: 5px;
-
+    background-color: var(--backgroundAccent);
+    border-radius: 5px;
 }
 
-.playlistside{
+.PlaylistCardContainerside:hover, .AlbumCardContainerside:hover {
+    background-color: var(--detailsTopSectionColor);
+}
+
+.SideBarLinksContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 5px;
+}
+
+.SideBarLinks{
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: var(--detailsTopSectionColor);
+    border-radius: 15px;
+    width: 100%;
+    padding: 5px;
+    border: var(--detailsTopSectionColor) solid 2px;
+}
+
+.Active{
+    background-color: var(--backgroundAccent);
+    font-weight: bold;
+}
+
+.sideBarContainer {
+    margin-top: 7px;
+}
+
+.sidebar-card-container {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 150px;
     flex-direction: column;
     align-items: center;
-    font-size: 10px;
-
-}
-.playlistside div img{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.PlaylistCardContainerside{
-    display: flex;
-    border: 2px black solid;
-    cursor: pointer;
-    width: 150px;
-    background-color: grey;
-    margin-bottom: 5px;
-
+    justify-content: center;
 }
 
 /* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */
