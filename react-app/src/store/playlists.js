@@ -168,7 +168,7 @@ const playlistReducer = (state = initialState, action) => {
         const newState = {...state}
         if (!action.playlistIds || !action.playlistIds.length) return state;
         action.playlistIds.forEach(playlistId => {
-            newState[playlistId].songs = newState[playlistId].songs.filter(songId => songId != action.id)
+            newState[playlistId].songs = newState[playlistId].songs.filter(songId => songId !== action.id)
         })
         return newState
     }

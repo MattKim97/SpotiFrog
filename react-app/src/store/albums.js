@@ -153,7 +153,7 @@ const albumReducer = (state = initialState, action) => {
         ? {...state,
           [action.albumId]:
           {...state[action.albumId],
-            songs: state[action.albumId].songs.filter(songId => songId != action.id)}} : state
+            songs: state[action.albumId].songs.filter(songId => songId !== action.id)}} : state
     }
     default:
       return state;
