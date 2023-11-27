@@ -317,6 +317,25 @@ input[type=file] {
 }
 
 /****************** MAIN CONTAINER ***********************/
+
+.PlayListContainerMain{
+  width: 900px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px ;
+}
+
+.AlbumsContainerMain{
+  width: 900px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px ;
+}
+
 .landingMainContainer{
     display: grid;
     grid-template-columns: repeat(4, 220px);
@@ -398,6 +417,70 @@ input[type=file] {
 
 .aboutContainer {
     margin: 50px;
+    width: 900px;
+}
+
+/***************** SEARCH ********************/
+.SearchContainer{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px ;
+}
+
+/***************** DELETE MODAL ******************/
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  flex-direction: column;
+}
+
+.modal-content {
+  position: absolute;
+  background-color: whitesmoke;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteButton {
+  background: red;
+  color: white;
+  margin-right: 10px;
+  border-radius: 5px;
+  width: 300px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 5px 2px 2px black;
+  margin-bottom: 10px;
+}
+
+.keepButton {
+  background: darkgray;
+  color: white;
+  border-radius: 5px;
+  width: 300px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 5px 2px 2px black;
 }
 
 /* ******* DETAILS PAGES *************** */
@@ -415,6 +498,8 @@ input[type=file] {
 
 .albumCover, .playlistCover {
     object-fit: cover;
+    width: 200px;
+    height: 200px;
     max-width: 100%;
     background-color: white;
     box-shadow: var(--boxShadow);
