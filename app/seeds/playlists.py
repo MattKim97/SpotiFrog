@@ -38,8 +38,14 @@ def seed_playlists():
         playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/meat.png",
         description="Uplifting playlist for when I want to croak"
         )
+    demo6 = Playlist(
+        name="Matt's Other Playlist",
+        userId=4,
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/matt.png",
+        description="Angery playlist"
+        )
 
-    playlists = [demo1, demo2, demo3, demo4, demo5]
+    playlists = [demo1, demo2, demo3, demo4, demo5, demo6]
 
 
     db.session.add_all(playlists)
