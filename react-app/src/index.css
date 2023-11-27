@@ -858,53 +858,54 @@ input[type=file] {
     margin-bottom: 7px;
 }
 
-.custom-modal-button {
+.custom-modal-button, .sidebar-card-container>button {
     background-color: var(--backgroundAccent);
     width: 100%;
     color: var(--backgroundTextColor);
     padding: 10px;
 }
 
-.custom-modal-button:hover {
+.custom-modal-button:hover, .sidebar-card-container>button:hover {
     background-color: var(--backgroundAccent);
     color: var(--textColor);
 }
 
 .playlistside, .albumside{
+    width: 175px;
+    border-radius: 5px;
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 150px;
-    flex-direction: column;
-    align-items: center;
-    font-size: 10px;
 }
 
-.playlistside>*:not(img), .albumside>div>* {
+.playlistside>*:not(img), .albumside>div, .albumside>div>* {
     padding: 2px;
+    font-size: small;
+    width: 100%;
+    align-self: center;
 }
 
 .playlistside img, .albumside img{
-    background-color: var(--textColor);
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
     object-fit: cover;
-    margin-bottom: 5px;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: var(--textColor);
 }
 
 .PlaylistCardContainerside, .AlbumCardContainerside{
+    margin-bottom: 5px;
+    width: 200px;
+    border-radius: 5px;
     display: flex;
     cursor: pointer;
-    width: 150px;
-    height: 150px;
-    margin-bottom: 5px;
-    background-color: var(--backgroundAccent);
-    border-radius: 5px;
+    /* background-color: var(--backgroundAccent); */
+    background-color: grey;
 }
 
 .PlaylistCardContainerside:hover, .AlbumCardContainerside:hover {
-    background-color: var(--detailsTopSectionColor);
+    /* background-color: var(--detailsTopSectionColor); */
+    background-color: var(--spotifyGreen);
 }
 
 .SideBarLinksContainer{
@@ -919,8 +920,8 @@ input[type=file] {
     background-color: var(--detailsTopSectionColor);
     border-radius: 15px;
     width: 100%;
-    padding: 5px;
-    border: var(--detailsTopSectionColor) solid 2px;
+    padding: 6px;
+    border: var(--detailsTopSectionColor) solid 1px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -941,6 +942,10 @@ input[type=file] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.sidebar-card-container>button {
+    margin: 3px;
 }
 
 /* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */
