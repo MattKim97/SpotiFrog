@@ -11,6 +11,7 @@ function ProfileButton({ user }) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  // const sessionUser = useSelector((state) => state.session.user);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -43,7 +44,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <button className="profile-button" onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        {user ? user.profilePictureUrl ? <img className="userProfileImage" src={user.profilePictureUrl} alt="profile" /> : <i className="fas fa-user-circle" /> :<i className="fas fa-user-circle" />}
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
