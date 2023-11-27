@@ -197,7 +197,10 @@ h2 {
     grid-template-columns: 1fr 4fr ;
     grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
-    max-width: 1024px;
+    max-width: 1024px; /* for player *//* talk to Bill before changing*/
+    height: 100vh;
+    min-height: 100%;  /* for player *//* talk to Bill before changing*/
+    position: relative;  /* for player *//* talk to Bill before changing*/
     margin-top: var(--headerHeight);
     padding-bottom: var(--musicAndFooterHeight);
 }
@@ -224,10 +227,12 @@ h2 {
 
 .SoundBarContainer{
     /* grid-area: sound; */
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
     height: var(--musicPlayerHeight);
+    position: fixed;/* for player *//* talk to Bill before changing*/
+    width: 100vw;   /* for player *//* talk to Bill before changing*/
+    max-width: 1024px; /* for player *//* talk to Bill before changing*/
+    /* left: 0; */
+    bottom: 0; /* for player *//* talk to Bill before changing*/
 }
 
 .background-text {
@@ -631,10 +636,6 @@ input[type=file] {
     font-size: 40pt;
 }
 
-/* .add-to-playlist {
-    margin-left: 10px;
-} */
-
 .add-to-playlist, .groupOwnerButtons {
     background-color: var(--backgroundAccent);
     display: flex;
@@ -877,16 +878,14 @@ input[type=file] {
 }
 .rhap_container {
     background: var(--rhap_backgroundColor);
+    height: 100%;
     padding-bottom:0;
 }
 .rhap_volume-bar, .rhap_progress-bar {
     background-color: var(--rhap_progressBarBackground);
 }
-.rhap_progress-bar {
-    height: 3px;
-}
-.rhap_volume-bar {
-    height: 5px;
+.rhap_progress-bar, .rhap_volume-bar {
+    height: 4px;
 }
 /* make the indicators the same like on Spotify */
 .rhap_progress-indicator, .rhap_volume-indicator {
@@ -951,12 +950,14 @@ input[type=file] {
 }
 .rhap_volume-controls {
     justify-content: space-between;
-    max-width: 435px;
+    max-width: 422px;
 }
 .rhap_volume-container {
-    margin-right: 40px;
+    min-width: 122px;
+    margin-right: 28px;
 }
 .rhap_repeat-button {
+    margin-top: 2px;
     margin-left: 4px;
 }
 .rhap_stacked-reverse .rhap_controls-section {
