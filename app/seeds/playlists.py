@@ -41,7 +41,7 @@ def seed_playlists():
     demo6 = Playlist(
         name="Matt's Other Playlist",
         userId=4,
-        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/matt.png",
+        playlistCover ="https://spotifrogmp3.s3.us-west-1.amazonaws.com/%E6%80%92%E8%9B%99_Angry_Frog_-_panoramio.jpg",
         description="Angery playlist"
         )
 
