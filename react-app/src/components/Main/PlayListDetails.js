@@ -169,7 +169,7 @@ export default function PlayListDetails() {
         </ul>
       </div>
       <div>   {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
-            <div className="SongListContainer" onClick={()=> onClickSong(song.id) } key={song.id}>
+            <div className="SongListContainerPlaylist" onClick={()=> onClickSong(song.id) } key={song.id}>
                         <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />
             <div>{song.name}</div>
             <div>{song.artist}</div>

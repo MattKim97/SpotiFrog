@@ -71,7 +71,10 @@ export default function PlaylistUpdateForm() {
 
 
     return (
-      <form onSubmit={handleSubmit}>
+      <div className='formsContainer'>
+
+      <form className="formsStyle" onSubmit={handleSubmit}>
+        <h2>Update your Playlist!</h2>
         <label>
           Playlist Name:
           <input
@@ -98,6 +101,7 @@ export default function PlaylistUpdateForm() {
           <textarea
           type='text'
             name="description"
+            className='playlistDescription'
             value={formData.description}
             onChange={handleInputChange}
           />
@@ -106,7 +110,8 @@ export default function PlaylistUpdateForm() {
 
         <br />
 
-        <button type="submit">Submit</button>
+        <button className="formsSubmit" type="submit">Submit</button>
       </form>
+      </div>
     );
 }
