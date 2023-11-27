@@ -17,13 +17,13 @@ function App() {
 
   return (
     <ContentLoadedProvider>
-    <div className="PageGridContainer">
-      <div className="HeaderContainer"><Header /></div>
-      <div className="SideBarContainer"><SideBar /></div>
-      <div className="MainContainer"><Main /></div>
+      <div className="PageGridContainer">
+        <div className="HeaderContainer"><Header /></div>
+        <div className="SideBarContainer"><SideBar /></div>
+        <div className="MainContainer"><Main /></div>
+        <div className="FooterContainer"><Footer /></div>
+      </div>
       <div className="SoundBarContainer"><MusicPlayer /></div>
-      <div className="FooterContainer"><Footer /></div>
-    </div>
     </ContentLoadedProvider>
   );
 }

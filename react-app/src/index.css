@@ -44,7 +44,7 @@
     --spotifyGreen: rgb(29,185,84);
     --rhap_backgroundColor: var(--backgroundColor);
     --rhap_indicatorColor: white;
-    --rhap_progressBarBackground: slategray;
+    --rhap_progressBarBackground: #4D4D4D;
     --rhap_progressColor: white;
     --rhap_progressHoverColor: var(--spotifyGreen);
     --rhap_controlColor: var(--spotifyQuiescentIcon);
@@ -55,6 +55,8 @@
     --rhap_skipControlFontSize: 2rem;
     --rhap_playPauseSize: 2.5rem;
     --rhap_playPauseHoverSize: 2.6rem;
+    --musicPlayerHeight: 5.3rem;
+    --musicAndFooterHeight: 7.3rem;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -112,7 +114,14 @@ table {
 	border-spacing: 0 ;
 }
 /* end of Eric Meyer's reset */
-
+html {
+    height: 100vh;/* Overrides 100% height in modern HTML5 browsers and uses the viewport's height. Only works in modern HTML5 browsers */
+}
+body {
+    height: auto; /* Allows content to grow beyond the page without overflow */
+    min-height: 100vh;/* Starts web page with 100% height. Uses the viewport's height. Only works in modern HTML5 browsers */
+    overflow-y: scroll;/* Optional: Adds an empty scrollbar to the right margin in case content grows vertically, creating a scrollbar.  Allows for better width calculations, as the browser pre-calculates width before scrollbar appears, avoiding page content shifting.*/
+}
 /* add progress cursor during db access */
 body.waiting * {
     cursor: progress !important ;
@@ -183,12 +192,13 @@ h2 {
     grid-template-areas:
                         /* "header header header" */
                          "sidebar main main"
-                         "sound sound sound"
+                        /* "sound sound sound" */
                          "footer footer footer" ;
     grid-template-columns: 1fr 4fr ;
-    grid-template-rows: 3fr 1fr 1fr;
+    grid-template-rows: 4fr /* 1fr */ 1fr;
     height: 100vh;
     margin-top: var(--headerHeight);
+    padding-bottom: var(--musicAndFooterHeight);
 }
 
 .HeaderContainer{
@@ -211,7 +221,11 @@ h2 {
 }
 
 .SoundBarContainer{
-    grid-area: sound;
+    /* grid-area: sound; */
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: var(--musicPlayerHeight);
 }
 
 .background-text {
@@ -935,7 +949,7 @@ input[type=file] {
   }
 
   .rhap_main-controls-button {
-    margin: 0 3px;
+    margin: 0 6px;
     color: #868686;
     font-size: 35px;
     width: 35px;
@@ -1099,7 +1113,9 @@ input[type=file] {
     font-size: var(--rhap_skipControlFontSize);
 }
 
-.rhap_button-clear:hover {
+.rhap_button-clear:hover,
+.rhap_button-clear svg:hover
+{
     color: white;
     background-color: var(--spotifyIconBackground);
 }
@@ -1110,10 +1126,30 @@ input[type=file] {
     background-color: var(--spotifyIconBackground);
     font-size: var(--rhap_playPauseSize);
 }
-.rhap_play-pause-button:hover
+.rhap_play-pause-button:hover,
+.rhap_play-pause-button svg:hover
 {
     font-size: var(--rhap_playPauseHoverSize);
 }
 
-
+/* .rhap_main-controls {
+    margin-right: -100px;
+} */
+.rhap_main-controls-button {
+    margin: 0 6px;
+}
+.rhap_volume-controls {
+    justify-content: space-between;
+    max-width: 435px;
+}
+.rhap_volume-container {
+    margin-right: 40px;
+    /* width: fit-content; */
+}
+.rhap_repeat-button {
+    margin-left: 4px;
+}
+.rhap_stacked-reverse .rhap_controls-section {
+    margin-bottom: 3px;
+}
 /* END REACT-H5-AUDIO-PLAYER STYLES */
