@@ -784,8 +784,8 @@ input[type=file] {
 
 .songContainerTitles{
     display: grid;
-    grid-template-areas: "name date album";
-    grid-template-columns: repeat(3,1fr);
+    grid-template-areas: "image name date album";
+    grid-template-columns: 60px 1fr 1fr 1fr;
     width: 900px;
     margin-top: 10px    ;
 }
