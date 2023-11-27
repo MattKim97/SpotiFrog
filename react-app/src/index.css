@@ -749,6 +749,7 @@ input[type=file] {
     justify-items: center;
 }
 
+
 .SongsContainerMain {
     width: 900px;
     display: flex;
@@ -757,6 +758,42 @@ input[type=file] {
     justify-content: center;
     gap: 10px ;
 }
+
+.album-details-song-list-titles{
+    display: grid;
+    grid-template-areas: "tracknumber name artist album  likes duration";
+    grid-template-columns: repeat(6,1fr);
+    grid-gap: 10px;
+    align-items: center;
+    margin: 5px auto;
+    width: 95%;
+    border-bottom: var(--detailsTopSectionColor) solid 1px;
+    margin-bottom: 5px;
+}
+
+.album-details-song-list-titles > h3{
+    color: var(--spotifyGreen);
+}
+
+.playlist-details-song-list-titles{
+    display: grid;
+    grid-template-areas: "tracknumber name artist album remove likes duration";
+    grid-template-columns: repeat(7,1fr);
+    grid-gap: 10px;
+    align-items: center;
+    margin: 5px auto;
+    width: 95%;
+    border-bottom: var(--detailsTopSectionColor) solid 1px;
+    margin-bottom: 5px;
+}
+
+.playlist-details-song-list-titles > h3{
+    color: var(--spotifyGreen);
+}
+
+/* .album-details-song-list-titles > div{
+    color: var(--spotifyGreen);
+} */
 
 .SongListContainer {
     box-sizing: border-box;
