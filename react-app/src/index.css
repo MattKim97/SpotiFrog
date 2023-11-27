@@ -858,14 +858,14 @@ input[type=file] {
     margin-bottom: 7px;
 }
 
-.custom-modal-button {
+.custom-modal-button, .sidebar-card-container>button {
     background-color: var(--backgroundAccent);
     width: 100%;
     color: var(--backgroundTextColor);
     padding: 10px;
 }
 
-.custom-modal-button:hover {
+.custom-modal-button:hover, .sidebar-card-container>button:hover {
     background-color: var(--backgroundAccent);
     color: var(--textColor);
 }
@@ -900,11 +900,13 @@ input[type=file] {
     height: 150px;
     margin-bottom: 5px;
     background-color: var(--backgroundAccent);
+    /* background-color: grey; */
     border-radius: 5px;
 }
 
 .PlaylistCardContainerside:hover, .AlbumCardContainerside:hover {
     background-color: var(--detailsTopSectionColor);
+    /* background-color: var(--spotifyGreen); */
 }
 
 .SideBarLinksContainer{
@@ -919,8 +921,8 @@ input[type=file] {
     background-color: var(--detailsTopSectionColor);
     border-radius: 15px;
     width: 100%;
-    padding: 5px;
-    border: var(--detailsTopSectionColor) solid 2px;
+    padding: 6px;
+    border: var(--detailsTopSectionColor) solid 1px;
 }
 
 .Active{
@@ -937,6 +939,10 @@ input[type=file] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.sidebar-card-container>button {
+    margin: 3px;
 }
 
 /* BEGIN REACT-H5-AUDIO-PLAYER overridden STYLES */
