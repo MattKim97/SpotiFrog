@@ -136,7 +136,7 @@ export default function PlayListDetails() {
             <h2>{playlist.name}</h2>
             <div className="background-text">{playlist.description}</div>
             <h3>
-              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length==1 ? "song":"songs"}, {playlistHr} hr {playlistMin} min {playlistSec} sec
+              <span className="details-section-artist">{playlist.owner}</span> • {playlist.songs.length} {playlist.songs.length===1 ? "song":"songs"}, {playlistHr} hr {playlistMin} min {playlistSec} sec
             </h3>
           </div>
       </div>
@@ -174,11 +174,11 @@ export default function PlayListDetails() {
           <h3>#</h3>
           <h3>Title</h3>
           <h3>Artist</h3>
-          <h3></h3>
+          <div/>
           <h3>Album</h3>
           <h3>Likes</h3>
           <h3><i style={{color:"var(--spotifyGreen)"}} className="fa-regular fa-clock"></i></h3>
-        </div> 
+        </div>
           {!playlistSongs.includes(undefined) && playlistSongs.map((song, songIndex) => (
             <div className="SongListContainerPlaylist" onClick={()=> onClickSong(song.id) } key={song.id}>
                         <PlayButton tracks={playlistSongIds} trackIndex={songIndex} />

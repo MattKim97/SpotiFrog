@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import "./SongCard.css"
-import { useSelector , useDispatch } from 'react-redux';
-import { thunkGetAllAlbums } from '../../store/albums';
-// import LikeSong from './LikeSong'
+import { useSelector } from 'react-redux';
 
 export default function SongCard({format, song}) {
 

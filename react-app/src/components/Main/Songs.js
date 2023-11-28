@@ -22,7 +22,7 @@ export default function Songs() {
     <div className="ContainerMainStyle">
       <div className="SongsContainerMain">
         <div className="songContainerTitles">
-          <h2></h2>
+          <div />
           <h2>Song Name</h2>
           <h2>Uploaded At</h2>
           <h2>Album Name</h2>
