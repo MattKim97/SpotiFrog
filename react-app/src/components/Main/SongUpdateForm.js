@@ -19,7 +19,7 @@ export default function UpdateSongForm() {
 
   const [formData, setFormData] = useState({
     name: "",
-    albumId: 0,
+    albumId: -1,
     lyrics: "",
   });
 
@@ -35,10 +35,9 @@ export default function UpdateSongForm() {
     e.preventDefault();
     setErrors({});
 
-    if (!formData.albumId) {
+    if (parseInt(formData.albumId) === -1) {
         delete formData.albumId;
-        }
-
+      }
 
     const response = await dispatch(thunkUpdateSong(formData,songId));
 
@@ -90,13 +89,13 @@ export default function UpdateSongForm() {
             value={formData.albumId}
             onChange={handleInputChange}
             >
-            <option value={0}>Select an album</option>
+            <option value={-1}>Select an album</option>
             {userAlbums.map((album) => (
                 <option key={album.id} value={album.id}>
                 {album.name}
                 </option>
             ))}
-            <option value={0}>None</option>
+            <option value={-1}>None</option>
             </select>
         </label>
 
