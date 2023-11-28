@@ -29,7 +29,7 @@ function LoginFormModal() {
     try {
       const response = await dispatch(login(email, password));
       if (response.ok) {
-        const data = await response.json();
+        await response.json();
         history.push("/");
       } else {
         console.error('Something went wrong');
