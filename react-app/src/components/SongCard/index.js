@@ -12,17 +12,9 @@ export default function SongCard({format, song}) {
     const year = new Date(song.uploadedAt).getFullYear();
     const month = new Date(song.uploadedAt).getMonth();
     const day = new Date(song.uploadedAt).getDay();
-    const album = useSelector(state => state.albums[song.albumId])
+    const album = useSelector((state) => state.albums[song.albumId]);
 
-
-    // useEffect(() => {
-    //     dispatch(thunkGetAllAlbums())
-    // }
-    // , [])
-
-    if (!album) return null;
-
-    const imageUrl = album.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png";
+    const imageUrl = album?.albumCover || 'https://static.thenounproject.com/png/4974686-200.png';
 
     return (
         <div className={`songs${format}container`}>
