@@ -9,7 +9,6 @@ import PlayListDetails from "./PlayListDetails";
 import AlbumDetails from "./AlbumDetails";
 import SongDetails from "./SongDetails";
 import AddRemoveSongForm from "../AddRemoveSongForm";
-import ProtectedRoute from "../auth/ProtectedRoute";
 import SongForm from "./SongForm";
 import SongUpdateForm from "./SongUpdateForm";
 import AlbumForm from "./AlbumForm";
@@ -63,9 +62,7 @@ export default function Main() {
                 <SongDetails />
             </Route>
             <Route exact path="/albums/:albumId/change-songs">
-                <ProtectedRoute>
-                    <AddRemoveSongForm />
-                </ProtectedRoute>
+                <AddRemoveSongForm />
             </Route>
             <Route>
                 404 Page Not Found

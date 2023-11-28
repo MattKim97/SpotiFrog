@@ -152,9 +152,9 @@ const initialState = { user: null };
 function sessionReducer(state = initialState, action) {
 	switch (action.type) {
 		case REMOVE_USER:
-			return { ...state, user: null };
+			return { user: null };
 		case SET_USER:
-			return { ...state, user: action.user };
+			return { user: action.user };
 		case GOT_USER_PLAYLISTS: {
 			const playlists = {};
 			action.playlists.forEach(p => playlists[p.id] = p);

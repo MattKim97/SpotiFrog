@@ -122,10 +122,7 @@ export const thunkDeleteSong = (id, playlistIds=[], albumId) => async dispatch =
 
 export const selectSongsByIds = (songList) => state => {
   if (!songList) return null
-  console.log("LIST OF SONG IDS", songList)
-
   const songs = songList.map(songId => state.songs[songId])
-  console.log("SONGS SELECTED", songs)
   return songs
   //
 }
@@ -143,11 +140,10 @@ const songReducer = (state = initialState, action) => {
     case GOT_SONG:
       return {...state, [action.song.id]: action.song };
     case CREATED_SONG:
-      return {...state, [action.song.id]: action.song };
-      case UPDATED_SONG:
-      return {...state, [action.song.id]: action.song };
+    case UPDATED_SONG:
+      return { ...state, [action.song.id]: action.song };
     case DELETED_SONG: {
-      const newState = {...state };
+      const newState = { ...state };
       delete newState[action.id];
       return newState;
     }
