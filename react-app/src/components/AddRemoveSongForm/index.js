@@ -4,8 +4,10 @@ import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { thunkAddSongToAlbum, thunkRemoveSongFromAlbum } from '../../store/albums'
 import { thunkGetAllSongs } from '../../store/songs'
+import { useContentLoaded } from '../../context/ContentLoaded'
 
 export default function AddRemoveSongForm() {
+    const {userLoaded} = useContentLoaded();
     const history = useHistory()
     const dispatch = useDispatch()
     const {albumId} = useParams()
@@ -52,7 +54,7 @@ export default function AddRemoveSongForm() {
             addedSongs.add(e.target.value)
             setAddedSongs(addedSongs)
         } else {
-            addedSongs.remove(e.target.value)
+            addedSongs.delete(e.target.value)
             setAddedSongs(addedSongs)
         }
     }
@@ -88,21 +90,26 @@ export default function AddRemoveSongForm() {
         setErrors(errors)
     }
 
-    if (!allSongs) return <>Loading update page</>
+    if (!allSongs || !userLoaded) return <>Loading update page</>
+
+    if (userLoaded && (!sessionUser || !sessionUser.albums.includes(parseInt(albumId)))) {
+        history.push('/')
+        return null;
+    }
 
     return (
         <div className='formsContainer'>
         <form action="" onSubmit={handleSubmit} className='formsStyle'>
             <h2>Update the songs in your Album!</h2>
-            <div>
-                <h3>Select songs to remove from album:</h3>
+            <div style={{marginTop:"15px"}}>
+                <h3>Deselect songs to remove from album:</h3>
                 <div className='small-top-line'/>
-                {albumSongs.map(song => {
+                {albumSongs.length ? albumSongs.map(song => {
                     return (
                     <div key={song.id}>
                     {errors[song.id] && <div>{errors[song.id]}</div>}
                     <label htmlFor={song.id} className="normal-label">
-                        {song.name}
+                        <span> • {song.name}</span>
                         <input
                             id={song.id}
                             type="checkbox"
@@ -113,16 +120,16 @@ export default function AddRemoveSongForm() {
                     </label>
                     </div>
                     )
-                })}
+                }): <div style={{margin:"15px 0"}}>No songs in album yet!</div>}
             </div>
 
-            <div>
+            <div style={{marginTop:"15px"}}>
                 <h3>Select songs to add to album:</h3>
                 <div className='small-top-line'/>
-                {userSingles.map(song => {
+                {userSingles.length ? userSingles.map(song => {
                     return (
                     <label key={song.id} htmlFor={song.id}className="normal-label">
-                        {song.name}
+                        <span> • {song.name}</span>
                         <input
                             id={song.id}
                             type="checkbox"
@@ -130,10 +137,10 @@ export default function AddRemoveSongForm() {
                             onClick={addSong}
                         />
                     </label>)
-                })}
+                }): <div style={{margin:"15px 0"}}>No available songs to add to album.</div> }
             </div>
 
-            <button className="formsSubmit" type="submit">Update Songs in Album</button>
+            <button style={{marginTop:"15px"}} className="formsSubmit" type="submit">Update Songs in Album</button>
         </form>
         </div>
     )

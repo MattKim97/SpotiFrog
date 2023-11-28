@@ -1141,6 +1141,12 @@ input[type=file] {
     font-weight: bold;
 }
 
-/* .normal-label {
-    border: red 1px solid;
-} */
+.normal-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.normal-label>span {
+    width: 100%;
+}
