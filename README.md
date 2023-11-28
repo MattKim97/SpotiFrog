@@ -105,9 +105,9 @@ https://github.com/MattKim97/SpotiFrog/wiki
 
 ## Authors
 
-## Bill Shauck 🐸 <a href="https://github.com/bshauck"><img src="images/github-mark-white.png" alt="GitHub logo" style="width:20;"></a><a href="https://www.linkedin.com/in/william-shauck-153bb0210/"><img src="images/linkedin.webp" alt="LinkedIn logo" style="width:20;"></a>
+## Bill Shauck 🐸 <a href="https://github.com/bshauck"><img src="images/github-mark-white.png" alt="GitHub logo" width="20"></a><a href="https://www.linkedin.com/in/william-shauck-153bb0210/"><img src="images/linkedin.webp" alt="LinkedIn logo" width="20"></a>
 
-## Sophia Tsau 🐸 <a href="https://github.com/sophiatsau"><img src="images/github-mark-white.png" alt="GitHub logo" style="width:20;"></a><a href="hhttps://www.linkedin.com/in/sophia-t-5a51637a/"><img src="images/linkedin.webp" alt="LinkedIn logo" style="width:20;"></a>
+## Sophia Tsau 🐸 <a href="https://github.com/sophiatsau"><img src="images/github-mark-white.png" alt="GitHub logo" width="20"></a><a href="hhttps://www.linkedin.com/in/sophia-t-5a51637a/"><img src="images/linkedin.webp" alt="LinkedIn logo" width="20"></a>
 
 
-## Matthew Kim 🐸 <a href="https://github.com/MattKim97"><img src="images/github-mark-white.png" alt="GitHub logo" style="width:20;"></a><a href="https://www.linkedin.com/in/matthew-kim-9ba86a15a/"><img src="images/linkedin.webp" alt="LinkedIn logo" style="width:20;"></a>
+## Matthew Kim 🐸 <a href="https://github.com/MattKim97"><img src="images/github-mark-white.png" alt="GitHub logo" width="20"></a><a href="https://www.linkedin.com/in/matthew-kim-9ba86a15a/"><img src="images/linkedin.webp" alt="LinkedIn logo" width="20"></a>
