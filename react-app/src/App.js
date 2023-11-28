@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authenticate } from "./store/session";
 import Footer from "./components/Footer";
@@ -9,10 +9,11 @@ import MusicPlayer from "./components/MusicPlayer";
 import { ContentLoadedProvider } from "./context/ContentLoaded";
 function App() {
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(authenticate())
+    // .then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
