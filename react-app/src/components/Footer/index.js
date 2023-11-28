@@ -11,7 +11,10 @@ export default function Footer() {
       <div><a className="FooterLinkStyle" href="https://www.linkedin.com/in/sophia-t-5a51637a/">Sophia Tsau 🐸</a></div>
 
     </div>
-    <div className="FooterStyle">The repo for our frogtastic site can be found here! <a href="https://github.com/MattKim97/SpotiFrog"> <i class="fa-brands fa-github"></i></a></div>
+    <div className="FooterStyle">
+    <div className="FooterText">The repo for our frogtastic site can be found here!</div>
+    <div><a className="FooterLinkStyle" href="https://github.com/MattKim97/SpotiFrog"> <i class="fa-brands fa-github"></i></a></div>
+    </div>
     </>
   );
 }
