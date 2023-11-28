@@ -22,12 +22,14 @@ export default function SongCard({format, song}) {
 
     if (!album) return null;
 
+    const imageUrl = album.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png";
+
     return (
         <div className={`songs${format}container`}>
         <Link to={`/songs/${song.id}`}>
             <div className={`song${format}`}>
                 <div className={`songs${format}style`}>
-                    <img  className="songalbumcoverimg" src={album.albumCover} alt="album cover" />
+                    <img  className="songalbumcoverimg" src={imageUrl} alt="album cover" />
                     <h3>{song.name}</h3>
                     <h4>{year}-{month}-{day}</h4>
                     <h4>{song.albumName}</h4>
