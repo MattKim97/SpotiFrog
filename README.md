@@ -39,8 +39,12 @@ https://github.com/MattKim97/SpotiFrog/wiki
 *  Amazon Web Services (AWS)
 *  Flask
 *  Packages:
-
 *  Docker
+
+Tools
+VS COde
+GitHub and Git
+
 
 ## Frameworks
 
