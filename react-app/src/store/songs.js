@@ -86,6 +86,7 @@ export const thunkUpdateSong = (data, id) => async dispatch => {
     const url = `/api/songs/${id}`
     const answer = await fetchData(url, {
         method: 'PUT',
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
     })
     if (!answer.errors) dispatch(updatedSong(answer))
