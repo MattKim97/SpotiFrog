@@ -3,7 +3,7 @@ from wtforms import StringField, IntegerField, DateField, IntegerField, TextArea
 from wtforms.validators import InputRequired, ValidationError, Length
 from flask_wtf.file import FileField, FileAllowed
 # from app.models import Album, db
-from flask_login import current_user
+# from flask_login import current_user
 
 class SongForm(FlaskForm):
     name=StringField(validators=[InputRequired(), Length(max=100)])
