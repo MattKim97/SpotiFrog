@@ -860,12 +860,29 @@ input[type=file] {
     }
 }
 
-.RemoveSongContainer{
-    color: black;
+.remove-song-button {
+    background-color: var(--backgroundAccent);
+    border: none;
+    width: 95px;
+    display: flex;
+    align-items: center;
+}
+
+.remove-song-button:hover {
+    background-color: transparent;
+    * {
+        font-weight: bold;
+    }
+}
+
+.remove-song-text {
+    color: var(--backgroundTextColor);
+    font-size: x-small;
 }
 
 .fa-minus{
-    color: black
+    color: var(--backgroundTextColor);
+    margin-right: 5px;
 }
 
 /********************** SIDEBAR ********************/

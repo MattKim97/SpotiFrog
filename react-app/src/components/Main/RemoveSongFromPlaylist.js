@@ -38,9 +38,9 @@ export default function RemoveSongFromPlaylist({songId, playlistId}) {
                 </div>
             </div>
         )}
-        <button onClick={openModal}>
+        <button onClick={openModal} className='remove-song-button'>
             <i className="fa-solid fa-minus"/>
-            <span className='RemoveSongContainer'>Remove Song</span>
+            <span className='remove-song-text'>Remove Song</span>
         </button>
         </>
     )
