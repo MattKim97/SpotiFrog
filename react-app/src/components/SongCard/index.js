@@ -6,6 +6,8 @@ import { thunkGetAllAlbums } from '../../store/albums';
 // import LikeSong from './LikeSong'
 
 export default function SongCard({format, song}) {
+    // const dispatch = useDispatch();
+    console.log("****SONG CARD, SONG IS", song)
 
     const year = new Date(song.uploadedAt).getFullYear();
     const month = new Date(song.uploadedAt).getMonth();
@@ -20,7 +22,7 @@ export default function SongCard({format, song}) {
 
     // if (!album) return null;
 
-    const imageUrl = album?.albumCover ? album.albumCover : "https://static.thenounproject.com/png/4974686-200.png";
+    const imageUrl = album?.albumCover || "https://static.thenounproject.com/png/4974686-200.png";
 
     return (
         <div className={`songs${format}container`}>
