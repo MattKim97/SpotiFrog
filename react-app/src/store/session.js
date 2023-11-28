@@ -166,7 +166,7 @@ function sessionReducer(state = initialState, action) {
 			return {user: {...state.user, songsLiked}}
 		}
 		case UNLIKE_SONG:
-			const songsLiked = [...state.user.songsLiked].filter(songId => songId !== action.songId)
+			const songsLiked = [...state.user.songsLiked].filter(songId => songId !== parseInt(action.songId))
 			return {user: {...state.user, songsLiked: songsLiked}}
 		case ADD_USER_PLAYLIST: {
 			return {user: {...state.user, playlists: [...state.user.playlists, parseInt(action.playlistId)]}}
