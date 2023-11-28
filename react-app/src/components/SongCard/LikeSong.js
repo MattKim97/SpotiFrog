@@ -8,7 +8,7 @@ export default function LikeSong({likedSongs, songId}) {
     const sessionUser = useSelector(state => state.session.user)
 
     if (!sessionUser) return null
-    console.log(sessionUser.songsLiked, "SESSION USER****")
+
     const liked = sessionUser.songsLiked.includes(parseInt(songId))
 
     const handleLike = async () => {

@@ -7,20 +7,21 @@ import { thunkGetAllAlbums } from '../../store/albums';
 
 export default function SongCard({format, song}) {
     // const dispatch = useDispatch();
+    console.log("****SONG CARD, SONG IS", song)
 
     const year = new Date(song.uploadedAt).getFullYear();
     const month = new Date(song.uploadedAt).getMonth();
     const day = new Date(song.uploadedAt).getDay();
     const album = useSelector(state => state.albums[song.albumId])
 
-    
+
     // useEffect(() => {
     //     dispatch(thunkGetAllAlbums())
     // }
     // , [])
-    
+
     if (!album) return null;
-    
+
     return (
         <div className={`songs${format}container`}>
         <Link to={`/songs/${song.id}`}>

@@ -52,10 +52,11 @@ export default function Library() {
   let userPlaylists = []
   let userSongs = []
 
+
   if (sessionUser){
     userAlbums = albums.filter(album => album.userId === sessionUser.id)
     userPlaylists = playlists.filter(playlist => playlist.userId === sessionUser.id)
-    userSongs = songs.filter(song => song.userId === sessionUser.id)
+    userSongs = songs.filter(song => song.userId == sessionUser.id)
   }
 
   const [activeTab, setActiveTab] = useState('albums')
