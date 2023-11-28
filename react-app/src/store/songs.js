@@ -122,10 +122,7 @@ export const thunkDeleteSong = (id, playlistIds=[], albumId) => async dispatch =
 
 export const selectSongsByIds = (songList) => state => {
   if (!songList) return null
-  console.log("LIST OF SONG IDS", songList)
-
   const songs = songList.map(songId => state.songs[songId])
-  console.log("SONGS SELECTED", songs)
   return songs
   //
 }

@@ -28,17 +28,12 @@ export default function PlayListDetails() {
   const history = useHistory();
 
   const openModal = () => {
-    console.log(playlistSongs)
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  // const onClickAdd = () => {
-  //   return history.push(`/playlists/${playlistId}/change-songs`)
-  // };
 
   const onClickDelete = () => {
     openModal();

@@ -10,7 +10,7 @@ import { authenticate } from "../../store/session";
 import './Header.css'
 import { useContentLoaded } from '../../context/ContentLoaded';
 
-export default function Index() {
+export default function Header() {
   const {setUserLoaded} = useContentLoaded()
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
