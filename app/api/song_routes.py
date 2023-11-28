@@ -43,7 +43,7 @@ def create_song():
         mp3_data = mp3_file.read()
 
         mp3_file.seek(0)
-        
+
         upload = upload_file_to_s3(mp3_file)
 
         if "url" not in upload:

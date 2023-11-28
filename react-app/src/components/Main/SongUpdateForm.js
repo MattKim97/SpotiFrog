@@ -35,7 +35,7 @@ export default function UpdateSongForm() {
     e.preventDefault();
     setErrors({});
 
-    if (formData.albumId === "0" || formData.albumId === 0) {
+    if (!formData.albumId) {
         delete formData.albumId;
         }
 
