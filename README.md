@@ -3,24 +3,24 @@ A frog-themed digital music service that gives you access to songs from artists 
 
 ## Technologies Used
 
-<a href="https://github.com"><img src="images/github-mark-white.png" alt="GitHub logo" style="width:35;"></a>
-<a href="https://"><img src="images/AWS.png" alt="AWS logo" style="width:35;"></a>
-<a href="https://"><img src="images/CSS.png" alt="CSS logo" style="width:35;"></a>
-<a href="https://"><img src="images/docker.jpg" alt="Docker logo" style="width:35;"></a>
-<a href="https://"><img src="images/flask.png" alt="Flask logo" style="width:35;"></a>
-<a href="https://"><img src="images/googleFonts.jpg" alt="Google Fonts logo" style="width:35;"></a>
-<a href="https://"><img src="images/HTML5.png" alt="HTML5 logo" style="width:35;"></a>
-<a href="https://"><img src="images/JavaScript-logo.png" alt="JavaScript logo" style="width:35;"></a>
-<a href="https://"><img src="images/MDN.jpg" alt="Mozilla Developer Network logo" style="width:35;"></a>
-<a href="https://"><img src="images/postgresql.jpg" alt="PostGreSQL logo" style="width:35;"></a>
-<a href="https://"><img src="images/Python-logo-notext.svg.png" alt="Python logo" style="width:35;"></a>
-<a href="https://"><img src="images/React-icon.svg.png" alt="React logo" style="width:35;"></a>
-<a href="https://"><img src="images/redux.svg" alt="Redux logo" style="width:35;"></a>
-<a href="https://"><img src="images/sql.jpg" alt="SQL logo" style="width:35;"></a>
-<a href="https://"><img src="images/SQLAlchemy.svg.png" alt="SQLAlchemy logo" style="width:35;"></a>
-<a href="https://"><img src="images/sqlite.jpg" alt="Sqlite logo" style="width:35;"></a>
-<a href="https://"><img src="images/Typescript_logo_2020.svg.png" alt="Typescript logo" style="width:35;"></a>
-<a href="https://"><img src="images/Visual_Studio_Code_1.35_icon.svg.png" alt="VisualStudio Code logo" style="width:35;"></a>
+<a href="https://github.com"><img src="images/github-mark-white.png" alt="GitHub logo" width="35"></a>
+<a href="https://"><img src="images/AWS.png" alt="AWS logo" width="35"></a>
+<a href="https://"><img src="images/CSS.png" alt="CSS logo" width="35"></a>
+<a href="https://"><img src="images/docker.jpg" alt="Docker logo" width="35"></a>
+<a href="https://"><img src="images/flask.png" alt="Flask logo" width="35"></a>
+<a href="https://"><img src="images/googleFonts.jpg" alt="Google Fonts logo" width="35"></a>
+<a href="https://"><img src="images/HTML5.png" alt="HTML5 logo" width="35"></a>
+<a href="https://"><img src="images/JavaScript-logo.png" alt="JavaScript logo" width="35"></a>
+<a href="https://"><img src="images/MDN.jpg" alt="Mozilla Developer Network logo" width="35"></a>
+<a href="https://"><img src="images/postgresql.jpg" alt="PostGreSQL logo" width="35"></a>
+<a href="https://"><img src="images/Python-logo-notext.svg.png" alt="Python logo" width="35"></a>
+<a href="https://"><img src="images/React-icon.svg.png" alt="React logo" width="35"></a>
+<a href="https://"><img src="images/redux.svg" alt="Redux logo" width="35"></a>
+<a href="https://"><img src="images/sql.jpg" alt="SQL logo" width="35"></a>
+<a href="https://"><img src="images/SQLAlchemy.svg.png" alt="SQLAlchemy logo" width="35"></a>
+<a href="https://"><img src="images/sqlite.jpg" alt="Sqlite logo" width="35"></a>
+<a href="https://"><img src="images/Typescript_logo_2020.svg.png" alt="Typescript logo" width="35"></a>
+<a href="https://"><img src="images/Visual_Studio_Code_1.35_icon.svg.png" alt="VisualStudio Code logo" width="35"></a>
 
 
 ## Live URL for Spotifrog
