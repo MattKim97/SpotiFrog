@@ -133,6 +133,8 @@ export const consumeUserPlaylists = userPlaylists => state => {
 
     const playlists = userPlaylists.map(playlistId => state.playlists[playlistId])
 
+    if (playlists.includes(undefined)) return []
+
     return playlists
 }
 

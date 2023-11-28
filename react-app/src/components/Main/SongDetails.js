@@ -143,9 +143,9 @@ export default function SongDetails() {
 
       <div className="details-section-user-options">
 
-        {sessionUser && (
+        {sessionUser ? (
           <LikeSong liked={sessionUser.songsLiked} songId={songId} />
-        )}
+        ): <div className="button-placeholder"/>}
         <i className={`fa-solid fa-ellipsis`} onClick={openDropdown}></i>
         <ul className={dropDown} ref={ulRef}>
           {sessionUser ?

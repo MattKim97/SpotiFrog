@@ -601,7 +601,8 @@ input[type=file] {
     background-color: var(--sectionBackground);
     padding: var(--mainPaddingX);
     display: grid;
-    grid-template-columns: 65px 65px 65px;
+    grid-template-columns: 65px 65px;
+    grid-template-rows: 50px;
     align-items: center;
     box-sizing: border-box;
     height: 100px;
@@ -619,6 +620,7 @@ input[type=file] {
 
 .fa-heart.fa-regular, .fa-ellipsis {
     color: var(--backgroundTextColor);
+    box-sizing: border-box;
 }
 
 .fa-heart:hover, .fa-ellipsis:hover {
@@ -627,6 +629,11 @@ input[type=file] {
 
 .fa-heart.fa-heart.fa-regular:hover, .fa-ellipsis:hover {
     color: var(--textColor);
+}
+
+.button-placeholder {
+    color: var(--sectionBackground);
+    height: 50px;
 }
 
 .fa-plus {
@@ -687,9 +694,9 @@ input[type=file] {
 }
 
 .user-options-dropdown {
+    margin-left: 20px;
     padding: 5px;
     width: 125px;
-    margin-left: 141px;
 }
 
 .user-options-dropdown>li {
