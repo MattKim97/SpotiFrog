@@ -130,7 +130,7 @@ export const selectSongsByIds = (songList) => state => {
   //
 }
 
-// export const selectSongsByAlbum = (albumId) => state => {}
+export const selectSongsByAlbum = (albumId) => state => {}
 
 
 const initialState = {};
@@ -143,11 +143,10 @@ const songReducer = (state = initialState, action) => {
     case GOT_SONG:
       return {...state, [action.song.id]: action.song };
     case CREATED_SONG:
-      return {...state, [action.song.id]: action.song };
-      case UPDATED_SONG:
-      return {...state, [action.song.id]: action.song };
+    case UPDATED_SONG:
+      return { ...state, [action.song.id]: action.song };
     case DELETED_SONG: {
-      const newState = {...state };
+      const newState = { ...state };
       delete newState[action.id];
       return newState;
     }
