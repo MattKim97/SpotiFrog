@@ -35,7 +35,6 @@ https://spotifrog2.onrender.com/
 * Visitors may not create or upload songs to an album without logging in to a user
 * Visitors may not like songs without logging in to a user
 * Users may log-in and log-out
-* Users when logging in, redirects to the last page logged out from if not new, if new redirect to landing page
 
 
 ### 2. Songs
