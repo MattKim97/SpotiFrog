@@ -1,4 +1,4 @@
-import React, { useRef, memo } from 'react'
+import React, { useRef, memo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import AudioPlayer , { RHAP_UI }  from 'react-h5-audio-player'
 
@@ -7,6 +7,7 @@ import { songName } from '../../utils/player'
 
 const MusicPlayer = memo(function MusicPlayer() {
   const { playlist, ids, track, isPlaying, url, player, isById, song } = useSelector(state => state.audio)
+  const [isPlayError, setIsPlayError] = useState(false)
   const dispatch = useDispatch()
   const audio = useRef()
   console.log(`Rerendering PLAYER: playlist: ${playlist?.length} ids: ${ids?.length} index: ${track} ${songName(song)}`)
@@ -30,6 +31,7 @@ const MusicPlayer = memo(function MusicPlayer() {
     dispatch(changeTrack(nextTrackIndex))
     setIsPlaying(true)
   }
+
   const handleClickPrevious = () => {
     const length = playlistLength()
     const prevTrackIndex = length < 2 ? 0 : (track ? track : length) - 1 // back to end
@@ -55,13 +57,27 @@ function handlePause() {
 }
 function handlePlay() {
   console.log(`PLAY: ${track} ${songName(song)}`)
+  setIsPlayError(false)
+  const mainButton = document.getElementsByClassName("rhap_play-pause-button")[0]
+  mainButton.classList.remove("error")
+  mainButton.style["color"] = 0xffffff;
   dispatch(setIsPlaying(true))
 }
 
-// if (!playlist || !playlist.length ||
-//       track < 0 || track >= playlist.length) {
-//         setIsPlaying(false)
-// }
+function handlePlayError() {
+  if (isPlayError) return
+  console.log("PLAY ERROR")
+  setIsPlayError(true)
+  setErrorCondition()
+}
+
+function setErrorCondition() {
+  const mainButton = document.getElementsByClassName("rhap_play-pause-button")[0]
+  mainButton.classList.add("error")
+  mainButton.style["color"] = 0xff0000;
+  dispatch(setIsPaused(true))
+    }
+
 
   return (
       <AudioPlayer
@@ -77,6 +93,8 @@ function handlePlay() {
         onLoadedMetaData={(event) => handleMetaData(event)}
         onPause={handlePause}
         onPlay={handlePlay}
+        onPlayError={handlePlayError}
+
         onPlaying={handlePlay}
         preload='auto'
         ref={audio}
@@ -117,20 +135,19 @@ function handlePlay() {
             // ]}
             // defaultCurrentTime="0:00"
             // defaultDuration="0:00"
-            // onAbort={() => console.log("ABORT")}
-            // onCanPlay={() => console.log("CAN PLAY")}
-            // onCanPlayThrough={() => console.log("CAN PLAY THROUGH")}
-            // onEmptied={() => console.log("EMPTIED")}
-            // onError={() => console.log("ERROR")}
-            // onLoadStart={() => console.log("LOAD START")}
-            // onLoadedData={() => console.log("LOADED DATA")}
-            // onPlayError={() => console.log("PLAY ERROR")}
-            // onProgress={() => console.log("PROGRESS")}
-            // onSeeked={() => console.log("SEEKED")}
-            // onSeeking={() => console.log("SEEKING")}
-            // onSuspend={() => console.log("SUSPEND")}
-            // onVolumeChanged={() => console.log("VOLUME CHANGED")}
-            // onWaiting={() => console.log("WAITING")}
+            onAbort={() => console.log("ABORT")}
+            onCanPlay={() => console.log("CAN PLAY")}
+            onCanPlayThrough={() => console.log("CAN PLAY THROUGH")}
+            onEmptied={() => console.log("EMPTIED")}
+            onError={() => console.log("ERROR")}
+            onLoadStart={() => console.log("LOAD START")}
+            onLoadedData={() => console.log("LOADED DATA")}
+            onProgress={() => console.log("PROGRESS")}
+            onSeeked={() => console.log("SEEKED")}
+            onSeeking={() => console.log("SEEKING")}
+            onSuspend={() => console.log("SUSPEND")}
+            onVolumeChanged={() => console.log("VOLUME CHANGED")}
+            onWaiting={() => console.log("WAITING")}
             // progressJumpSteps={{ backward: 5000, forward: 5000 }}
             // showDownloadProgress={true}
 
