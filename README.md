@@ -81,7 +81,7 @@ https://github.com/MattKim97/SpotiFrog/wiki
 *  Docker
 
 ### Tools
-* VS COde
+* VS Code
 * GitHub and Git
 * Render for deployment and publishing
 
