@@ -462,9 +462,31 @@ input[type=file] {
     padding: 5px;
 }
 
+.aboutContainer > h1 {
+    font-size: var(--headingSize);
+    font-weight: bold;
+    color: var(--spotifyGreen);
+    text-align: center;
+}
+
+.aboutContainer > h2 {
+    font-size: var(--subheadingSize);
+    font-weight: bold;
+    color: var(--spotifyGreen);
+    text-align: center;
+}
+
 .aboutContainer {
     margin: 50px;
-    width: 900px;
+    width: 90%;
+    background-size: contain;
+    background-color: (0,0,0,0.5);
+}
+
+.aboutContainer > p {
+    font-size: var(--fontSize);
+    color: white;
+    /* font-weight: bold; */
 }
 
 /***************** SEARCH ********************/
@@ -607,6 +629,16 @@ input[type=file] {
     box-sizing: border-box;
     height: 100px;
 }
+
+.fa-radio {
+    color: var(--spotifyGreen);
+}
+
+.fa-headphones{
+    color: var(--spotifyGreen);
+}
+
+
 
 .fa-heart, .fa-ellipsis {
     align-self: center;
@@ -908,6 +940,7 @@ input[type=file] {
 }
 
 .fa-solid.fa-house, .fa-solid.fa-eye {
+    color: var(--spotifyGreen);
     margin-right: 15px;
 }
 
@@ -922,11 +955,24 @@ input[type=file] {
     padding: 7px;
 }
 
-.fa-solid.fa-book, .library-text {
-    color: var(--backgroundTextColor);
+.fa-solid.fa-book{
+    color: var(--spotifyGreen);
     margin-right: 15px;
     margin-bottom: 7px;
 }
+
+.library-text {
+    cursor: pointer;
+    color: var(--backgroundTextColor);
+    font-size: var(--fontSize);
+    margin-right: 15px;
+    margin-bottom: 7px;
+}
+
+.fa-book, .fa-music {
+    color: var(--spotifyGreen);
+}
+
 
 .custom-modal-button, .sidebar-card-container>button {
     background-color: var(--backgroundAccent);
