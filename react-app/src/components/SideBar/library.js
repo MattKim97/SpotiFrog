@@ -48,6 +48,10 @@ export default function Library() {
     history.push('/songs')
   }
 
+  const seeLikedSongs = () => {
+    history.push('/songs/liked')
+  }
+
   let userAlbums = []
   let userPlaylists = []
   let userSongs = []
@@ -131,6 +135,7 @@ export default function Library() {
             )) : null}
             <button type='button' onClick={onClickSong}>Create a song</button>
             <button type='button' onClick={seeSongs}>See All Songs</button>
+            <button type='button' onClick={seeLikedSongs}>See Liked Songs</button>
           </div>
           : "No active tab set"
     }

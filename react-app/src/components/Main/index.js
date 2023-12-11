@@ -14,6 +14,7 @@ import SongUpdateForm from "./SongUpdateForm";
 import AlbumForm from "./AlbumForm";
 import PlaylistForm from "./PlaylistForm";
 import PlaylistUpdateForm from "./PlaylistUpdateForm";
+import LikedSongs from "./LikedSongs";
 
 
 export default function Main() {
@@ -54,6 +55,9 @@ export default function Main() {
             </Route>
             <Route exact path="/albums/:albumId">
                 <AlbumDetails/>
+            </Route>
+            <Route exact path="/songs/liked">
+                <LikedSongs />
             </Route>
             <Route exact path="/songs/:songId/edit">
                 <SongUpdateForm/>

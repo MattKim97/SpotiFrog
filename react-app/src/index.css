@@ -1174,3 +1174,9 @@ input[type=file] {
 .normal-label>span {
     width: 100%;
 }
+
+/****** LIKED SONGS ***********/
+.liked-songs-header {
+    font-weight: bold;
+    margin: 15px 0;
+}
