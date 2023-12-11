@@ -961,6 +961,7 @@ input[type=file] {
 }
 
 .library-text {
+    cursor: pointer;
     color: var(--backgroundTextColor);
     font-size: var(--fontSize);
     margin-right: 15px;
@@ -969,7 +970,7 @@ input[type=file] {
 
 .fa-book, .fa-music {
     color: var(--spotifyGreen);
-}   
+}
 
 
 .custom-modal-button, .sidebar-card-container>button {
