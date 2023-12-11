@@ -18,6 +18,7 @@ function ProfileButton({ user }) {
     setShowMenu(true);
   };
 
+
   useEffect(() => {
     if (!showMenu) return;
 
@@ -51,6 +52,7 @@ function ProfileButton({ user }) {
           <>
             <li>{user.username}</li>
             <li>{user.email}</li>
+
             <button className="logout-button" onClick={handleLogout}>Log Out</button>
           </>
         ) : (

@@ -4,9 +4,9 @@ export default function About() {
   return (
     <div className='aboutContainer'>
       <h1>About Spotifrog</h1>
-      <p>
+      <h2>
         A frog themed music sharing platform
-      </p>
+      </h2>
 
       <p>
         Welcome to "Spotifrog," where every hop is a musical leap!
