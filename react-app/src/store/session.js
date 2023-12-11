@@ -172,7 +172,8 @@ function sessionReducer(state = initialState, action) {
 			return {user: {...state.user, playlists: [...state.user.playlists, parseInt(action.playlistId)]}}
 		}
 		case REMOVE_USER_PLAYLIST: {
-			const playlists = state.user.playlists.filter(playlist => playlist.id !== action.playlistId)
+			const playlists = state.user.playlists.filter(playlist => parseInt(playlist) !== parseInt(action.playlistId))
+
 			return {user: {...state.user, playlists}}
 		}
 		case CREATED_SONG: {

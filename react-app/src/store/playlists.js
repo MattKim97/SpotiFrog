@@ -131,9 +131,10 @@ export const thunkRemoveFromPlaylist = (playlistId, songId) => async dispatch =>
 export const consumeUserPlaylists = userPlaylists => state => {
     if (!userPlaylists) return []
 
-    const playlists = userPlaylists.map(playlistId => state.playlists[playlistId])
-
-    if (playlists.includes(undefined)) return []
+    const playlists = userPlaylists.reduce((lists, playlistId) => {
+        if (state.playlists[playlistId]) lists.push(state.playlists[playlistId]);
+        return lists;
+    }, [])
 
     return playlists
 }

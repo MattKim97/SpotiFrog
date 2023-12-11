@@ -922,6 +922,10 @@ input[type=file] {
     padding: 7px;
 }
 
+.library-text {
+    cursor: pointer;
+}
+
 .fa-solid.fa-book, .library-text {
     color: var(--backgroundTextColor);
     margin-right: 15px;
